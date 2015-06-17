@@ -27,37 +27,38 @@ typedef float           REAL;       // real
 typedef double          REAL8;      // real*8
 typedef long double     REAL16;     // real*16
 
-
-class Vector_double
+// support float, double, int and long basic data type (generic programming)
+template <typename T>
+class Vector_hpc
 {
     protected:
-        double *p_;
+        T *p_;
         integer_t dim_;
         int ref_;           // 0: own memory space; 1: point to another memory space
     public:
         /*::::::::::::::::::::::::::*/
         /* Constructors/Destructors */
         /*::::::::::::::::::::::::::*/
-        Vector_double();
-        Vector_double(integer_t);
-        Vector_double(integer_t, const double&);
-        Vector_double(double*, integer_t);
-        Vector_double(const double*, integer_t);
-        Vector_double(const Vector_double &);
-        ~Vector_double();
+        Vector_hpc() { p_ = NULL; dim_ = 0; }
+        Vector_hpc(integer_t);
+        Vector_hpc(integer_t, const T&);
+        Vector_hpc(double*, integer_t);
+        Vector_hpc(const double*, integer_t);
+        Vector_hpc(const Vector_hpc &);
+        ~Vector_hpc();
         /*::::::::::::::::::::::::::::::::*/
         /*  Indices and access operations */
         /*::::::::::::::::::::::::::::::::*/
-        double& operator()(integer_t i) {
+        T& operator()(integer_t i) {
             return p_[i];
         }
-        const double& operator()(integer_t i) const {
+        const T& operator()(integer_t i) const {
             return p_[i];
         }
-        double& operator[](integer_t i) {
+        T& operator[](integer_t i) {
             return p_[i];
         }
-        const double& operator[](integer_t i) const {
+        const T& operator[](integer_t i) const {
             return p_[i];
         }
 
@@ -67,31 +68,31 @@ class Vector_double
         inline int null() const {return dim_== 0;}
         //
         // Create a new *uninitalized* vector of size N
-        Vector_double & newsize(integer_t);
+        Vector_hpc & newsize(integer_t);
         /*::::::::::::::*/
         /*  Assignment  */
         /*::::::::::::::*/
-        Vector_double & operator=(const Vector_double&);
-        Vector_double & operator=(const double&);
-        friend Vector_double operator+(const Vector_double &c1, const Vector_double &c2);
-        friend Vector_double operator+(const Vector_double &c1, double num);
-        friend Vector_double operator+(double num, const Vector_double &c1);
+        Vector_hpc & operator=(const Vector_hpc&);
+        Vector_hpc & operator=(const T&);
+        friend Vector_hpc operator+(const Vector_hpc &c1, const Vector_hpc &c2);
+        friend Vector_hpc operator+(const Vector_hpc &c1, T num);
+        friend Vector_hpc operator+(T num, const Vector_hpc &c1);
 
         // common functions
-        void add(const Vector_double &c1);
-        void add(double *);
-        void sub(const Vector_double &c1);
-        void sub(double *);
-        void mul(double num);
-        void div(double num);
+        void add(const Vector_hpc &c1);
+        void add(T *);
+        void sub(const Vector_hpc &c1);
+        void sub(T *);
+        void mul(T num);
+        void div(T num);
         double max();
         double min();
         double mean();
 
         // something related to Fortran
-        void copyFortran(int ref, REAL8 *, INTEGER dim);
+        void copyFortran(int ref, T *, INTEGER dim);
 
-        friend std::ostream& operator<<(std::ostream &s, const Vector_double &A);
+        friend std::ostream& operator<<(std::ostream &s, const Vector_hpc &A);
 };
 
 class Face_current : public Vector_double

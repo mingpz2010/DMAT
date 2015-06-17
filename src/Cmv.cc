@@ -10,9 +10,8 @@
 
 using namespace std;
 
-Vector_double::Vector_double() : p_(0), dim_(0) {};
-
-Vector_double::Vector_double(integer_t n) : p_(new double[n]), dim_(n)
+template <typename T>
+Vector_hpc::Vector_hpc(integer_t n) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL) {
         cerr << "Error: NULL pointer in Vector_double(int) constructor " << endl;
@@ -21,8 +20,9 @@ Vector_double::Vector_double(integer_t n) : p_(new double[n]), dim_(n)
     }
 }
 
-Vector_double::Vector_double(integer_t n, const double& v) :
-        p_(new double[n]), dim_(n)
+template <typename T>
+Vector_hpc::Vector_hpc(integer_t n, const T& v) :
+        p_(new T[n]), dim_(n)
 {
     if (p_ == NULL)
     {
@@ -34,7 +34,8 @@ Vector_double::Vector_double(integer_t n, const double& v) :
         p_[i] = v;
 }
 
-Vector_double::Vector_double(double* d, integer_t n) : p_(new double[n]),
+template <typename T>
+Vector_hpc::Vector_hpc(T* d, integer_t n) : p_(new T[n]),
       dim_(n)
 {
     if (p_ == NULL)
@@ -47,7 +48,8 @@ Vector_double::Vector_double(double* d, integer_t n) : p_(new double[n]),
 
 }
 
-Vector_double::Vector_double(const double* d, integer_t n) : p_(new double[n]),
+template <typename T>
+Vector_hpc::Vector_hpc(const T* d, integer_t n) : p_(new T[n]),
       dim_(n)
 {
     if (p_ == NULL)
@@ -60,7 +62,8 @@ Vector_double::Vector_double(const double* d, integer_t n) : p_(new double[n]),
 
 }
 
-Vector_double::Vector_double(const Vector_double & m) : p_(new double[m.dim_]),
+template <typename T>
+Vector_hpc::Vector_hpc(const Vector_hpc & m) : p_(new T[m.dim_]),
     dim_(m.dim_)
 {
     if (p_ == NULL)
@@ -75,18 +78,19 @@ Vector_double::Vector_double(const Vector_double & m) : p_(new double[m.dim_]),
         p_[i] = m.p_[i];
 }
 
-Vector_double::~Vector_double()
+template <typename T>
+Vector_hpc::~Vector_hpc()
 {
     if (p_) delete [] p_;
 }
 
-
-Vector_double& Vector_double::newsize(integer_t n)
+template <typename T>
+Vector_hpc& Vector_hpc::newsize(integer_t n)
 {
     if (dim_ != n )                     // only delete and new if
     {                                   // the size of memory is really
         if (p_) delete [] p_;           // changing, otherwise just
-        p_ = new double[n];              // copy in place.
+        p_ = new T[n];              // copy in place.
         if (p_ == NULL)
         {
             cerr << "Error : NULL pointer in operator= newsize" << endl;
@@ -98,7 +102,8 @@ Vector_double& Vector_double::newsize(integer_t n)
     return *this;
 }
 
-Vector_double& Vector_double::operator=(const double & m)
+template <typename T>
+Vector_hpc& Vector_hpc::operator=(const T & m)
 {
     // unroll loops to depth of length 4
     integer_t N = size();
@@ -118,7 +123,8 @@ Vector_double& Vector_double::operator=(const double & m)
     return *this;
 }
 
-Vector_double& Vector_double::operator=(const Vector_double & m)
+template <typename T>
+Vector_hpc& Vector_hpc::operator=(const Vector_hpc & m)
 {
 
     integer_t N = m.dim_;
@@ -133,9 +139,10 @@ Vector_double& Vector_double::operator=(const Vector_double & m)
     return *this;
 }
 
-Vector_double operator+(const Vector_double &c1, const Vector_double &c2)
+template <typename T>
+Vector_hpc operator+(const Vector_hpc &c1, const Vector_hpc &c2)
 {
-    Vector_double c(c1.dim_);
+    Vector_hpc c(c1.dim_);
 
     for (integer_t i=0; i < c1.dim_; i++) {
         c[i] = c1[i] + c2[i];
@@ -144,9 +151,10 @@ Vector_double operator+(const Vector_double &c1, const Vector_double &c2)
     return c;
 }
 
-Vector_double operator+(const Vector_double &c1, double num)
+template <typename T>
+Vector_hpc operator+(const Vector_hpc &c1, T num)
 {
-    Vector_double c(c1.dim_);
+    Vector_hpc c(c1.dim_);
 
     for (integer_t i=0; i < c1.dim_; i++) {
         c[i] += num;
@@ -155,9 +163,10 @@ Vector_double operator+(const Vector_double &c1, double num)
     return c;
 }
 
-Vector_double operator+(double num, const Vector_double &c1)
+template <typename T>
+Vector_hpc operator+(double num, const Vector_hpc &c1)
 {
-    Vector_double c(c1.dim_);
+    Vector_hpc c(c1.dim_);
 
     for (integer_t i=0; i < c1.dim_; i++) {
         c[i] += num;
@@ -166,7 +175,8 @@ Vector_double operator+(double num, const Vector_double &c1)
     return c;
 }
 
-void Vector_double::add(const Vector_double &c1)
+template <typename T>
+void Vector_hpc::add(const Vector_hpc &c1)
 {
     if (dim_ <= 0 || dim_ != c1.dim_) {
         return;
@@ -177,7 +187,8 @@ void Vector_double::add(const Vector_double &c1)
     }
 }
 
-void Vector_double::add(double *m)
+template <typename T>
+void Vector_hpc::add(T *m)
 {
     if (dim_ <= 0) {
         return;
@@ -188,7 +199,8 @@ void Vector_double::add(double *m)
     }
 }
 
-void Vector_double::sub(const Vector_double &c1)
+template <typename T>
+void Vector_hpc::sub(const Vector_hpc &c1)
 {
     if (dim_ <= 0 || dim_ != c1.dim_) {
         return;
@@ -199,7 +211,8 @@ void Vector_double::sub(const Vector_double &c1)
     }
 }
 
-void Vector_double::sub(double *m)
+template <typename T>
+void Vector_hpc::sub(T *m)
 {
     if (dim_ <= 0) {
         return;
@@ -210,7 +223,8 @@ void Vector_double::sub(double *m)
     }
 }
 
-void Vector_double::mul(double num)
+template <typename T>
+void Vector_hpc::mul(T num)
 {
     if (dim_ <= 0 )  return;
 
@@ -221,7 +235,8 @@ void Vector_double::mul(double num)
     }
 }
 
-void Vector_double::div(double num)
+template <typename T>
+void Vector_hpc::div(T num)
 {
     if (dim_ <= 0 )  return;
 
@@ -237,12 +252,13 @@ void Vector_double::div(double num)
     }
 }
 
-double Vector_double::max()
+template <typename T>
+T Vector_hpc::max()
 {
     if (dim_ <= 0) { return 0.; }
     if (dim_ == 1) { return p_[0]; }
 
-    double ans;
+    T ans;
     integer_t i;
     ans = p_[0];
     for (i=1; i<dim; i++) {
@@ -251,12 +267,13 @@ double Vector_double::max()
     return ans;
 }
 
-double Vector_double::min()
+template <typename T>
+T Vector_hpc::min()
 {
     if (dim_ <= 0) { return 0.; }
     if (dim_ == 1) { return p_[0]; }
 
-    double ans;
+    T ans;
     integer_t i;
     ans = p_[0];
     for (i=1; i<dim; i++) {
@@ -265,11 +282,12 @@ double Vector_double::min()
     return ans;
 }
 
-double Vector_double::mean()
+template <typename T>
+double Vector_hpc::mean()
 {
     if (dim_ <= 0)  return 0.;
 
-    double ans;
+    T ans;
     integer_t i;
     for ( ans = 0., i=0; i<dim; i++) {
         ans += p_[i];
@@ -278,7 +296,8 @@ double Vector_double::mean()
     return ans/dim_;
 }
 
-void Vector_double::copyFortran(int ref, REAL8 *from, INTEGER dim)
+template <typename T>
+void Vector_hpc::copyFortran(int ref, T *from, INTEGER dim)
 {
     ref_ = ref;
 
@@ -287,13 +306,14 @@ void Vector_double::copyFortran(int ref, REAL8 *from, INTEGER dim)
     }
     dim_ = dim;
     if (ref_ == 0) {
-        p_ = new double[dim_];
+        p_ = new T[dim_];
     } else {
         p_ = from;
     }
 }
 
-ostream& operator<<(ostream& s, const Vector_double& V)
+template <typename T>
+ostream& operator<<(ostream& s, const Vector_hpc& V)
 {
     integer_t N = V.size();
 
