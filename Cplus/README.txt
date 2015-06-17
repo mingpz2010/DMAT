@@ -1,3 +1,0 @@
-ADT(abstract data structure):
-
-
