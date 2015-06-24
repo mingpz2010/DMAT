@@ -20,6 +20,11 @@
 #ifndef CMV_H_
 #define CMV_H_
 
+#include <iostream>
+#include <fstream>
+#include <cstdio>
+#include <cstdlib>
+
 #ifdef integer_t
 #undef integer_t
 #endif
@@ -44,10 +49,10 @@ typedef long double     REAL16;     // real*16
 // From the <More C++ Idioms> wiki book
 // Declare friend function
 template<typename T> class Vector_hpc;
-template<typename T> friend Vector_hpc<T> operator+(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2);
-template<typename T> friend Vector_hpc<T> operator+(const Vector_hpc<T> &c1, T num);
-template<typename T> friend Vector_hpc<T> operator+(T num, const Vector_hpc<T> &c1);
-template<typename T> friend std::ostream& operator<<(std::ostream &s, const Vector_hpc<T> &A);
+template<typename T> Vector_hpc<T> operator+(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2);
+template<typename T> Vector_hpc<T> operator+(const Vector_hpc<T> &c1, T num);
+template<typename T> Vector_hpc<T> operator+(T num, const Vector_hpc<T> &c1);
+template<typename T> std::ostream& operator<<(std::ostream &s, const Vector_hpc<T> &A);
 
 template <typename T>
 class Vector_hpc
@@ -100,9 +105,9 @@ class Vector_hpc
         friend Vector_hpc<T> operator+(T num, const Vector_hpc<T> &c1);
 
         // common functions
-        void add(const Vector_hpc &c1);
+        void add(const Vector_hpc<T> &c1);
         void add(T *);
-        void sub(const Vector_hpc &c1);
+        void sub(const Vector_hpc<T> &c1);
         void sub(T *);
         void mul(T num);
         void div(T num);

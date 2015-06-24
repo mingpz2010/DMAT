@@ -16,19 +16,12 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <iostream>
-#include <fstream>
-#include <cstdio>
-#include <cstdlib>
-
-using namespace std;
-
 template <typename T>
 Vector_hpc<T>::Vector_hpc(integer_t n) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL) {
-        cerr << "Error: NULL pointer in Vector_double(int) constructor " << endl;
-        cerr << "       Most likely out of memory... " << endl;
+        std::cerr << "Error: NULL pointer in Vector_double(int) constructor " << std::endl;
+        std::cerr << "       Most likely out of memory... " << std::endl;
         exit(-1);
     }
 }
@@ -38,8 +31,8 @@ Vector_hpc<T>::Vector_hpc(integer_t n, const T& v) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL)
     {
-        cerr << "Error: NULL pointer in Marray_1D_double(int) constructor " << endl;
-        cerr << "       Most likely out of memory... " << endl;
+    	std::cerr << "Error: NULL pointer in Marray_1D_double(int) constructor " << std::endl;
+    	std::cerr << "       Most likely out of memory... " << std::endl;
         exit(-1);
     }
     for (integer_t i=0; i<n; i++)
@@ -51,7 +44,7 @@ Vector_hpc<T>::Vector_hpc(T* d, integer_t n) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL)
     {
-        cerr << "Error: Null pointer in Marray_1D_double(double*, int) " << endl;
+    	std::cerr << "Error: Null pointer in Marray_1D_double(double*, int) " << std::endl;
         exit(1);
     }
     for (integer_t i=0; i<n; i++)
@@ -64,7 +57,7 @@ Vector_hpc<T>::Vector_hpc(const T* d, integer_t n) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL)
     {
-        cerr << "Error: Null pointer in Marray_1D_double(double*, int) " << endl;
+    	std::cerr << "Error: Null pointer in Marray_1D_double(double*, int) " << std::endl;
         exit(-1);
     }
     for (integer_t i=0; i<n; i++)
@@ -77,7 +70,7 @@ Vector_hpc<T>::Vector_hpc(const Vector_hpc<T> & m) : p_(new T[m.dim_]), dim_(m.d
 {
     if (p_ == NULL)
     {
-        cerr << "Error:  Null pointer in Marray_1D_double(const Marray_1D_double&); " << endl;
+    	std::cerr << "Error:  Null pointer in Marray_1D_double(const Marray_1D_double&); " << std::endl;
         exit(-1);
     }
 
@@ -102,7 +95,7 @@ Vector_hpc<T>& Vector_hpc<T>::newsize(integer_t n)
         p_ = new T[n];              // copy in place.
         if (p_ == NULL)
         {
-            cerr << "Error : NULL pointer in operator= newsize" << endl;
+        	std::cerr << "Error : NULL pointer in operator= newsize" << std::endl;
             exit(-1);
         }
         dim_ = n;
@@ -250,7 +243,7 @@ void Vector_hpc<T>::div(T num)
     if (dim_ <= 0 )  return;
 
     if (num == 0) {
-        cerr << "div 0 error, so we don't process it"<< endl;
+    	std::cerr << "div 0 error, so we don't process it"<< std::endl;
         return;
     }
 
