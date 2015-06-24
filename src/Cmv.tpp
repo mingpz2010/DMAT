@@ -163,9 +163,9 @@ Vector_hpc<T> operator+(const Vector_hpc &c1, const Vector_hpc &c2)
 }
 
 template <typename T>
-Vector_hpc<T> operator+(const Vector_hpc &c1, T num)
+Vector_hpc<T> operator+(const Vector_hpc<T> &c1, T num)
 {
-    Vector_hpc c(c1.dim_);
+    Vector_hpc<T> c(c1.dim_);
 
     for (integer_t i=0; i < c1.dim_; i++) {
         c[i] += num;
@@ -175,9 +175,9 @@ Vector_hpc<T> operator+(const Vector_hpc &c1, T num)
 }
 
 template <typename T>
-Vector_hpc<T> operator+(double num, const Vector_hpc &c1)
+Vector_hpc<T> operator+(double num, const Vector_hpc<T> &c1)
 {
-    Vector_hpc c(c1.dim_);
+    Vector_hpc<T> c(c1.dim_);
 
     for (integer_t i=0; i < c1.dim_; i++) {
         c[i] += num;
@@ -187,7 +187,7 @@ Vector_hpc<T> operator+(double num, const Vector_hpc &c1)
 }
 
 template <typename T>
-void Vector_hpc<T>::add(const Vector_hpc &c1)
+void Vector_hpc<T>::add(const Vector_hpc<T> &c1)
 {
     if (dim_ <= 0 || dim_ != c1.dim_) {
         return;
