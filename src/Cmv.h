@@ -54,8 +54,8 @@ class Vector_hpc
         Vector_hpc() { p_ = NULL; dim_ = 0; ref_ = 0; }
         Vector_hpc(integer_t);
         Vector_hpc(integer_t, const T&);
-        Vector_hpc(double*, integer_t);
-        Vector_hpc(const double*, integer_t);
+        Vector_hpc(T*, integer_t);
+        Vector_hpc(const T*, integer_t);
         Vector_hpc(const Vector_hpc &);
         ~Vector_hpc();
         /*::::::::::::::::::::::::::::::::*/
