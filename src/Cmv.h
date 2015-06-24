@@ -80,15 +80,15 @@ class Vector_hpc
         inline int null() const {return dim_== 0;}
         //
         // Create a new *uninitalized* vector of size N
-        Vector_hpc & newsize(integer_t);
+        Vector_hpc<T> & newsize(integer_t);
         /*::::::::::::::*/
         /*  Assignment  */
         /*::::::::::::::*/
-        Vector_hpc & operator=(const Vector_hpc&);
-        Vector_hpc & operator=(const T&);
-        friend Vector_hpc operator+(const Vector_hpc &c1, const Vector_hpc &c2);
-        friend Vector_hpc operator+(const Vector_hpc &c1, T num);
-        friend Vector_hpc operator+(T num, const Vector_hpc &c1);
+        Vector_hpc<T> & operator=(const Vector_hpc<T>&);
+        Vector_hpc<T> & operator=(const T&);
+        friend Vector_hpc<T> operator+(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2);
+        friend Vector_hpc<T> operator+(const Vector_hpc<T> &c1, T num);
+        friend Vector_hpc<T> operator+(T num, const Vector_hpc<T> &c1);
 
         // common functions
         void add(const Vector_hpc &c1);
