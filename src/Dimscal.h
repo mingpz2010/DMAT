@@ -51,6 +51,6 @@ public:
     void copyFortran(int ref, T *, INTEGER dim1, INTEGER dim2, INTEGER dim3);
 };
 
-
+#include "Dimscal.tpp"
 
 #endif /* DIMSCAL_H_ */

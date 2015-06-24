@@ -107,5 +107,7 @@ class Vector_hpc
         friend std::ostream& operator<<(std::ostream &s, const Vector_hpc &A);
 };
 
+#include "Cmv.tpp"
+
 #endif /* CMV_H_ */
 

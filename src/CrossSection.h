@@ -28,5 +28,6 @@ class CrossSection : public Vector_hpc<T>
 
 };
 
+#include "CrossSection.tpp"
 
 #endif /* CROSSSECTION_H_ */

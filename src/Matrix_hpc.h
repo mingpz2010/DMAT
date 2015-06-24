@@ -16,34 +16,16 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FLUX_H_
-#define FLUX_H_
+#ifndef MATRIX_HPC_H_
+#define MATRIX_HPC_H_
 
 #include "Cmv.h"
 
-// It derived from Vector_hpc, 3D ADT, used for representing neutron flux
-
-class Flux : public Vector_hpc
+class Matrix_hpc : public Vector_hpc
 {
-protected:
-    integer_t dim1_;
-    integer_t dim2_;
-    integer_t dim3_;
-    integer_t w1, w2;
-public:
-    Flux() : Vector_hpc() { dim1_ = dim2_ = dim3_ = 0; w1 = w2 = 0; }
-    Flux(integer_t dim1, integer_t dim2, integer_t dim3);
-    inline const double& Flux::operator() (integer_t dim1, integer_t dim2,
-            integer_t dim3) const {
-        return p_[dim1*w1+dim2*w2+dim3];
-    }
-    inline double& Flux::operator() (integer_t dim1, integer_t dim2,
-            integer_t dim3) {
-        return p_[dim1*w1+dim2*w2+dim3];
-    }
-    ~Face_current();
+
 };
 
-#include "Flux.tpp"
+#include "Matrix_hpc.tpp"
 
-#endif /* FLUX_H_ */
+#endif /* MATRIX_HPC_H_ */
