@@ -40,6 +40,15 @@ typedef double          REAL8;      // real*8
 typedef long double     REAL16;     // real*16
 
 // support float, double, int and long basic data type (generic programming)
+// " More C++ Idioms/Making New Friends "
+// From the <More C++ Idioms> wiki book
+// Declare friend function
+template<typename T> class Vector_hpc;
+template<typename T> friend Vector_hpc<T> operator+(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2);
+template<typename T> friend Vector_hpc<T> operator+(const Vector_hpc<T> &c1, T num);
+template<typename T> friend Vector_hpc<T> operator+(T num, const Vector_hpc<T> &c1);
+template<typename T> friend std::ostream& operator<<(std::ostream &s, const Vector_hpc<T> &A);
+
 template <typename T>
 class Vector_hpc
 {
@@ -86,11 +95,8 @@ class Vector_hpc
         /*::::::::::::::*/
         Vector_hpc<T> & operator=(const Vector_hpc<T>&);
         Vector_hpc<T> & operator=(const T&);
-        template <typename T>
         friend Vector_hpc<T> operator+(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2);
-        template <typename T>
         friend Vector_hpc<T> operator+(const Vector_hpc<T> &c1, T num);
-        template <typename T>
         friend Vector_hpc<T> operator+(T num, const Vector_hpc<T> &c1);
 
         // common functions
@@ -107,8 +113,7 @@ class Vector_hpc
         // something related to Fortran
         void copyFortran(int ref, T *, INTEGER dim);
 
-        template <typename T>
-        friend std::ostream& operator<<(std::ostream &s, const Vector_hpc &A);
+        friend std::ostream& operator<<(std::ostream &s, const Vector_hpc<T> &A);
 };
 
 #include "Cmv.tpp"
