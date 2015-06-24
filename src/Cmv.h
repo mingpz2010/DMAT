@@ -104,7 +104,7 @@ class Vector_hpc
         // something related to Fortran
         void copyFortran(int ref, T *, INTEGER dim);
 
-        friend std::ostream& operator<< <>(std::ostream &s, const Vector_hpc &A);
+        friend std::ostream& operator<<(std::ostream &s, const Vector_hpc &A);
 };
 
 #include "Cmv.tpp"
