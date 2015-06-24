@@ -18,6 +18,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <cstdio>
+#include <cstdlib>
 
 using namespace std;
 
@@ -74,8 +76,7 @@ Vector_hpc<T>::Vector_hpc(const T* d, integer_t n) : p_(new T[n]),
 }
 
 template <typename T>
-Vector_hpc<T>::Vector_hpc(const Vector_hpc & m) : p_(new T[m.dim_]),
-    dim_(m.dim_)
+Vector_hpc<T>::Vector_hpc(const Vector_hpc<T> & m) : p_(new T[m.dim_]), dim_(m.dim_)
 {
     if (p_ == NULL)
     {
@@ -96,7 +97,7 @@ Vector_hpc<T>::~Vector_hpc()
 }
 
 template <typename T>
-Vector_hpc& Vector_hpc<T>::newsize(integer_t n)
+Vector_hpc<T>& Vector_hpc<T>::newsize(integer_t n)
 {
     if (dim_ != n )                     // only delete and new if
     {                                   // the size of memory is really
@@ -114,7 +115,7 @@ Vector_hpc& Vector_hpc<T>::newsize(integer_t n)
 }
 
 template <typename T>
-Vector_hpc& Vector_hpc<T>::operator=(const T & m)
+Vector_hpc<T>& Vector_hpc<T>::operator=(const T & m)
 {
     // unroll loops to depth of length 4
     integer_t N = size();
@@ -135,7 +136,7 @@ Vector_hpc& Vector_hpc<T>::operator=(const T & m)
 }
 
 template <typename T>
-Vector_hpc& Vector_hpc<T>::operator=(const Vector_hpc & m)
+Vector_hpc<T>& Vector_hpc<T>::operator=(const Vector_hpc & m)
 {
 
     integer_t N = m.dim_;
