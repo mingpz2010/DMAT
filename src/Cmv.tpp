@@ -315,12 +315,12 @@ void Vector_hpc<T>::copyFortran(int ref, T *from, INTEGER dim)
 }
 
 template <typename T>
-ostream& operator<<(ostream& s, const Vector_hpc<T>& V)
+std::ostream& operator<<(std::ostream& s, const Vector_hpc<T>& V)
 {
     integer_t N = V.size();
 
     for (integer_t i=0; i< N; i++)
-        s << V(i) << endl;
+        s << V(i) << std::endl;
 
     return s;
 }
