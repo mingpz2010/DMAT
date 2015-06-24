@@ -34,8 +34,7 @@ Vector_hpc<T>::Vector_hpc(integer_t n) : p_(new T[n]), dim_(n)
 }
 
 template <typename T>
-Vector_hpc<T>::Vector_hpc(integer_t n, const T& v) :
-        p_(new T[n]), dim_(n)
+Vector_hpc<T>::Vector_hpc(integer_t n, const T& v) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL)
     {
@@ -48,8 +47,7 @@ Vector_hpc<T>::Vector_hpc(integer_t n, const T& v) :
 }
 
 template <typename T>
-Vector_hpc<T>::Vector_hpc(T* d, integer_t n) : p_(new T[n]),
-      dim_(n)
+Vector_hpc<T>::Vector_hpc(T* d, integer_t n) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL)
     {
@@ -62,8 +60,7 @@ Vector_hpc<T>::Vector_hpc(T* d, integer_t n) : p_(new T[n]),
 }
 
 template <typename T>
-Vector_hpc<T>::Vector_hpc(const T* d, integer_t n) : p_(new T[n]),
-      dim_(n)
+Vector_hpc<T>::Vector_hpc(const T* d, integer_t n) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL)
     {

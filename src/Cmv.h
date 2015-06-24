@@ -51,7 +51,7 @@ class Vector_hpc
         /*::::::::::::::::::::::::::*/
         /* Constructors/Destructors */
         /*::::::::::::::::::::::::::*/
-        Vector_hpc() { p_ = NULL; dim_ = 0; }
+        Vector_hpc() { p_ = NULL; dim_ = 0; ref_ = 0; }
         Vector_hpc(integer_t);
         Vector_hpc(integer_t, const T&);
         Vector_hpc(double*, integer_t);
