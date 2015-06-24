@@ -21,7 +21,8 @@
 
 #include "Cmv.h"
 
-class Matrix_hpc : public Vector_hpc
+template <typename T>
+class Matrix_hpc : public Vector_hpc<T>
 {
 
 };

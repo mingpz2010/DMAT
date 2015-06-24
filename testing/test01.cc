@@ -20,6 +20,8 @@
 #include <cstdio>
 #include "../src/Cmv.h"
 
+#define PI  3.1415926
+
 #define TRACE_PRINT(fmt, args...) do { \
                 fprintf(stderr, "DEBUG: %s:%d:%s(): " fmt, \
                 __FILE__, __LINE__, __func__, ##args); \
@@ -28,6 +30,20 @@
 int main(int argc, char *argv[])
 {
     TRACE_PRINT("start to test Vector_hpc class and Matrix_hpc class!\n");
+
+    Vector_hpc<double> v1(10);
+    Vector_hpc<double> v2(10);
+
+    for (int i=0; i<10; i++) {
+        v1(i) = i*PI;
+    }
+    std::cout << "output v1:"<< std::endl;
+    std::cout << v1 << std::endl;
+    std::cout << "output v2:"<< std::endl;
+    std::cout << v2 << std::endl;
+    std::cout << "output v2:"<< std::endl;
+    v2 = v1;
+    std::cout << v2 << std::endl;
 
     return 0;
 }
