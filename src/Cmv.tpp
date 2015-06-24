@@ -149,7 +149,7 @@ Vector_hpc<T>& Vector_hpc<T>::operator=(const Vector_hpc & m)
 }
 
 template <typename T>
-Vector_hpc<T> operator+(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2)
+friend Vector_hpc<T> operator+(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2)
 {
     Vector_hpc<T> c(c1.dim_);
 
@@ -161,7 +161,7 @@ Vector_hpc<T> operator+(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2)
 }
 
 template <typename T>
-Vector_hpc<T> operator+(const Vector_hpc<T> &c1, T num)
+friend Vector_hpc<T> operator+(const Vector_hpc<T> &c1, T num)
 {
     Vector_hpc<T> c(c1.dim_);
 
@@ -173,7 +173,7 @@ Vector_hpc<T> operator+(const Vector_hpc<T> &c1, T num)
 }
 
 template <typename T>
-Vector_hpc<T> operator+(double num, const Vector_hpc<T> &c1)
+friend Vector_hpc<T> operator+(double num, const Vector_hpc<T> &c1)
 {
     Vector_hpc<T> c(c1.dim_);
 
