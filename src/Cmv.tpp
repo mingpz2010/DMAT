@@ -23,7 +23,7 @@
 using namespace std;
 
 template <typename T>
-Vector_hpc::Vector_hpc(integer_t n) : p_(new T[n]), dim_(n)
+Vector_hpc<T>::Vector_hpc(integer_t n) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL) {
         cerr << "Error: NULL pointer in Vector_double(int) constructor " << endl;
@@ -33,7 +33,7 @@ Vector_hpc::Vector_hpc(integer_t n) : p_(new T[n]), dim_(n)
 }
 
 template <typename T>
-Vector_hpc::Vector_hpc(integer_t n, const T& v) :
+Vector_hpc<T>::Vector_hpc(integer_t n, const T& v) :
         p_(new T[n]), dim_(n)
 {
     if (p_ == NULL)
@@ -47,7 +47,7 @@ Vector_hpc::Vector_hpc(integer_t n, const T& v) :
 }
 
 template <typename T>
-Vector_hpc::Vector_hpc(T* d, integer_t n) : p_(new T[n]),
+Vector_hpc<T>::Vector_hpc(T* d, integer_t n) : p_(new T[n]),
       dim_(n)
 {
     if (p_ == NULL)
@@ -61,7 +61,7 @@ Vector_hpc::Vector_hpc(T* d, integer_t n) : p_(new T[n]),
 }
 
 template <typename T>
-Vector_hpc::Vector_hpc(const T* d, integer_t n) : p_(new T[n]),
+Vector_hpc<T>::Vector_hpc(const T* d, integer_t n) : p_(new T[n]),
       dim_(n)
 {
     if (p_ == NULL)
@@ -75,7 +75,7 @@ Vector_hpc::Vector_hpc(const T* d, integer_t n) : p_(new T[n]),
 }
 
 template <typename T>
-Vector_hpc::Vector_hpc(const Vector_hpc & m) : p_(new T[m.dim_]),
+Vector_hpc<T>::Vector_hpc(const Vector_hpc & m) : p_(new T[m.dim_]),
     dim_(m.dim_)
 {
     if (p_ == NULL)
@@ -91,13 +91,13 @@ Vector_hpc::Vector_hpc(const Vector_hpc & m) : p_(new T[m.dim_]),
 }
 
 template <typename T>
-Vector_hpc::~Vector_hpc()
+Vector_hpc<T>::~Vector_hpc()
 {
     if (p_) delete [] p_;
 }
 
 template <typename T>
-Vector_hpc& Vector_hpc::newsize(integer_t n)
+Vector_hpc& Vector_hpc<T>::newsize(integer_t n)
 {
     if (dim_ != n )                     // only delete and new if
     {                                   // the size of memory is really
@@ -115,7 +115,7 @@ Vector_hpc& Vector_hpc::newsize(integer_t n)
 }
 
 template <typename T>
-Vector_hpc& Vector_hpc::operator=(const T & m)
+Vector_hpc& Vector_hpc<T>::operator=(const T & m)
 {
     // unroll loops to depth of length 4
     integer_t N = size();
@@ -136,7 +136,7 @@ Vector_hpc& Vector_hpc::operator=(const T & m)
 }
 
 template <typename T>
-Vector_hpc& Vector_hpc::operator=(const Vector_hpc & m)
+Vector_hpc& Vector_hpc<T>::operator=(const Vector_hpc & m)
 {
 
     integer_t N = m.dim_;
@@ -152,7 +152,7 @@ Vector_hpc& Vector_hpc::operator=(const Vector_hpc & m)
 }
 
 template <typename T>
-Vector_hpc operator+(const Vector_hpc &c1, const Vector_hpc &c2)
+Vector_hpc<T> operator+(const Vector_hpc &c1, const Vector_hpc &c2)
 {
     Vector_hpc c(c1.dim_);
 
@@ -164,7 +164,7 @@ Vector_hpc operator+(const Vector_hpc &c1, const Vector_hpc &c2)
 }
 
 template <typename T>
-Vector_hpc operator+(const Vector_hpc &c1, T num)
+Vector_hpc<T> operator+(const Vector_hpc &c1, T num)
 {
     Vector_hpc c(c1.dim_);
 
@@ -176,7 +176,7 @@ Vector_hpc operator+(const Vector_hpc &c1, T num)
 }
 
 template <typename T>
-Vector_hpc operator+(double num, const Vector_hpc &c1)
+Vector_hpc<T> operator+(double num, const Vector_hpc &c1)
 {
     Vector_hpc c(c1.dim_);
 
@@ -188,7 +188,7 @@ Vector_hpc operator+(double num, const Vector_hpc &c1)
 }
 
 template <typename T>
-void Vector_hpc::add(const Vector_hpc &c1)
+void Vector_hpc<T>::add(const Vector_hpc &c1)
 {
     if (dim_ <= 0 || dim_ != c1.dim_) {
         return;
@@ -200,7 +200,7 @@ void Vector_hpc::add(const Vector_hpc &c1)
 }
 
 template <typename T>
-void Vector_hpc::add(T *m)
+void Vector_hpc<T>::add(T *m)
 {
     if (dim_ <= 0) {
         return;
@@ -212,7 +212,7 @@ void Vector_hpc::add(T *m)
 }
 
 template <typename T>
-void Vector_hpc::sub(const Vector_hpc &c1)
+void Vector_hpc<T>::sub(const Vector_hpc &c1)
 {
     if (dim_ <= 0 || dim_ != c1.dim_) {
         return;
@@ -224,7 +224,7 @@ void Vector_hpc::sub(const Vector_hpc &c1)
 }
 
 template <typename T>
-void Vector_hpc::sub(T *m)
+void Vector_hpc<T>::sub(T *m)
 {
     if (dim_ <= 0) {
         return;
@@ -236,7 +236,7 @@ void Vector_hpc::sub(T *m)
 }
 
 template <typename T>
-void Vector_hpc::mul(T num)
+void Vector_hpc<T>::mul(T num)
 {
     if (dim_ <= 0 )  return;
 
@@ -248,7 +248,7 @@ void Vector_hpc::mul(T num)
 }
 
 template <typename T>
-void Vector_hpc::div(T num)
+void Vector_hpc<T>::div(T num)
 {
     if (dim_ <= 0 )  return;
 
@@ -265,7 +265,7 @@ void Vector_hpc::div(T num)
 }
 
 template <typename T>
-T Vector_hpc::max()
+T Vector_hpc<T>::max()
 {
     if (dim_ <= 0) { return 0.; }
     if (dim_ == 1) { return p_[0]; }
@@ -280,7 +280,7 @@ T Vector_hpc::max()
 }
 
 template <typename T>
-T Vector_hpc::min()
+T Vector_hpc<T>::min()
 {
     if (dim_ <= 0) { return 0.; }
     if (dim_ == 1) { return p_[0]; }
@@ -295,7 +295,7 @@ T Vector_hpc::min()
 }
 
 template <typename T>
-double Vector_hpc::mean()
+double Vector_hpc<T>::mean()
 {
     if (dim_ <= 0)  return 0.;
 
@@ -309,7 +309,7 @@ double Vector_hpc::mean()
 }
 
 template <typename T>
-void Vector_hpc::copyFortran(int ref, T *from, INTEGER dim)
+void Vector_hpc<T>::copyFortran(int ref, T *from, INTEGER dim)
 {
     ref_ = ref;
 
@@ -333,18 +333,5 @@ ostream& operator<<(ostream& s, const Vector_hpc& V)
         s << V(i) << endl;
 
     return s;
-}
-
-Face_current::Face_current(integer_t dim1, integer_t dim2, integer_t dim3, integer_t dim4)
-                    : Vector_double(dim1*dim2*dim3*dim4)
-{
-    dim1_ = dim1;
-    dim2_ = dim2;
-    dim3_ = dim3;
-    dim4_ = dim4;
-    dim_ = dim1*dim2*dim3*dim4;
-    w1 = dim2_*dim3_*dim4_;
-    w2 = dim3_*dim4_;
-    w3 = dim4_;
 }
 

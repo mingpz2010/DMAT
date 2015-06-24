@@ -16,7 +16,20 @@
 	with this program; if not, write to the Free Software Foundation, Inc.,
 	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+#include <iostream>
+#include <cstdio>
+#include "../src/Cmv.h"
 
+#define TRACE_PRINT(fmt, args...) do { \
+                fprintf(stderr, "DEBUG: %s:%d:%s(): " fmt, \
+                __FILE__, __LINE__, __func__, ##args); \
+            } while(0)
 
+int main(int argc, char *argv[])
+{
+    TRACE_PRINT("start to test Vector_hpc class and Matrix_hpc class!\n");
+
+    return 0;
+}
 
 
