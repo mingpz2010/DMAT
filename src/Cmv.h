@@ -97,9 +97,9 @@ class Vector_hpc
         void sub(T *);
         void mul(T num);
         void div(T num);
-        double max();
-        double min();
-        double mean();
+        T max();
+        T min();
+        T mean();
 
         // something related to Fortran
         void copyFortran(int ref, T *, INTEGER dim);

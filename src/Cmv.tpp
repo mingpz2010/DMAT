@@ -151,9 +151,9 @@ Vector_hpc& Vector_hpc<T>::operator=(const Vector_hpc & m)
 }
 
 template <typename T>
-Vector_hpc<T> operator+(const Vector_hpc &c1, const Vector_hpc &c2)
+Vector_hpc<T> operator+(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2)
 {
-    Vector_hpc c(c1.dim_);
+    Vector_hpc<T> c(c1.dim_);
 
     for (integer_t i=0; i < c1.dim_; i++) {
         c[i] = c1[i] + c2[i];
@@ -294,7 +294,7 @@ T Vector_hpc<T>::min()
 }
 
 template <typename T>
-double Vector_hpc<T>::mean()
+T Vector_hpc<T>::mean()
 {
     if (dim_ <= 0)  return 0.;
 
