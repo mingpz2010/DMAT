@@ -100,9 +100,9 @@ class Vector_hpc
         /*::::::::::::::*/
         Vector_hpc<T> & operator=(const Vector_hpc<T>&);
         Vector_hpc<T> & operator=(const T&);
-        friend Vector_hpc<T> operator+(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2);
-        friend Vector_hpc<T> operator+(const Vector_hpc<T> &c1, T num);
-        friend Vector_hpc<T> operator+(T num, const Vector_hpc<T> &c1);
+        friend Vector_hpc<T> operator+ <>(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2);
+        friend Vector_hpc<T> operator+ <>(const Vector_hpc<T> &c1, T num);
+        friend Vector_hpc<T> operator+ <>(T num, const Vector_hpc<T> &c1);
 
         // common functions
         void add(const Vector_hpc<T> &c1);
@@ -118,7 +118,7 @@ class Vector_hpc
         // something related to Fortran
         void copyFortran(int ref, T *, INTEGER dim);
 
-        friend std::ostream& operator<<(std::ostream &s, const Vector_hpc<T> &A);
+        friend std::ostream& operator<< <>(std::ostream &s, const Vector_hpc<T> &A);
 };
 
 #include "Cmv.tpp"
