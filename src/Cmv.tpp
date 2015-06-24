@@ -18,7 +18,6 @@
 
 #include <iostream>
 #include <fstream>
-#include "Cmv.h"
 
 using namespace std;
 
@@ -325,7 +324,7 @@ void Vector_hpc<T>::copyFortran(int ref, T *from, INTEGER dim)
 }
 
 template <typename T>
-ostream& operator<<(ostream& s, const Vector_hpc& V)
+ostream& operator<<(ostream& s, const Vector_hpc<T>& V)
 {
     integer_t N = V.size();
 
