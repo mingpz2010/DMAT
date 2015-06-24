@@ -1,8 +1,20 @@
 /*
- * Cmv.h
- *
- *  Created on: 2015.6.11
- *      Author: PingzhouMing
+    <Cmv.h: Basic abstract data type for DMAT project.>
+    Copyright (C) <2014-2020>  <PingzhouMing>
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
 #ifndef CMV_H_
@@ -94,56 +106,6 @@ class Vector_hpc
 
         friend std::ostream& operator<<(std::ostream &s, const Vector_hpc &A);
 };
-
-class Face_current : public Vector_double
-{
-protected:
-    integer_t dim1_;
-    integer_t dim2_;
-    integer_t dim3_;
-    integer_t dim4_;
-    integer_t w1, w2, w3;
-public:
-    Face_current() : Vector_double() { dim1_ = dim2_ = dim3_ = dim4_ = 0; }
-    Face_current(integer_t dim1, integer_t dim2, integer_t dim3, integer_t dim4);
-    inline const double& Face_current::operator() (integer_t dim1, integer_t dim2,
-            integer_t dim3, integer_t dim4) const {
-        return p_[dim1*w1+dim2*w2+dim3*w3+dim4];
-    }
-    inline double& Face_current::operator() (integer_t dim1, integer_t dim2,
-            integer_t dim3, integer_t dim4) {
-        return p_[dim1*w1+dim2*w2+dim3*w3+dim4];
-    }
-    ~Face_current();
-};
-
-class Dimensional_scal : public Vector_double
-{
-protected:
-    integer_t dim1_;
-    integer_t dim2_;
-    integer_t dim3_;
-    integer_t w1, w2;
-public:
-    Dimensional_scal() : Vector_double() { dim1_= dim2_ = dim3_ = 0; }
-    Dimensional_scal(integer_t dim1, integer_t dim2, integer_t dim3);
-    inline const double& Dimensional_scal::operator() (integer_t dim1, integer_t dim2,
-            integer_t dim3) const {
-        return p_[dim1*w1+dim2*w2+dim3];
-    }
-    inline double& Dimensional_scal::operator() (integer_t dim1, integer_t dim2,
-            integer_t dim3) {
-        return p_[dim1*w1+dim2*w2+dim3];
-    }
-    ~Dimensional_scal();
-
-    // common functions
-    double maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim3);
-
-    // something related to Fortran
-    void copyFortran(int ref, REAL8 *, INTEGER dim1, INTEGER dim2, INTEGER dim3);
-};
-
 
 #endif /* CMV_H_ */
 

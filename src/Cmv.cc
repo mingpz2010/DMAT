@@ -1,9 +1,21 @@
 /*
- * Cmv.cc
- *
- *  Created on: 2015.6.11
- *      Author: PingzhouMing
+    Copyright (C) <2014-2020>  <PingzhouMing>
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 2 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+
 #include <iostream>
 #include <fstream>
 #include "Cmv.h"
@@ -247,7 +259,7 @@ void Vector_hpc::div(T num)
 
     integer_t i;
 
-    for (i=0; i<dim; i++) {
+    for (i=0; i<dim_; i++) {
         p_[i] /= num;
     }
 }
@@ -261,7 +273,7 @@ T Vector_hpc::max()
     T ans;
     integer_t i;
     ans = p_[0];
-    for (i=1; i<dim; i++) {
+    for (i=1; i<dim_; i++) {
         if( ans < p_[i]) ans = p_[i];
     }
     return ans;
@@ -276,7 +288,7 @@ T Vector_hpc::min()
     T ans;
     integer_t i;
     ans = p_[0];
-    for (i=1; i<dim; i++) {
+    for (i=1; i<dim_; i++) {
         if( ans > p_[i]) ans = p_[i];
     }
     return ans;
@@ -289,7 +301,7 @@ double Vector_hpc::mean()
 
     T ans;
     integer_t i;
-    for ( ans = 0., i=0; i<dim; i++) {
+    for ( ans = 0., i=0; i<dim_; i++) {
         ans += p_[i];
     }
 
@@ -334,64 +346,5 @@ Face_current::Face_current(integer_t dim1, integer_t dim2, integer_t dim3, integ
     w1 = dim2_*dim3_*dim4_;
     w2 = dim3_*dim4_;
     w3 = dim4_;
-}
-
-Dimensional_scal::Dimensional_scal(integer_t dim1, integer_t dim2, integer_t dim3)
-                    : Vector_double(dim1*dim2*dim3)
-{
-    dim1_ = dim1;
-    dim2_ = dim2;
-    dim3_ = dim3;
-    dim_ = dim1*dim2*dim3;
-    w1 = dim2*dim3;
-    w2 = dim3;
-
-    p_ = new double[dim_];
-}
-
-double Dimensional_scal::maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim3)
-{
-    if (dim_ <= 0) {
-        dim1 = dim2 = dim3 = -1;
-        return 0.;
-    }
-    if (dim_ == 1) {
-        dim1 = dim2 = dim3 = 0;
-        return p_[0];
-    }
-
-    integer_t i,j,k;
-    integer_t index;
-    double ans;
-
-    ans = 0.;
-    for (i=0; i<dim1_; i++) {
-        index = i*w1;
-        for (j=0; j<dim2_; j++) {
-            index += j*w2;
-            for (k=0; k<dim3_; k++) {
-                index += k;
-                if (ans < p_[index] ) {
-                    ans = p_[index];
-                    dim1 = i; dim2 = j; dim3 = k;
-                }
-            }
-        }
-    }
-
-    return ans;
-}
-
-void Dimensional_scal::copyFortran(int ref, REAL8 *from, INTEGER dim1,
-        INTEGER dim2, INTEGER dim3)
-{
-    dim1_ = dim1;
-    dim2_ = dim2;
-    dim3_ = dim3;
-    dim_ = dim1*dim2*dim3;
-    w1 = dim2*dim3;
-    w2 = dim3;
-
-    Vector_double::copyFortran(ref, from, dim1*dim2*dim3);
 }
 
