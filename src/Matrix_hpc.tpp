@@ -74,7 +74,7 @@ Matrix_hpc<T>::Matrix_hpc<T> & operator=(const Matrix_hpc<T>& M)
 }
 
 template <typename T>
-Matrix_hpc<T>::Matrix_hpc<T> & operator=(const T& x)
+Matrix_hpc<T>::Matrix_hpc<T> & operator=(const T& m)
 {
     // unroll loops to depth of length 8
     integer_t N = size();
