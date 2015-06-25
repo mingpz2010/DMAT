@@ -68,7 +68,7 @@ Matrix_hpc<T>& Matrix_hpc<T>::newsize(integer_t m, integer_t n)
 template <typename T>
 Matrix_hpc<T>& Matrix_hpc<T>::operator=(const Matrix_hpc<T>& M)
 {
-    integer_t N = m.size();
+    integer_t N = M.size();
     integer_t i;
 
     if (&M == this) {
@@ -77,7 +77,7 @@ Matrix_hpc<T>& Matrix_hpc<T>::operator=(const Matrix_hpc<T>& M)
 
     // no need to test for overlap, since this region is new
     for (i =0; i< N; i++)       // careful not to use bcopy()
-        Vector_hpc<T>::p_[i] = m.Vector_hpc<T>::p_[i];        // here, but double::operator= double.
+        Vector_hpc<T>::p_[i] = M.Vector_hpc<T>::p_[i];        // here, but double::operator= double.
 
     return *this;
 }
