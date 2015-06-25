@@ -17,8 +17,10 @@
  */
 
 template <typename T>
-Matrix_hpc<T>::Matrix_hpc() : Vector_hpc()
+Matrix_hpc<T>::Matrix_hpc()
 {
+    Vector_hpc<T>::p_ = NULL;
+    Vector_hpc<T>::dim_ = 0;
 	dim1_ = dim2_ = 0;
 }
 
