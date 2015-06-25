@@ -25,7 +25,7 @@
 // From the <More C++ Idioms> wiki book
 // Declare friend function
 template<typename T> class Matrix_hpc;
-template<typename T> std::ostream& operator<<(std::ostream &s, const Vector_hpc<T> &M);
+template<typename T> std::ostream& operator<<(std::ostream &s, const Matrix_hpc<T> &M);
 
 template <typename T>
 class Matrix_hpc : public Vector_hpc<T>
