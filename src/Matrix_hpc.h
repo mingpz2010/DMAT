@@ -39,7 +39,7 @@ class Matrix_hpc : public Vector_hpc<T>
         inline T& operator()(integer_t m, integer_t n) {
             return Vector_hpc<T>::p_[m*dim2_ + n];
         }
-        inline const T& operator()(integer_t m, integer_t n) {
+        inline const T& operator()(integer_t m, integer_t n) const {
             return Vector_hpc<T>::p_[m*dim2_ + n];
         }
 

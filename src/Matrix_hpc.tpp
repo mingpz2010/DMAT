@@ -68,7 +68,7 @@ Matrix_hpc<T>& Matrix_hpc<T>::newsize(integer_t m, integer_t n)
 template <typename T>
 Matrix_hpc<T>& Matrix_hpc<T>::operator=(const Matrix_hpc<T>& M)
 {
-    integer_t N = m.dim_;
+    integer_t N = m.size();
     integer_t i;
 
     if (&M == this) {
@@ -77,7 +77,7 @@ Matrix_hpc<T>& Matrix_hpc<T>::operator=(const Matrix_hpc<T>& M)
 
     // no need to test for overlap, since this region is new
     for (i =0; i< N; i++)       // careful not to use bcopy()
-        p_[i] = m.p_[i];        // here, but double::operator= double.
+        Vector_hpc<T>::p_[i] = m.Vector_hpc<T>::p_[i];        // here, but double::operator= double.
 
     return *this;
 }
@@ -92,17 +92,17 @@ Matrix_hpc<T>& Matrix_hpc<T>::operator=(const T& m)
 
     for (i=0; i<Nminus8; )
     {
-        p_[i++] = m;
-        p_[i++] = m;
-        p_[i++] = m;
-        p_[i++] = m;
-        p_[i++] = m;
-        p_[i++] = m;
-        p_[i++] = m;
-        p_[i++] = m;
+        Vector_hpc<T>::p_[i++] = m;
+        Vector_hpc<T>::p_[i++] = m;
+        Vector_hpc<T>::p_[i++] = m;
+        Vector_hpc<T>::p_[i++] = m;
+        Vector_hpc<T>::p_[i++] = m;
+        Vector_hpc<T>::p_[i++] = m;
+        Vector_hpc<T>::p_[i++] = m;
+        Vector_hpc<T>::p_[i++] = m;
     }
 
-    for (; i<N; p_[i++] = m);   // finish off last piece...
+    for (; i<N; Vector_hpc<T>::p_[i++] = m);   // finish off last piece...
 
     return *this;
 }
