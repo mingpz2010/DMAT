@@ -42,16 +42,16 @@ Matrix_hpc<T>::Matrix_hpc<T> & newsize(integer_t m, integer_t n)
     if (m<0 || n<0) {
         return;
     }
-    if (p_) delete [] p_;
+    if (Vector_hpc<T>::p_) delete [] Vector_hpc<T>::p_;
     dim1_ = m;
     dim2_ = n;
-    p_ = new T[m*n];
-    if (p_ == NULL)
+    Vector_hpc<T>::p_ = new T[m*n];
+    if (Vector_hpc<T>::p_ == NULL)
     {
     	std::cerr << "Error : NULL pointer in operator= Matrix_hpc newsize" << std::endl;
         exit(-1);
     }
-    dim_ = m*n;
+    Vector_hpc<T>::dim_ = m*n;
 
     return *this;
 }
