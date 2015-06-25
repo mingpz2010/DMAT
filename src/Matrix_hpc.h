@@ -37,10 +37,10 @@ class Matrix_hpc : public Vector_hpc<T>
         Matrix_hpc();
         Matrix_hpc(integer_t, integer_t);
         inline T& operator()(integer_t m, integer_t n) {
-            return p_[m*dim2_ + n];
+            return Vector_hpc<T>::p_[m*dim2_ + n];
         }
         inline const T& operator()(integer_t m, integer_t n) {
-            return p_[m*dim2_ + n];
+            return Vector_hpc<T>::p_[m*dim2_ + n];
         }
 
         inline integer_t size() const { return Vector_hpc<T>::dim_;}
