@@ -46,7 +46,7 @@ Matrix_hpc<T>::Matrix_hpc(integer_t m, integer_t n)
 }
 
 template <typename T>
-Matrix_hpc<T>::Matrix_hpc<T> & newsize(integer_t m, integer_t n)
+Matrix_hpc<T>& Matrix_hpc<T>::newsize(integer_t m, integer_t n)
 {
     if (m<0 || n<0) {
         return;
@@ -66,7 +66,7 @@ Matrix_hpc<T>::Matrix_hpc<T> & newsize(integer_t m, integer_t n)
 }
 
 template <typename T>
-Matrix_hpc<T>::Matrix_hpc<T> & operator=(const Matrix_hpc<T>& M)
+Matrix_hpc<T>& Matrix_hpc<T>::operator=(const Matrix_hpc<T>& M)
 {
     integer_t N = m.dim_;
     integer_t i;
@@ -83,7 +83,7 @@ Matrix_hpc<T>::Matrix_hpc<T> & operator=(const Matrix_hpc<T>& M)
 }
 
 template <typename T>
-Matrix_hpc<T>::Matrix_hpc<T> & operator=(const T& m)
+Matrix_hpc<T>& Matrix_hpc<T>::operator=(const T& m)
 {
     // unroll loops to depth of length 8
     integer_t N = size();
