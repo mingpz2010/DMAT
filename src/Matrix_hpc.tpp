@@ -101,12 +101,14 @@ Matrix_hpc<T>::Matrix_hpc<T> & operator=(const T& m)
 template <typename T>
 void Matrix_hpc<T>::add(const Matrix_hpc<T> &c1)
 {
-    if (dim_ <= 0 || dim_ != c1.dim_) {
+    integer_t dim = size();
+    
+    if (dim <= 0 || dim != c1.size()) {
         return;
     }
 
-    for (integer_t i=0; i<dim_; i++) {
-        p_[i] += c1.p_[i];
+    for (integer_t i=0; i<dim; i++) {
+        Vector_hpc<T>::p_[i] += c1.Vector_hpc<T>::p_[i];
     }
 }
 
