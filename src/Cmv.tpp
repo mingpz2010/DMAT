@@ -320,7 +320,9 @@ std::ostream& operator<<(std::ostream& s, const Vector_hpc<T>& V)
     integer_t N = V.size();
 
     for (integer_t i=0; i< N; i++)
-        s << V(i) << std::endl;
+        s << V(i) << " ";
+    
+    s << std::endl;
 
     return s;
 }

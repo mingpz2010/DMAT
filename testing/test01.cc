@@ -45,6 +45,19 @@ int main(int argc, char *argv[])
     v2 = v1;
     std::cout << v2 << std::endl;
 
+    double ans;
+
+    ans = v1.max();
+    std::cout<< "v1 max : "<< ans << std::endl;
+    ans = v1.mean();
+    std::cout<< "v1 mean : "<< ans << std::endl;
+    ans = v1.min();
+    std::cout<< "v1 min : "<< ans << std::endl;
+    v1.mul(PI);
+    std::cout << v1 << std::endl;
+
+    std::cout << v1+v2 << std::endl;
+
     return 0;
 }
 
