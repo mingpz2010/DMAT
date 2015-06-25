@@ -1,5 +1,5 @@
 /*
-    <test03.cc, testing for c++ language library version.>
+    <test04.cc, testing for c++ language library version.>
     Copyright (C) <2014-2020>  <PingzhouMing>
 
     This program is free software; you can redistribute it and/or modify
@@ -16,26 +16,6 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-#include <iostream>
-#include <cstdio>
-#include "../src/Matrix_hpc.h"
-
-#define PI  3.1415926
-
-#define TRACE_PRINT(fmt, args...) do { \
-                fprintf(stderr, "DEBUG: %s:%d:%s(): " fmt, \
-                __FILE__, __LINE__, __func__, ##args); \
-            } while(0)
-
-int main(int argc, char *argv[])
-{
-    TRACE_PRINT("start to test Matrix_hpc class!\n");
-
-
-    return 0;
-}
-
 
 
 

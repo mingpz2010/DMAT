@@ -16,7 +16,73 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
+#include <iostream>
+#include <cstdio>
+#include <ctime>
+#include "../src/Cmv.h"
 
+#define PI  3.1415926
+
+#define TRACE_PRINT(fmt, args...) do { \
+                fprintf(stderr, "DEBUG: %s:%d:%s(): " fmt, \
+                __FILE__, __LINE__, __func__, ##args); \
+            } while(0)
+
+double now()
+{
+    std::clock_t t = clock();
+
+    return static_cast<double>(t)/CLOCKS_PER_SEC;
+}
+
+void Vector_hpc_benchmark(long size)
+{
+    Vector_hpc<double> v1(size);
+    Vector_hpc<double> v2(size);
+
+    for (int i=0; i<size; i++) {
+        v1(i) = i*PI;
+    }
+    v2 = v1;
+}
+
+void basic_benchmark(long size)
+{
+    double *v1 = new double[size];
+    double *v2 = new double[size];
+
+    for (int i=0; i<size; i++) {
+        v1[i] = i*PI;
+    }
+
+    for (int i=0; i<size; i++) {
+        v2[i] = v1[i];
+    }
+
+    delete[] v2;
+    delete[] v1;
+}
+
+int main(int argc, char *argv[])
+{
+    TRACE_PRINT("start to test Vector_hpc class efficiency!\n");
+
+    double start, end;
+
+    start = now();
+    Vector_hpc_benchmark(10000);
+    end = now();
+
+    TRACE_PRINT("[%d] Vector_hpc<double> run time is %g sec.\n", 10000, end-start);
+
+    start = now();
+    basic_benchmark(10000);
+    end = now();
+
+    TRACE_PRINT("[%d] basic array run time is %g sec.\n", 10000, end-start);
+
+    return 0;
+}
 
 
 

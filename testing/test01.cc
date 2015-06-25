@@ -29,7 +29,7 @@
 
 int main(int argc, char *argv[])
 {
-    TRACE_PRINT("start to test Vector_hpc class and Matrix_hpc class!\n");
+    TRACE_PRINT("start to test Vector_hpc class!\n");
 
     Vector_hpc<double> v1(10);
     Vector_hpc<double> v2(10);
