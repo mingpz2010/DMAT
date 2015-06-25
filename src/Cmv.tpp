@@ -20,7 +20,7 @@ template <typename T>
 Vector_hpc<T>::Vector_hpc(integer_t n) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL) {
-        std::cerr << "Error: NULL pointer in Vector_double(int) constructor " << std::endl;
+        std::cerr << "Error: NULL pointer in Vector_hpc constructor " << std::endl;
         std::cerr << "       Most likely out of memory... " << std::endl;
         exit(-1);
     }
@@ -31,7 +31,7 @@ Vector_hpc<T>::Vector_hpc(integer_t n, const T& v) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL)
     {
-    	std::cerr << "Error: NULL pointer in Marray_1D_double(int) constructor " << std::endl;
+    	std::cerr << "Error: NULL pointer in Vector_hpc constructor " << std::endl;
     	std::cerr << "       Most likely out of memory... " << std::endl;
         exit(-1);
     }
@@ -44,7 +44,7 @@ Vector_hpc<T>::Vector_hpc(T* d, integer_t n) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL)
     {
-    	std::cerr << "Error: Null pointer in Marray_1D_double(double*, int) " << std::endl;
+    	std::cerr << "Error: Null pointer in Vector_hpc(double*, int) " << std::endl;
         exit(1);
     }
     for (integer_t i=0; i<n; i++)
@@ -57,7 +57,7 @@ Vector_hpc<T>::Vector_hpc(const T* d, integer_t n) : p_(new T[n]), dim_(n)
 {
     if (p_ == NULL)
     {
-    	std::cerr << "Error: Null pointer in Marray_1D_double(double*, int) " << std::endl;
+    	std::cerr << "Error: Null pointer in Vector_hpc(double*, int) " << std::endl;
         exit(-1);
     }
     for (integer_t i=0; i<n; i++)
@@ -70,7 +70,7 @@ Vector_hpc<T>::Vector_hpc(const Vector_hpc<T> & m) : p_(new T[m.dim_]), dim_(m.d
 {
     if (p_ == NULL)
     {
-    	std::cerr << "Error:  Null pointer in Marray_1D_double(const Marray_1D_double&); " << std::endl;
+    	std::cerr << "Error:  Null pointer in Vector_hpc(const Marray_1D_double&); " << std::endl;
         exit(-1);
     }
 
@@ -132,7 +132,9 @@ Vector_hpc<T>& Vector_hpc<T>::operator=(const Vector_hpc<T> & m)
     integer_t N = m.dim_;
     integer_t i;
 
-    newsize(N);
+    if (&m == this) {
+    	return *this;
+    }
 
     // no need to test for overlap, since this region is new
     for (i =0; i< N; i++)       // careful not to use bcopy()
@@ -252,6 +254,30 @@ void Vector_hpc<T>::div(T num)
     for (i=0; i<dim_; i++) {
         p_[i] /= num;
     }
+}
+
+
+template <typename T>
+void Vector_hpc<T>::fill(T num)
+{
+    // unroll loops to depth of length 8
+    integer_t N = size();
+    integer_t Nminus8 = N-8;
+    integer_t i;
+
+    for (i=0; i<Nminus8; )
+    {
+        p_[i++] = num;
+        p_[i++] = num;
+        p_[i++] = num;
+        p_[i++] = num;
+        p_[i++] = num;
+        p_[i++] = num;
+        p_[i++] = num;
+        p_[i++] = num;
+    }
+
+    for (; i<N; p_[i++] = num);   // finish off last piece...
 }
 
 template <typename T>

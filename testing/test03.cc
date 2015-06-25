@@ -32,6 +32,25 @@ int main(int argc, char *argv[])
 {
     TRACE_PRINT("start to test Matrix_hpc class!\n");
 
+    Matrix_hpc<double> m1(8, 8);
+    Matrix_hpc<double> m2(8, 8);
+
+    for (int i=0; i<8; i++) {
+        for (int j=0; j<8; j++) {
+            m1(i, j) = (i+j)*PI;
+        }
+    }
+
+    std::cout << "output m1:"<< std::endl;
+    std::cout << m1 << std::endl;
+    std::cout << "output m2:"<< std::endl;
+    std::cout << m2 << std::endl;
+    std::cout << "output m2:"<< std::endl;
+    m2 = m1;
+    std::cout << m2 << std::endl;
+
+    m1.add(m2);
+    std::cout << m1 << std::endl;
 
     return 0;
 }

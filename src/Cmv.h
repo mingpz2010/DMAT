@@ -111,6 +111,7 @@ class Vector_hpc
         void sub(T *);
         void mul(T num);
         void div(T num);
+        void fill(T num);
         T max();
         T min();
         T mean();
