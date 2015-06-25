@@ -26,14 +26,21 @@ template <typename T>
 Matrix_hpc<T>::Matrix_hpc(integer_t m, integer_t n)
 {
 	if (m<=0 || n<=0) {
-	    Vector_hpc();
+	    Vector_hpc<T>::p_ = NULL;
+	    Vector_hpc<T>::dim_ = 0;
 	    dim1_ = dim2_ = 0;
 	    std::cerr << "Error: bad value in Matrix_hpc constructor " << std::endl;
 	    return;
 	}
 	dim1_ = m;
 	dim2_ = n;
-	Vector_hpc<T>(m*n);
+	Vector_hpc<T>::p_ = new T[m*n];
+	Vector_hpc<T>::dim_ = m*n;
+    if (Vector_hpc<T>::p_ == NULL) {
+        std::cerr << "Error: NULL pointer in Matrix_hpc<T> constructor " << std::endl;
+        std::cerr << "       Most likely out of memory... " << std::endl;
+        exit(-1);
+    }
 }
 
 template <typename T>
