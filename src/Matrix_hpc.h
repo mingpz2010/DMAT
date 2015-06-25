@@ -43,12 +43,12 @@ class Matrix_hpc : public Vector_hpc<T>
             return p_[m*dim2_ + n];
         }
 
-        inline integer_t size() const { return dim_;}
-        inline integer_t dim() const { return dim_;}
+        inline integer_t size() const { return Vector_hpc<T>::dim_;}
+        inline integer_t dim() const { return Vector_hpc<T>::dim_;}
         inline integer_t dim1() const { return dim1_;}
         inline integer_t dim2() const { return dim2_;}
-        inline integer_t ref() const { return ref_; }
-        inline int null() const {return dim_== 0;}
+        inline integer_t ref() const { return Vector_hpc<T>::ref_; }
+        inline int null() const {return Vector_hpc<T>::dim_== 0;}
 
         Matrix_hpc<T> & newsize(integer_t, integer_t);
         Matrix_hpc<T> & operator=(const Matrix_hpc<T>&);

@@ -17,7 +17,7 @@
  */
 
 template <typename T>
-Matrix_hpc<T>::Matrix_hpc() : Vector_hpc<T>()
+Matrix_hpc<T>::Matrix_hpc() : Vector_hpc()
 {
 	dim1_ = dim2_ = 0;
 }
@@ -26,7 +26,7 @@ template <typename T>
 Matrix_hpc<T>::Matrix_hpc(integer_t m, integer_t n)
 {
 	if (m<=0 || n<=0) {
-	    Vector_hpc<T>();
+	    Vector_hpc();
 	    dim1_ = dim2_ = 0;
 	    std::cerr << "Error: bad value in Matrix_hpc constructor " << std::endl;
 	    return;
