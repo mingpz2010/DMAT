@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     std::cout<< "v1 mean : "<< ans << std::endl;
     ans = v1.min();
     std::cout<< "v1 min : "<< ans << std::endl;
-    v1.mul(PI);
+    v1.mul(3.14159);
     std::cout << v1 << std::endl;
 
     std::cout << v1+v2 << std::endl;
