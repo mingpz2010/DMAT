@@ -232,7 +232,7 @@ void Vector_hpc<T>::mul(T num)
 
     integer_t i;
 
-    for (i=0; i<dim; i++) {
+    for (i=0; i<dim_; i++) {
         p_[i] *= num;
     }
 }
