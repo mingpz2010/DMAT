@@ -33,7 +33,7 @@ Matrix_hpc<T>::Matrix_hpc(integer_t m, integer_t n)
 	}
 	dim1_ = m;
 	dim2_ = n;
-	Vector_hpc<T>::Vector(m*n);
+	Vector_hpc<T>::Vector_hpc(m*n);
 }
 
 template <typename T>
