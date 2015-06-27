@@ -168,7 +168,7 @@ Vector_hpc<T> operator+(const Vector_hpc<T> &c1, T num)
 }
 
 template <typename T>
-Vector_hpc<T> operator+(double num, const Vector_hpc<T> &c1)
+Vector_hpc<T> operator+(T num, const Vector_hpc<T> &c1)
 {
     Vector_hpc<T> c(c1.dim_);
 

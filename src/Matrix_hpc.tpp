@@ -48,7 +48,7 @@ Matrix_hpc<T>::Matrix_hpc(integer_t m, integer_t n)
 template <typename T>
 Matrix_hpc<T>& Matrix_hpc<T>::newsize(integer_t m, integer_t n)
 {
-    if (m<0 || n<0) {
+    if (m<=0 || n<=0) {
         return;
     }
     if (Vector_hpc<T>::p_) delete [] Vector_hpc<T>::p_;

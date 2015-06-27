@@ -23,7 +23,11 @@
 
 // It derived from Vector_hpc, 3D ADT, used for representing neutron flux
 
-class Flux : public Vector_hpc
+template<typename T> class Flux;
+template<typename T> std::ostream& operator<<(std::ostream &s, const Flux<T> &M);
+
+template <typename T>
+class Flux : public Vector_hpc<T>
 {
 protected:
     integer_t dim1_;
@@ -32,16 +36,25 @@ protected:
     integer_t w1, w2;
 public:
     Flux() : Vector_hpc() { dim1_ = dim2_ = dim3_ = 0; w1 = w2 = 0; }
-    Flux(integer_t dim1, integer_t dim2, integer_t dim3);
-    inline const double& Flux::operator() (integer_t dim1, integer_t dim2,
+    Flux(integer_t, integer_t, integer_t);
+    inline const T& operator() (integer_t dim1, integer_t dim2,
             integer_t dim3) const {
-        return p_[dim1*w1+dim2*w2+dim3];
+        return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3];
     }
-    inline double& Flux::operator() (integer_t dim1, integer_t dim2,
+    inline T& operator() (integer_t dim1, integer_t dim2,
             integer_t dim3) {
-        return p_[dim1*w1+dim2*w2+dim3];
+        return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3];
     }
-    ~Face_current();
+
+    inline integer_t dim1() const { return dim1_; }
+    inline integer_t dim2() const { return dim2_; }
+    inline integer_t dim3() const { return dim3_; }
+
+    Flux<T> & newsize(integer_t, integer_t, integer_t);
+    Flux<T> & operator=(const Flux<T>&);
+    Flux<T> & operator=(const T&);
+
+    friend std::ostream& operator<< <>(std::ostream &s, const Flux<T> &M);
 };
 
 #include "Flux.tpp"
