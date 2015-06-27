@@ -35,7 +35,7 @@ protected:
     integer_t dim3_;
     integer_t w1, w2;
 public:
-    Flux() : Vector_hpc() { dim1_ = dim2_ = dim3_ = 0; w1 = w2 = 0; }
+    Flux() : Vector_hpc<T>() { dim1_ = dim2_ = dim3_ = 0; w1 = w2 = 0; }
     Flux(integer_t, integer_t, integer_t);
     inline const T& operator() (integer_t dim1, integer_t dim2,
             integer_t dim3) const {
@@ -46,6 +46,7 @@ public:
         return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3];
     }
 
+    inline integer_t size() const { return Vector_hpc<T>::dim_;}
     inline integer_t dim1() const { return dim1_; }
     inline integer_t dim2() const { return dim2_; }
     inline integer_t dim3() const { return dim3_; }
