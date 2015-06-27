@@ -19,13 +19,13 @@
 #ifndef STENCIL3D_H_
 #define STENCIL3D_H_
 
-#include "Cmv.h"
+#include "Dimscal.h"
 
 template <typename T>
-typedef void (*stencil3d_func)(T ***, integer_t, integer_t, integer_t);
+typedef void (*stencil3d_func)(Dimscal<T>&, integer_t, integer_t, integer_t);
 
 template <typename T>
-class Stencil3D : public Vector_hpc<T>
+class Stencil3D : public Dimscal<T>
 {
 protected:
     stencil3d_func my_func;

@@ -19,13 +19,13 @@
 #ifndef STENCIL2D_H_
 #define STENCIL2D_H_
 
-#include "Cmv.h"
+#include "Matrix_hpc.h"
 
 template <typename T>
-typedef void (*stencil2d_func)(T **, integer_t, integer_t);
+typedef void (*stencil2d_func)(Matrix_hpc<T>&, integer_t, integer_t);
 
 template <typename T>
-class Stencil2D : public Vector_hpc<T>
+class Stencil2D : public Matrix_hpc<T>
 {
 protected:
     stencil2d_func my_func;
