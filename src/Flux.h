@@ -33,25 +33,27 @@ protected:
     integer_t dim1_;
     integer_t dim2_;
     integer_t dim3_;
-    integer_t w1, w2;
+    integer_t dim4_;
+    integer_t w1, w2, w3;
 public:
-    Flux() : Vector_hpc<T>() { dim1_ = dim2_ = dim3_ = 0; w1 = w2 = 0; }
-    Flux(integer_t, integer_t, integer_t);
+    Flux() : Vector_hpc<T>() { dim1_ = dim2_ = dim3_ = dim4_ = 0; w1 = w2 = w3 = 0; }
+    Flux(integer_t, integer_t, integer_t, integer_t);
     inline const T& operator() (integer_t dim1, integer_t dim2,
-            integer_t dim3) const {
-        return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3];
+            integer_t dim3, integer_t dim4) const {
+        return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3*w3+dim4];
     }
     inline T& operator() (integer_t dim1, integer_t dim2,
-            integer_t dim3) {
-        return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3];
+            integer_t dim3, integer_t dim4) {
+        return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3*w3+dim4];
     }
 
     inline integer_t size() const { return Vector_hpc<T>::dim_;}
     inline integer_t dim1() const { return dim1_; }
     inline integer_t dim2() const { return dim2_; }
     inline integer_t dim3() const { return dim3_; }
+    inline integer_t dim4() const { return dim4_; }
 
-    Flux<T> & newsize(integer_t, integer_t, integer_t);
+    Flux<T> & newsize(integer_t, integer_t, integer_t, integer_t);
     Flux<T> & operator=(const Flux<T>&);
     Flux<T> & operator=(const T&);
 

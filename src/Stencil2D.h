@@ -16,18 +16,22 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef CROSSSECTION_H_
-#define CROSSSECTION_H_
+#ifndef STENCIL2D_H_
+#define STENCIL2D_H_
 
 #include "Cmv.h"
 
-// It derived from Vector_hpc, 2D ADT with { energy group + Temperature }
-template<typename T>
-class CrossSection : public Vector_hpc<T>
-{
+template <typename T>
+typedef void (*stencil2d_func)(T **, integer_t, integer_t);
 
+template <typename T>
+class Stencil2D : public Vector_hpc<T>
+{
+protected:
+    stencil2d_func my_func;
+public:
+    void stencil_reg(stencil2d_func f);
+    void stencil_boundary();
 };
 
-#include "CrossSection.tpp"
-
-#endif /* CROSSSECTION_H_ */
+#endif /* STENCIL2D_H_ */

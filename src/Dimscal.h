@@ -23,6 +23,9 @@
 
 // It derived from Vector_hpc, 3D ADT
 
+template<typename T> class Dimscal;
+template<typename T> std::ostream& operator<<(std::ostream &s, const Dimscal<T> &M);
+
 template <typename T>
 class Dimscal : public Vector_hpc<T>
 {
@@ -33,22 +36,20 @@ protected:
     integer_t w1, w2;
 public:
     Dimscal() : Vector_hpc<T>() { dim1_= dim2_ = dim3_ = 0; w1 = w2 = 0; }
-    Dimscal(integer_t dim1, integer_t dim2, integer_t dim3);
-    inline const double& Dimscal::operator() (integer_t dim1, integer_t dim2,
+    Dimscal(integer_t, integer_t, integer_t);
+    inline const T& operator() (integer_t dim1, integer_t dim2,
             integer_t dim3) const {
-        return p_[dim1*w1+dim2*w2+dim3];
+        return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3];
     }
-    inline double& Dimscal::operator() (integer_t dim1, integer_t dim2,
+    inline T& operator() (integer_t dim1, integer_t dim2,
             integer_t dim3) {
-        return p_[dim1*w1+dim2*w2+dim3];
+        return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3];
     }
-    ~Dimscal() {}
 
     // common functions
-    double maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim3);
+    T maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim3);
 
-    // something related to Fortran
-    void copyFortran(int ref, T *, INTEGER dim1, INTEGER dim2, INTEGER dim3);
+    friend std::ostream& operator<< <>(std::ostream &s, const Dimscal<T> &M);
 };
 
 #include "Dimscal.tpp"

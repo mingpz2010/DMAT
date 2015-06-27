@@ -57,69 +57,69 @@ template<typename T> std::ostream& operator<<(std::ostream &s, const Vector_hpc<
 template <typename T>
 class Vector_hpc
 {
-    protected:
-        T *p_;
-        integer_t dim_;
-        int ref_;           // 0: own memory space; 1: point to another memory space
-    public:
-        /*::::::::::::::::::::::::::*/
-        /* Constructors/Destructors */
-        /*::::::::::::::::::::::::::*/
-        Vector_hpc() { p_ = NULL; dim_ = 0; ref_ = 0; }
-        Vector_hpc(integer_t);
-        Vector_hpc(integer_t, const T&);
-        Vector_hpc(T*, integer_t);
-        Vector_hpc(const T*, integer_t);
-        Vector_hpc(const Vector_hpc &);
-        ~Vector_hpc();
-        /*::::::::::::::::::::::::::::::::*/
-        /*  Indices and access operations */
-        /*::::::::::::::::::::::::::::::::*/
-        T& operator()(integer_t i) {
-            return p_[i];
-        }
-        const T& operator()(integer_t i) const {
-            return p_[i];
-        }
-        T& operator[](integer_t i) {
-            return p_[i];
-        }
-        const T& operator[](integer_t i) const {
-            return p_[i];
-        }
+protected:
+    T *p_;
+    integer_t dim_;
+    int ref_;           // 0: own memory space; 1: point to another memory space
+public:
+    /*::::::::::::::::::::::::::*/
+    /* Constructors/Destructors */
+    /*::::::::::::::::::::::::::*/
+    Vector_hpc() { p_ = NULL; dim_ = 0; ref_ = 0; }
+    Vector_hpc(integer_t);
+    Vector_hpc(integer_t, const T&);
+    Vector_hpc(T*, integer_t);
+    Vector_hpc(const T*, integer_t);
+    Vector_hpc(const Vector_hpc &);
+    ~Vector_hpc();
+    /*::::::::::::::::::::::::::::::::*/
+    /*  Indices and access operations */
+    /*::::::::::::::::::::::::::::::::*/
+    T& operator()(integer_t i) {
+        return p_[i];
+    }
+    const T& operator()(integer_t i) const {
+        return p_[i];
+    }
+    T& operator[](integer_t i) {
+        return p_[i];
+    }
+    const T& operator[](integer_t i) const {
+        return p_[i];
+    }
 
-        inline integer_t size() const { return dim_;}
-        inline integer_t dim() const { return dim_;}
-        inline integer_t ref() const { return ref_; }
-        inline int null() const {return dim_== 0;}
-        //
-        // Create a new *uninitalized* vector of size N
-        Vector_hpc<T> & newsize(integer_t);
-        /*::::::::::::::*/
-        /*  Assignment  */
-        /*::::::::::::::*/
-        Vector_hpc<T> & operator=(const Vector_hpc<T>&);
-        Vector_hpc<T> & operator=(const T&);
-        friend Vector_hpc<T> operator+ <>(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2);
-        friend Vector_hpc<T> operator+ <>(const Vector_hpc<T> &c1, T num);
-        friend Vector_hpc<T> operator+ <>(T num, const Vector_hpc<T> &c1);
+    inline integer_t size() const { return dim_;}
+    inline integer_t dim() const { return dim_;}
+    inline integer_t ref() const { return ref_; }
+    inline int null() const {return dim_== 0;}
+    //
+    // Create a new *uninitalized* vector of size N
+    Vector_hpc<T> & newsize(integer_t);
+    /*::::::::::::::*/
+    /*  Assignment  */
+    /*::::::::::::::*/
+    Vector_hpc<T> & operator=(const Vector_hpc<T>&);
+    Vector_hpc<T> & operator=(const T&);
+    friend Vector_hpc<T> operator+ <>(const Vector_hpc<T> &c1, const Vector_hpc<T> &c2);
+    friend Vector_hpc<T> operator+ <>(const Vector_hpc<T> &c1, T num);
+    friend Vector_hpc<T> operator+ <>(T num, const Vector_hpc<T> &c1);
 
-        // common functions
-        void add(const Vector_hpc<T> &c1);
-        void add(T *);
-        void sub(const Vector_hpc<T> &c1);
-        void sub(T *);
-        void mul(T num);
-        void div(T num);
-        void fill(T num);
-        T max();
-        T min();
-        T mean();
+    // common functions
+    void add(const Vector_hpc<T> &c1);
+    void add(T *);
+    void sub(const Vector_hpc<T> &c1);
+    void sub(T *);
+    void mul(T num);
+    void div(T num);
+    void fill(T num);
+    T max();
+    T min();
+    T mean();
 
-        // something related to Fortran
-        void copyFortran(int ref, T *, INTEGER dim);
+    // something related to Fortran
+    void copyFortran(int ref, T *, INTEGER dim);
 
-        friend std::ostream& operator<< <>(std::ostream &s, const Vector_hpc<T> &A);
+    friend std::ostream& operator<< <>(std::ostream &s, const Vector_hpc<T> &A);
 };
 
 #include "Cmv.tpp"

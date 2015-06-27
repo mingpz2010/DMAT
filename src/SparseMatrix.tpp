@@ -16,18 +16,6 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef CROSSSECTION_H_
-#define CROSSSECTION_H_
 
-#include "Cmv.h"
 
-// It derived from Vector_hpc, 2D ADT with { energy group + Temperature }
-template<typename T>
-class CrossSection : public Vector_hpc<T>
-{
 
-};
-
-#include "CrossSection.tpp"
-
-#endif /* CROSSSECTION_H_ */

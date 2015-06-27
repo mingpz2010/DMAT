@@ -19,6 +19,7 @@
 template <typename T>
 Matrix_hpc<T>::Matrix_hpc()
 {
+    type = 0;
     Vector_hpc<T>::p_ = NULL;
     Vector_hpc<T>::dim_ = 0;
 	dim1_ = dim2_ = 0;
@@ -34,10 +35,37 @@ Matrix_hpc<T>::Matrix_hpc(integer_t m, integer_t n)
 	    std::cerr << "Error: bad value in Matrix_hpc constructor " << std::endl;
 	    return;
 	}
+	type = 0;
 	dim1_ = m;
 	dim2_ = n;
 	Vector_hpc<T>::p_ = new T[m*n];
 	Vector_hpc<T>::dim_ = m*n;
+    if (Vector_hpc<T>::p_ == NULL) {
+        std::cerr << "Error: NULL pointer in Matrix_hpc<T> constructor " << std::endl;
+        std::cerr << "       Most likely out of memory... " << std::endl;
+        exit(-1);
+    }
+}
+
+template <typename T>
+Matrix_hpc<T>::Matrix_hpc(matrix_manner_t type, integer_t m, integer_t n)
+{
+    if (m<=0 || n<=0) {
+        Vector_hpc<T>::p_ = NULL;
+        Vector_hpc<T>::dim_ = 0;
+        dim1_ = dim2_ = 0;
+        std::cerr << "Error: bad value in Matrix_hpc constructor " << std::endl;
+        return;
+    }
+    if (type == ROW_MAJOR) {
+        this->type = 0;
+    } else {
+        this->type = 1;
+    }
+    dim1_ = m;
+    dim2_ = n;
+    Vector_hpc<T>::p_ = new T[m*n];
+    Vector_hpc<T>::dim_ = m*n;
     if (Vector_hpc<T>::p_ == NULL) {
         std::cerr << "Error: NULL pointer in Matrix_hpc<T> constructor " << std::endl;
         std::cerr << "       Most likely out of memory... " << std::endl;

@@ -16,30 +16,40 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Dimscal.h"
-
-Dimensional_scal::Dimensional_scal(integer_t dim1, integer_t dim2, integer_t dim3)
-                    : Vector_double(dim1*dim2*dim3)
+template <typename T>
+Dimscal<T>::Dimscal(integer_t m, integer_t n, integer_t k)
 {
-    dim1_ = dim1;
-    dim2_ = dim2;
-    dim3_ = dim3;
-    dim_ = dim1*dim2*dim3;
-    w1 = dim2*dim3;
-    w2 = dim3;
-
-    p_ = new double[dim_];
+    if (m<=0 || n<=0 || k<=0) {
+        Vector_hpc<T>::p_ = NULL;
+        Vector_hpc<T>::dim_ = 0;
+        dim1_ = dim2_ = dim3_ = 0;
+        std::cerr << "Error: bad value in Dimscal constructor " << std::endl;
+        return;
+    }
+    dim1_ = m;
+    dim2_ = n;
+    dim3_ = k;
+    w1 = n*k;
+    w2 = k;
+    Vector_hpc<T>::p_ = new T[m*n*k];
+    Vector_hpc<T>::dim_ = m*n*k;
+    if (Vector_hpc<T>::p_ == NULL) {
+        std::cerr << "Error: NULL pointer in Dimscal<T> constructor " << std::endl;
+        std::cerr << "       Most likely out of memory... " << std::endl;
+        exit(-1);
+    }
 }
 
-double Dimensional_scal::maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim3)
+template <typename T>
+T Dimscal<T>::maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim3)
 {
-    if (dim_ <= 0) {
+    if (Vector_hpc<T>::dim_ <= 0) {
         dim1 = dim2 = dim3 = -1;
         return 0.;
     }
     if (dim_ == 1) {
         dim1 = dim2 = dim3 = 0;
-        return p_[0];
+        return Vector_hpc<T>::p_[0];
     }
 
     integer_t i,j,k;
@@ -53,8 +63,8 @@ double Dimensional_scal::maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim
             index += j*w2;
             for (k=0; k<dim3_; k++) {
                 index += k;
-                if (ans < p_[index] ) {
-                    ans = p_[index];
+                if (ans < Vector_hpc<T>::p_[index] ) {
+                    ans = Vector_hpc<T>::p_[index];
                     dim1 = i; dim2 = j; dim3 = k;
                 }
             }
@@ -64,11 +74,26 @@ double Dimensional_scal::maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim
     return ans;
 }
 
-void Dimscal::copyFortran(int ref, T *, INTEGER dim1, INTEGER dim2, INTEGER dim3)
+template <typename T>
+std::ostream& operator<<(std::ostream &s, const Dimscal<T> &M)
 {
+    integer_t N = M.size();
+    integer_t i_max = M.dim1();
+    integer_t j_max = M.dim2();
+    integer_t k_max = M.dim3();
 
+    for (integer_t i=0; i< i_max; i++) {
+        for (integer_t j=0; j< j_max; j++) {
+            for (integer_t k=0; k< k_max; k++) {
+                s << M(i, j, k) << std::endl;
+            }
+        }
+    }
+
+    s << std::endl;
+
+    return s;
 }
-
 
 
 

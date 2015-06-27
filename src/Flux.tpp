@@ -17,22 +17,24 @@
  */
 
 template <typename T>
-Flux<T>::Flux(integer_t m, integer_t n, integer_t k)
+Flux<T>::Flux(integer_t m, integer_t n, integer_t k, integer_t d)
 {
-	if (m<=0 || n<=0 || k<=0) {
+	if (m<=0 || n<=0 || k<=0 || d<=0) {
 	    Vector_hpc<T>::p_ = NULL;
 	    Vector_hpc<T>::dim_ = 0;
-	    dim1_ = dim2_ = dim3_ = 0;
+	    dim1_ = dim2_ = dim3_ = dim4_ = 0;
 	    std::cerr << "Error: bad value in Flux constructor " << std::endl;
 	    return;
 	}
 	dim1_ = m;
 	dim2_ = n;
 	dim3_ = k;
-	w1 = n*k;
-	w2 = k;
-	Vector_hpc<T>::p_ = new T[m*n*k];
-	Vector_hpc<T>::dim_ = m*n*k;
+	dim4_ = d;
+	w1 = n*k*d;
+	w2 = k*d;
+	w3 = d;
+	Vector_hpc<T>::p_ = new T[m*n*k*d];
+	Vector_hpc<T>::dim_ = m*n*k*d;
     if (Vector_hpc<T>::p_ == NULL) {
         std::cerr << "Error: NULL pointer in Flux<T> constructor " << std::endl;
         std::cerr << "       Most likely out of memory... " << std::endl;
@@ -41,23 +43,24 @@ Flux<T>::Flux(integer_t m, integer_t n, integer_t k)
 }
 
 template <typename T>
-Flux<T>& Flux<T>::newsize(integer_t m, integer_t n, integer_t k)
+Flux<T>& Flux<T>::newsize(integer_t m, integer_t n, integer_t k, integer_t d)
 {
-    if (m<=0 || n<=0 || k<=0) {
+    if (m<=0 || n<=0 || k<=0 || d<=0) {
         return;
     }
     if (Vector_hpc<T>::p_) delete [] Vector_hpc<T>::p_;
     dim1_ = m;
     dim2_ = n;
     dim3_ = k;
-    w1 = n*k;	w2 = k;
-    Vector_hpc<T>::p_ = new T[m*n*k];
+    dim4_ = d;
+    w1 = n*k*d; w2 = k*d;   w3 = d;
+    Vector_hpc<T>::p_ = new T[m*n*k*d];
     if (Vector_hpc<T>::p_ == NULL)
     {
     	std::cerr << "Error : NULL pointer in operator= Flux newsize" << std::endl;
         exit(-1);
     }
-    Vector_hpc<T>::dim_ = m*n*k;
+    Vector_hpc<T>::dim_ = m*n*k*d;
 
     return *this;
 }
@@ -111,11 +114,14 @@ std::ostream& operator<<(std::ostream &s, const Flux<T> &M)
     integer_t i_max = M.dim1();
     integer_t j_max = M.dim2();
     integer_t k_max = M.dim3();
+    integer_t r_max = M.dim4();
 
     for (integer_t i=0; i< i_max; i++) {
         for (integer_t j=0; j< j_max; j++) {
         	for (integer_t k=0; k< k_max; k++) {
-            	s << M(i, j, k) << std::endl;
+        	    for (integer_t r=0; r< r_max; r++) {
+        	        s << M(i, j, k, r) << std::endl;
+        	    }
             }
         }
     }

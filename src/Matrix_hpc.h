@@ -21,6 +21,11 @@
 
 #include "Cmv.h"
 
+typedef enum Matrix_store_manner {
+    ROW_MAJOR,
+    COL_MAJOR
+}matrix_manner_t;
+
 // " More C++ Idioms/Making New Friends "
 // From the <More C++ Idioms> wiki book
 // Declare friend function
@@ -30,33 +35,43 @@ template<typename T> std::ostream& operator<<(std::ostream &s, const Matrix_hpc<
 template <typename T>
 class Matrix_hpc : public Vector_hpc<T>
 {
-    protected:
-        integer_t dim1_;
-        integer_t dim2_;
-    public:
-        Matrix_hpc();
-        Matrix_hpc(integer_t, integer_t);
-        inline T& operator()(integer_t m, integer_t n) {
+protected:
+    int type;  // 0-ROW_MAJOR, 1-COL_MAJOR
+    integer_t dim1_;
+    integer_t dim2_;
+public:
+    Matrix_hpc();
+    Matrix_hpc(integer_t, integer_t);
+    Matrix_hpc(matrix_manner_t, integer_t, integer_t);
+    inline T& operator()(integer_t m, integer_t n) {
+        if (type == 0) {
             return Vector_hpc<T>::p_[m*dim2_ + n];
+        } else {
+            return Vector_hpc<T>::p_[m + n*dim1_];
         }
-        inline const T& operator()(integer_t m, integer_t n) const {
+    }
+    inline const T& operator()(integer_t m, integer_t n) const {
+        if (type == 0) {
             return Vector_hpc<T>::p_[m*dim2_ + n];
+        } else {
+            return Vector_hpc<T>::p_[m + n*dim1_];
         }
+    }
 
-        inline integer_t size() const { return Vector_hpc<T>::dim_;}
-        inline integer_t dim() const { return Vector_hpc<T>::dim_;}
-        inline integer_t dim1() const { return dim1_;}
-        inline integer_t dim2() const { return dim2_;}
-        inline integer_t ref() const { return Vector_hpc<T>::ref_; }
-        inline int null() const {return Vector_hpc<T>::dim_== 0;}
+    inline integer_t size() const { return Vector_hpc<T>::dim_;}
+    inline integer_t dim() const { return Vector_hpc<T>::dim_;}
+    inline integer_t dim1() const { return dim1_;}
+    inline integer_t dim2() const { return dim2_;}
+    inline integer_t ref() const { return Vector_hpc<T>::ref_; }
+    inline int null() const {return Vector_hpc<T>::dim_== 0;}
 
-        Matrix_hpc<T> & newsize(integer_t, integer_t);
-        Matrix_hpc<T> & operator=(const Matrix_hpc<T>&);
-        Matrix_hpc<T> & operator=(const T&);
+    Matrix_hpc<T> & newsize(integer_t, integer_t);
+    Matrix_hpc<T> & operator=(const Matrix_hpc<T>&);
+    Matrix_hpc<T> & operator=(const T&);
 
-        void add(const Matrix_hpc<T> &c1);
+    void add(const Matrix_hpc<T> &c1);
 
-        friend std::ostream& operator<< <>(std::ostream &s, const Matrix_hpc<T> &M);
+    friend std::ostream& operator<< <>(std::ostream &s, const Matrix_hpc<T> &M);
 };
 
 #include "Matrix_hpc.tpp"
