@@ -70,13 +70,13 @@ int main(int argc, char *argv[])
     double start, end;
 
     start = now();
-    Vector_hpc_benchmark(1000000);
+    Vector_hpc_benchmark(10000000);
     end = now();
 
     TRACE_PRINT("[%d] Vector_hpc<double> run time is %.6lf sec.\n", 1000000, end-start);
 
     start = now();
-    basic_benchmark(1000000);
+    basic_benchmark(10000000);
     end = now();
 
     TRACE_PRINT("[%d] basic array run time is %.6lf sec.\n", 1000000, end-start);

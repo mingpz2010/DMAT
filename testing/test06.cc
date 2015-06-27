@@ -101,13 +101,13 @@ int main(int argc, char *argv[])
     double start, end;
 
     start = now();
-    Flux_benchmark(100);
+    Flux_benchmark(400);
     end = now();
 
     TRACE_PRINT("[%d] Flux<double> run time is %.6lf sec.\n", 100, end-start);
 
     start = now();
-    basic_benchmark(100);
+    basic_benchmark(400);
     end = now();
 
     TRACE_PRINT("[%d] basic array[][][] run time is %.6lf sec.\n", 100, end-start);

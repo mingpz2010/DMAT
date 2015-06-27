@@ -83,13 +83,13 @@ int main(int argc, char *argv[])
     double start, end;
 
     start = now();
-    Matrix_hpc_benchmark(1000);
+    Matrix_hpc_benchmark(4000);
     end = now();
 
     TRACE_PRINT("[%d] Matrix_hpc<double> run time is %.6lf sec.\n", 1000, end-start);
 
     start = now();
-    basic_benchmark(1000);
+    basic_benchmark(4000);
     end = now();
 
     TRACE_PRINT("[%d] basic array[][] run time is %.6lf sec.\n", 1000, end-start);
