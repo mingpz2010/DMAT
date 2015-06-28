@@ -19,7 +19,7 @@
 #ifndef DENSEMATRIX_H_
 #define DENSEMATRIX_H_
 
-
+#include "Matrix_hpc.h"
 
 
 

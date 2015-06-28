@@ -22,16 +22,25 @@
 #include "Matrix_hpc.h"
 
 template <typename T>
-typedef void (*stencil2d_func)(Matrix_hpc<T>&, integer_t, integer_t);
+typedef void (*stencil2d_func)(Matrix_hpc<T>&);
 
 template <typename T>
-class Stencil2D : public Matrix_hpc<T>
+class Stencil2D
 {
 protected:
+    Matrix_hpc<T> m;
     stencil2d_func my_func;
 public:
-    void stencil_reg(stencil2d_func f);
-    void stencil_boundary();
+    Stencil2D();
+    Stencil2D(integer_t, integer_t);
+    Stencil2D(stencil2d_func, integer_t, integer_t);
+
+    void stencil_reg(stencil2d_func);
+    void boundary(stencil2d_func);
+
+    void run();
 };
+
+#include "Stencil2D.tpp"
 
 #endif /* STENCIL2D_H_ */

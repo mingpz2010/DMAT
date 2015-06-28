@@ -16,31 +16,52 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef STENCIL3D_H_
-#define STENCIL3D_H_
-
-#include "Dimscal.h"
-
 template <typename T>
-typedef void (*stencil3d_func)(Dimscal<T>&);
-
-template <typename T>
-class Stencil3D
+Stencil2D<T>::Stencil2D()
 {
-protected:
-    Dimscal<T> m;
-    stencil3d_func my_func;
-public:
-    Stencil3D();
-    Stencil3D(integer_t, integer_t, integer_t);
-    Stencil3D(stencil3d_func, integer_t, integer_t, integer_t);
+    my_func = NULL;
+}
 
-    void stencil_reg(stencil3d_func f);
-    void boundary(stencil3d_func);
+template <typename T>
+Stencil2D<T>::Stencil2D(integer_t n, integer_t k)
+{
+    m.newsize(n, k);
+    my_func = NULL;
+}
 
-    void run();
-};
+template <typename T>
+Stencil2D<T>::Stencil2D(stencil2d_func f, integer_t n, integer_t k)
+{
+    m.newsize(n, k);
+    my_func = f;
+}
 
-#include "Stencil3D.tpp"
+template <typename T>
+void Stencil2D<T>::stencil_reg(stencil2d_func f)
+{
+    my_func = f;
+}
 
-#endif /* STENCIL3D_H_ */
+template <typename T>
+void Stencil2D<T>::boundary(stencil2d_func f)
+{
+    if (m.dim() != 0) {
+        f(m);
+    }
+}
+
+template <typename T>
+void Stencil2D<T>::run()
+{
+    if (my_func == NULL) {
+        std::cerr << "Error: Stencil2D run has no stencil regedit! " << std::endl;
+        return;
+    }
+
+    if (m.dim() != 0) {
+        my_func(m);
+    }
+}
+
+
+
