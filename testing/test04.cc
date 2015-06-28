@@ -22,7 +22,7 @@
 #include <ctime>
 #include "../src/Matrix_hpc.h"
 
-#define SIZE    2000
+#define SIZE    4000
 #define PI  3.1415926
 
 #define TRACE_PRINT(fmt, args...) do { \

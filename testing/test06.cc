@@ -56,8 +56,8 @@ void Flux_benchmark(long size)
 
 void basic_benchmark(long size)
 {
-    double[][][][] v1 = new double[size][size][size][size];
-    double[][][][] v2 = new double[size][size][size][size];
+    double**** v1 = new double[size][size][size][size];
+    double**** v2 = new double[size][size][size][size];
 
     for (int i=0; i<size; i++) {
         for (int j=0; j<size; j++) {
@@ -79,7 +79,8 @@ void basic_benchmark(long size)
         }
     }
 
-
+    delete[] v2;
+    delete[] v1;
 }
 
 int main(int argc, char *argv[])
