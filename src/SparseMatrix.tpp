@@ -158,7 +158,7 @@ SparseMatrix<T>::SparseMatrix(Matrix_hpc<T>& M)
 template <typename T>
 SparseMatrix<T>::SparseMatrix(sparsematrix_manner_t type, Matrix_hpc<T>& M)
 {
-    this->init(type, M);
+    this->init(type, M);  // M ---> const M, read-only
 }
 
 template <typename T>
