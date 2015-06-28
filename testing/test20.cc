@@ -1,5 +1,4 @@
 /*
-    <test07.cc, testing for c++ language library version.>
     Copyright (C) <2014-2020>  <PingzhouMing>
 
     This program is free software; you can redistribute it and/or modify
@@ -29,9 +28,8 @@
 
 int main(int argc, char *argv[])
 {
-    TRACE_PRINT("start to test Dimscal class!\n");
+    TRACE_PRINT("start to integrated example 2!\n");
 
     return 0;
 }
-
 

@@ -17,6 +17,21 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+#include <iostream>
+#include <cstdio>
 
+#define PI  3.1415926
+
+#define TRACE_PRINT(fmt, args...) do { \
+                fprintf(stderr, "DEBUG: %s:%d:%s(): " fmt, \
+                __FILE__, __LINE__, __func__, ##args); \
+            } while(0)
+
+int main(int argc, char *argv[])
+{
+    TRACE_PRINT("start to test Dimscal class efficiency!\n");
+
+    return 0;
+}
 
 

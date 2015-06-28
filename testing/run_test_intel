@@ -1,0 +1,40 @@
+#!/bin/sh
+CPP=icpc
+FLAGS=-O2
+
+echo "start to run testing based on GNU compiler g++"
+
+echo "***********************************************"
+echo "*                                             *"
+echo "*                                             *"
+echo "*   (1)    check compile success?             *"
+echo "*                                             *"
+echo "*                                             *"
+echo "***********************************************"
+rm -rf *.exe
+INDEX=1
+for file in test01.cc test02.cc test03.cc test04.cc test05.cc test06.cc 
+    test07.cc test08.cc test09.cc test10.cc test11.cc test12.cc
+    test13.cc test14.cc test15.cc test16.cc test17.cc test18.cc
+    test19.cc test20.cc
+do
+    echo "$file compile"
+    $CPP $FLAGS $file -o "test${INDEX}.exe"
+    if [ -f "test${INDEX}.exe" ]; then
+        echo "$file compile failure"
+    else
+        echo "$file compile success"
+    fi
+    echo ""
+    echo ""
+done
+
+
+
+echo "***********************************************"
+echo "*                                             *"
+echo "*                                             *"
+echo "*   (2)    check run success?                 *"
+echo "*                                             *"
+echo "*                                             *"
+echo "***********************************************"
