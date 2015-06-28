@@ -40,5 +40,29 @@ echo "*   (2)    check run success?                 *"
 echo "*                                             *"
 echo "*                                             *"
 echo "***********************************************"
-
+INDEX=1
+OUT=0
+echo "start to run every testing program!"
+for file in test01.cc test02.cc test03.cc test04.cc test05.cc test06.cc \
+    test07.cc test08.cc test09.cc test10.cc test11.cc test12.cc \
+    test13.cc test14.cc test15.cc test16.cc test17.cc test18.cc \
+    test19.cc test20.cc
+do
+    echo "test${INDEX}.exe run and check correctness"
+    if [ -e "./test${INDEX}.exe" ]; then
+        `./test${INDEX}.exe`
+        OUT=$?
+        if [ $OUT -eq 0 ];then
+   	        echo "run success!"
+        else
+            echo "run fail!"
+        fi
+    else
+        echo "$file compile failure, there is no executable!"
+    fi
+    INDEX=`expr "${INDEX}" + "1" `
+    echo "INDEX=${INDEX}"
+    echo ""
+    echo ""
+done
 
