@@ -1,0 +1,21 @@
+#!/bin/sh
+rm -f CMakeCache.txt
+
+/home/mingpz/Downloads/cmake-2.8.12/my_install/bin/cmake \
+  -DCMAKE_VERBOSE_MAKEFILE=ON \
+  -DMPI_BASE_DIR:PATH=/home/mingpz/Downloads/openmpi-1.6.2/my_install \
+  -DMPI_C_COMPILER:FILEPATH="/home/mingpz/Downloads/openmpi-1.6.2/my_install/bin/mpicc" \
+  -DMPI_CXX_COMPILER:FILEPATH="/home/mingpz/Downloads/openmpi-1.6.2/my_install/bin/mpicxx" \
+  -DMPI_Fortran_COMPILER:FILEPATH="/home/mingpz/Downloads/openmpi-1.6.2/my_install/bin/mpif77" \
+  -DCMAKE_C_FLAGS:STRING="-I/home/mingpz/Downloads/openmpi-1.6.2/my_install/include" \
+  -DCMAKE_CXX_FLAGS:STRING="-I/home/mingpz/Downloads/openmpi-1.6.2/my_install/include" \
+  -DTrilinos_EXTRA_LINK_FLAGS="-L/home/mingpz/Downloads/openmpi-1.6.2/my_install/lib -lmpi -lopen-rte -lopen-pal -ldl -lgfortran" \
+  -DTPL_ENABLE_MPI:BOOL=ON \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DBLAS_LIBRARY_DIRS=/home/mingpz/Downloads/BLAS \
+  -DLAPACK_LIBRARY_DIRS=/home/mingpz/Downloads/lapack-3.5.0/my_install/lib \
+  -DCMAKE_INSTALL_PREFIX=/home/mingpz/DMAT/trunk/lib/my_install_minium \
+  -DTrilinos_ENABLE_ALL_PACKAGES=OFF \
+  -DTrilinos_ENABLE_Epetra=ON \
+  -DTrilinos_ENABLE_TESTS:BOOL=ON \
+  /home/mingpz/Downloads/trilinos-11.12.1-Source
