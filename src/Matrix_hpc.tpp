@@ -165,11 +165,11 @@ std::ostream& operator<<(std::ostream &s, const Matrix_hpc<T> &M)
     s << "\nNumber of Cols = " << j_max << std::endl;
     s << std::endl;
     s.width(10);
-    s << "  Row Index ";
+    s << "    Row Index ";
     s.width(10);
-    s << "  Col Index ";
+    s << "    Col Index ";
     s.width(20);
-    s << "  Value";
+    s << "    Value";
     s << std::endl;
 
     for (integer_t i=0; i< i_max; i++) {
