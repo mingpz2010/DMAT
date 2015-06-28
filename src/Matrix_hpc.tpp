@@ -23,6 +23,7 @@ Matrix_hpc<T>::Matrix_hpc()
     Vector_hpc<T>::p_ = NULL;
     Vector_hpc<T>::dim_ = 0;
 	dim1_ = dim2_ = 0;
+	nonzeroes = 0;
 }
 
 template <typename T>
@@ -45,6 +46,7 @@ Matrix_hpc<T>::Matrix_hpc(integer_t m, integer_t n)
         std::cerr << "       Most likely out of memory... " << std::endl;
         exit(-1);
     }
+    nonzeroes = 0;
 }
 
 template <typename T>
@@ -71,6 +73,7 @@ Matrix_hpc<T>::Matrix_hpc(matrix_manner_t type, integer_t m, integer_t n)
         std::cerr << "       Most likely out of memory... " << std::endl;
         exit(-1);
     }
+    nonzeroes = 0;
 }
 
 template <typename T>
@@ -89,6 +92,7 @@ Matrix_hpc<T>& Matrix_hpc<T>::newsize(integer_t m, integer_t n)
         exit(-1);
     }
     Vector_hpc<T>::dim_ = m*n;
+    nonzeroes = 0;
 
     return *this;
 }
@@ -106,6 +110,7 @@ Matrix_hpc<T>& Matrix_hpc<T>::operator=(const Matrix_hpc<T>& M)
     // no need to test for overlap, since this region is new
     for (i =0; i< N; i++)       // careful not to use bcopy()
         Vector_hpc<T>::p_[i] = M.Vector_hpc<T>::p_[i];        // here, but double::operator= double.
+    nonzeroes = M.nonzeroes;
 
     return *this;
 }
@@ -156,9 +161,26 @@ std::ostream& operator<<(std::ostream &s, const Matrix_hpc<T> &M)
     integer_t i_max = M.dim1();
     integer_t j_max = M.dim2();
 
+    s << "\nNumber of Rows = " << i_max << std::endl;
+    s << "\nNumber of Cols = " << j_max << std::endl;
+    s << std::endl;
+    s.width(10);
+    s << "  Row Index ";
+    s.width(10);
+    s << "  Col Index ";
+    s.width(20);
+    s << "  Value";
+    s << std::endl;
+
     for (integer_t i=0; i< i_max; i++) {
         for (integer_t j=0; j< j_max; j++) {
-            s << M(i, j) << " ";
+            s.width(10);
+            s << i <<"    ";
+            s.width(10);
+            s << j <<"    ";
+            s.width(20);
+            s << M(i,j);
+            s << std::endl;;
         }
     }
     

@@ -31,13 +31,15 @@ int main(int argc, char *argv[])
 {
     TRACE_PRINT("start to test Flux class!\n");
 
-    Flux<double> m1(2, 2, 10);
-    Flux<double> m2(2, 2, 10);
+    Flux<double> m1(2, 2, 2, 10);
+    Flux<double> m2(2, 2, 2, 10);
 
     for (int i=0; i<2; i++) {
         for (int j=0; j<2; j++) {
-            for (int k=0; k<10; k++) {
-                m1(i, j, k) = (i+j+k)*PI;
+            for (int k=0; k<2; k++) {
+                for (int r=0; r<10; r++) {
+                    m1(i, j, k, r) = (i+j+k+r)*PI;
+                }
             }
         }
     }

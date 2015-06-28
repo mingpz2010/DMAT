@@ -36,9 +36,10 @@ template <typename T>
 class Matrix_hpc : public Vector_hpc<T>
 {
 protected:
-    int type;  // 0-ROW_MAJOR, 1-COL_MAJOR
+    int type;  // 0-ROW_MAJOR, default, 1-COL_MAJOR
     integer_t dim1_;
     integer_t dim2_;
+    integer_t nonzeroes;
 public:
     Matrix_hpc();
     Matrix_hpc(integer_t, integer_t);
@@ -64,6 +65,7 @@ public:
     inline integer_t dim2() const { return dim2_;}
     inline integer_t ref() const { return Vector_hpc<T>::ref_; }
     inline int null() const {return Vector_hpc<T>::dim_== 0;}
+    inline void set_nonzero(integer_t n) { nonzeroes = n; }
 
     Matrix_hpc<T> & newsize(integer_t, integer_t);
     Matrix_hpc<T> & operator=(const Matrix_hpc<T>&);

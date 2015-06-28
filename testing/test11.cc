@@ -16,20 +16,5 @@
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef DENSEMATRIX_H_
-#define DENSEMATRIX_H_
 
-#include "Matrix_hpc.h"
 
-template <typename T>
-class DenseMatrix : public Matrix_hpc<T>
-{
-public:
-    DenseMatrix();
-    DenseMatrix(integer_t, integer_t);
-    DenseMatrix(matrix_manner_t, integer_t, integer_t);
-};
-
-#include "DenseMatrix.tpp"
-
-#endif /* DENSEMATRIX_H_ */
