@@ -17,7 +17,7 @@
  */
 
 template <typename T>
-void SparseMatrix<T>::init(sparsematrix_manner_t type, const Matrix_hpc<T>& M)
+void SparseMatrix<T>::init(sparsematrix_manner_t type, Matrix_hpc<T>& M)
 {
     integer_t i_max = M.dim1();
     integer_t j_max = M.dim2();
@@ -193,7 +193,7 @@ SparseMatrix<T>& SparseMatrix<T>::operator=(const Matrix_hpc<T>& M)
         delete[] right_val;
     }
 
-    this->init(0, M);
+    this->init(CRS_MANNER, M);
 
     return *this;
 }
