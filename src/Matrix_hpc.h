@@ -44,6 +44,7 @@ public:
     Matrix_hpc();
     Matrix_hpc(integer_t, integer_t);
     Matrix_hpc(matrix_manner_t, integer_t, integer_t);
+    ~Matrix_hpc();
     inline T& operator()(integer_t m, integer_t n) {
         if (type == 0) {
             return Vector_hpc<T>::p_[m*dim2_ + n];
@@ -65,6 +66,11 @@ public:
     inline integer_t dim2() const { return dim2_;}
     inline integer_t ref() const { return Vector_hpc<T>::ref_; }
     inline int null() const {return Vector_hpc<T>::dim_== 0;}
+    inline void zero() {
+        for (integer_t i=0; i<Vector_hpc<T>::dim_; i++) {
+            Vector_hpc<T>::p_[i] = 0;
+        }
+    }
     inline void set_nonzero(integer_t n) { nonzeroes = n; }
 
     Matrix_hpc<T> & newsize(integer_t, integer_t);

@@ -17,47 +17,18 @@
  */
 
 template <typename T>
-SparseMatrix<T>::SparseMatrix(Matrix_hpc<T>& M)
-{
-    integer_t i_max = M.dim1();
-    integer_t j_max = M.dim2();
-    // default is CSR manner
-    type = 0;
-    nonzeroes = 0;
-    dim1_ = i_max; dim2_ = j_max;
-    for (integer_t i=0; i<i_max; i++) {
-        for (integer_t j=0; j<j_max; j++) {
-            if (M(i,j) > 0 || M(i,j) < 0) {
-                nonzeroes += 1;
-            }
-        }
-    }
-
-    val = new T[nonzeroes];
-    col_ind = new integer_t[nonzeroes];
-    row_ptr = new integer_t[i_max + 1];
-
-    integer_t k = 0;
-    for (integer_t i=0; i<i_max; i++) {
-        row_ptr[i] = k + 1;
-        for (integer_t j=0; j<j_max; j++) {
-            if (M(i,j) > 0 || M(i,j) < 0) {
-                val[k] = M(i,j);
-                col_ind[k] = j + 1;
-                ++k;
-            }
-        }
-    }
-    row_ptr[i_max] = nonzeroes + 1;
-}
-
-template <typename T>
-SparseMatrix<T>::SparseMatrix(sparsematrix_manner_t type, Matrix_hpc<T>& M)
+void SparseMatrix<T>::init(sparsematrix_manner_t type, const Matrix_hpc<T>& M)
 {
     integer_t i_max = M.dim1();
     integer_t j_max = M.dim2();
 
     nonzeroes = 0;
+
+    if (i_max <=0 || j_max <= 0) {
+        std::cerr << "Error: bad value in SparseMatrix constructor(<0) " << std::endl;
+        exit(-1);
+    }
+
     for (integer_t i=0; i<i_max; i++) {
         for (integer_t j=0; j<j_max; j++) {
             if (M(i,j) > 0 || M(i,j) < 0) {
@@ -67,6 +38,7 @@ SparseMatrix<T>::SparseMatrix(sparsematrix_manner_t type, Matrix_hpc<T>& M)
     }
 
     val = NULL;
+    left_val = right_val = NULL;
     col_ind = row_ptr = row_ind = col_ptr = NULL;
     dim1_ = i_max; dim2_ = j_max;
 
@@ -106,11 +78,124 @@ SparseMatrix<T>::SparseMatrix(sparsematrix_manner_t type, Matrix_hpc<T>& M)
             }
         }
         col_ptr[j_max] = nonzeroes + 1;
-    } else if (type == BCRS_MANNER) {
+    } else if (type == TDS_MANNER) {
         this->type = 2;
+        if (i_max != j_max) {
+            std::cerr << "Error: bad value in SparseMatrix TDS constructor " << std::endl;
+            std::cerr << " Matrix must be square matrix! "<< std::endl;
+            exit(-1);
+        }
+        val = new T[i_max];
+        left_val = new T[i_max];
+        right_val = new T[i_max];
+
+        if (i_max == 1) {
+            val[0] = M(0,0);
+        } else if (i_max == 2) {
+            val[0] = M(0,0); val[1] = M(1,1);
+            left_val[0] = 0; left_val[1] = M(1, 0);
+            right_val[0] = M(0,1); right_val[1] = 0;
+        } else {
+            for (integer_t i=1; i<i_max-1; i++) {
+                val[i] = M(i,i);
+                left_val[i] = M(i, i-1);
+                right_val[i] = M(i, i+1);
+            }
+            val[0] = M(0,0);  val[i_max-1] = M(i_max-1, i_max-1);
+            left_val[0] = 0;  left_val[i_max-1] = M(i_max-1, i_max-2);
+            right_val[0] = M(0, 1);  right_val[i_max-1] = 0;
+        }
     } else {
         this->type = -1;
     }
+}
+
+template <typename T>
+SparseMatrix<T>::SparseMatrix(Matrix_hpc<T>& M)
+{
+    integer_t i_max = M.dim1();
+    integer_t j_max = M.dim2();
+    // default is CSR manner
+    type = 0;
+    nonzeroes = 0;
+    dim1_ = i_max; dim2_ = j_max;
+
+    if (i_max <=0 || j_max <= 0) {
+        std::cerr << "Error: bad value in SparseMatrix constructor(<0) " << std::endl;
+        exit(-1);
+    }
+
+    for (integer_t i=0; i<i_max; i++) {
+        for (integer_t j=0; j<j_max; j++) {
+            if (M(i,j) > 0 || M(i,j) < 0) {
+                nonzeroes += 1;
+            }
+        }
+    }
+
+    val = new T[nonzeroes];
+    left_val = right_val = NULL;
+    col_ind = new integer_t[nonzeroes];
+    row_ptr = new integer_t[i_max + 1];
+
+    integer_t k = 0;
+    for (integer_t i=0; i<i_max; i++) {
+        row_ptr[i] = k + 1;
+        for (integer_t j=0; j<j_max; j++) {
+            if (M(i,j) > 0 || M(i,j) < 0) {
+                val[k] = M(i,j);
+                col_ind[k] = j + 1;
+                ++k;
+            }
+        }
+    }
+    row_ptr[i_max] = nonzeroes + 1;
+
+    row_ind = col_ptr = NULL;
+    left_val = right_val = NULL;
+}
+
+template <typename T>
+SparseMatrix<T>::SparseMatrix(sparsematrix_manner_t type, Matrix_hpc<T>& M)
+{
+    this->init(type, M);
+}
+
+template <typename T>
+SparseMatrix<T>& SparseMatrix<T>::operator=(const Matrix_hpc<T>& M)
+{
+    integer_t i_max = M.dim1();
+    integer_t j_max = M.dim2();
+
+    type = 0;
+    dim1_ = i_max;
+    dim2_ = j_max;
+
+    if (val != NULL) {
+        delete[] val;
+    }
+    if (col_ind != NULL) {
+        delete[] col_ind;
+    }
+    if (row_ptr != NULL) {
+        delete[] row_ptr;
+    }
+    if (row_ind != NULL) {
+        delete[] row_ind;
+    }
+    if (col_ptr != NULL) {
+        delete[] col_ptr;
+    }
+    if (left_val != NULL) {
+        delete[] left_val;
+    }
+    if (right_val != NULL) {
+        delete[] right_val;
+    }
+
+    this->init(0, M);
+
+    return *this;
 }
 
 template <typename T>
@@ -160,6 +245,24 @@ std::ostream& operator<<(std::ostream &s, const SparseMatrix<T> &M)
             s.width(20);
             s << M(k);
             s << std::endl;;
+        }
+    }
+
+    if (M.type_of_sparse() == 2) {
+        for (integer_t k=0; k< i_max; k++) {
+            s.width(10); s << k+1 <<"    ";
+            s.width(10); s << k+1 <<"    ";
+            s.width(20); s << M.val[k]; s << std::endl;
+            if (k>0) {
+                s.width(10); s << k <<"    ";
+                s.width(10); s << k-1 <<"    ";
+                s.width(20); s << M.left_val[k]; s << std::endl;
+            }
+            if (k<i_max-1) {
+                s.width(10); s << k <<"    ";
+                s.width(10); s << k+1 <<"    ";
+                s.width(20); s << M.right_val[k]; s << std::endl;
+            }
         }
     }
 

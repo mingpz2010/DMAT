@@ -41,6 +41,7 @@ Matrix_hpc<T>::Matrix_hpc(integer_t m, integer_t n)
 	dim2_ = n;
 	Vector_hpc<T>::p_ = new T[m*n];
 	Vector_hpc<T>::dim_ = m*n;
+	zero();
     if (Vector_hpc<T>::p_ == NULL) {
         std::cerr << "Error: NULL pointer in Matrix_hpc<T> constructor " << std::endl;
         std::cerr << "       Most likely out of memory... " << std::endl;
@@ -68,12 +69,19 @@ Matrix_hpc<T>::Matrix_hpc(matrix_manner_t type, integer_t m, integer_t n)
     dim2_ = n;
     Vector_hpc<T>::p_ = new T[m*n];
     Vector_hpc<T>::dim_ = m*n;
+    zero();
     if (Vector_hpc<T>::p_ == NULL) {
         std::cerr << "Error: NULL pointer in Matrix_hpc<T> constructor " << std::endl;
         std::cerr << "       Most likely out of memory... " << std::endl;
         exit(-1);
     }
     nonzeroes = 0;
+}
+
+template <typename T>
+Matrix_hpc<T>::¡«Matrix_hpc()
+{
+    std::cout << "Matrix_hpc destructor"<< std::endl;
 }
 
 template <typename T>
@@ -92,6 +100,7 @@ Matrix_hpc<T>& Matrix_hpc<T>::newsize(integer_t m, integer_t n)
         exit(-1);
     }
     Vector_hpc<T>::dim_ = m*n;
+    zero();
     nonzeroes = 0;
 
     return *this;

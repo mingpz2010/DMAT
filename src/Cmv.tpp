@@ -24,6 +24,7 @@ Vector_hpc<T>::Vector_hpc(integer_t n) : p_(new T[n]), dim_(n)
         std::cerr << "       Most likely out of memory... " << std::endl;
         exit(-1);
     }
+    zero();
 }
 
 template <typename T>
@@ -83,6 +84,7 @@ Vector_hpc<T>::Vector_hpc(const Vector_hpc<T> & m) : p_(new T[m.dim_]), dim_(m.d
 template <typename T>
 Vector_hpc<T>::~Vector_hpc()
 {
+    std::cout << "Vector_hpc destructor"<< std::endl;
     if (p_) delete [] p_;
 }
 
@@ -99,6 +101,7 @@ Vector_hpc<T>& Vector_hpc<T>::newsize(integer_t n)
             exit(-1);
         }
         dim_ = n;
+        zero();
     }
 
     return *this;

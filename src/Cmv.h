@@ -92,6 +92,11 @@ public:
     inline integer_t dim() const { return dim_;}
     inline integer_t ref() const { return ref_; }
     inline int null() const {return dim_== 0;}
+    inline void zero() {
+        for (integer_t i=0; i<dim_; i++) {
+            p_[i] = 0;
+        }
+    }
     //
     // Create a new *uninitalized* vector of size N
     Vector_hpc<T> & newsize(integer_t);

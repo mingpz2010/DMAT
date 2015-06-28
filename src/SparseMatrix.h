@@ -22,9 +22,9 @@
 #include "Matrix_hpc.h"
 
 typedef enum Sparse_matrix_store_manner {
-    CRS_MANNER,
-    CCS_MANNER,
-    BCRS_MANNER
+    CRS_MANNER,         // Compressed Row Storage
+    CCS_MANNER,         // Compressed Column Storage
+    TDS_MANNER,         // Three Diagonal Storage, Sparse Matrix must be square matrix
 }sparsematrix_manner_t;
 
 template<typename T> class SparseMatrix;
@@ -33,8 +33,10 @@ template<typename T> std::ostream& operator<<(std::ostream &s, const SparseMatri
 template <typename T>
 class SparseMatrix
 {
+private:
+    void init(sparsematrix_manner_t type, const Matrix_hpc<T>&);
 protected:
-    int type;  // 0-CRS, default, 1-CCS, 2-BCRS
+    int type;  // 0-CRS, default, 1-CCS, 2-CDS
     integer_t dim1_;
     integer_t dim2_;
     integer_t nonzeroes;
@@ -45,11 +47,14 @@ protected:
     // CCS manner
     integer_t *row_ind;
     integer_t *col_ptr;
+    // TDS manner
+    T * left_val;
+    T * right_val;
 public:
     SparseMatrix() {
         type = nonzeroes = 0;
         dim1_ = dim2_ = 0;
-        val = NULL;
+        val = left_val = right_val = NULL;
         col_ind = row_ptr = row_ind = col_ptr = NULL;
     }
     SparseMatrix(Matrix_hpc<T>&);
@@ -70,8 +75,10 @@ public:
     // CCS manner
     inline integer_t row(integer_t k) const { return row_ind[k]; }
     inline integer_t p_col(integer_t k) const { return col_ptr[k]; }
-
     inline int type_of_sparse() const { return type; }
+
+    // In order to unified, CRS manner is stored
+    SparseMatrix<T> & operator=(const Matrix_hpc<T>&);
 
     friend std::ostream& operator<< <>(std::ostream &s, const SparseMatrix<T> &M);
 };

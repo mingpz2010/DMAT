@@ -39,8 +39,18 @@ int main(int argc, char *argv[])
     m1(4,1) = 8; m1(4,3) = 9; m1(4,4) = 9; m1(4,5) = 13;
     m1(5,1) = 4; m1(5,4) = 2; m1(5,5) = -1;
 
+    Matrix_hpc<double> m_diagonal(6, 6);
+    m_diagonal(0,0) = 10; m_diagonal(0,4) = -2;
+    m_diagonal(1,1) = 9; m_diagonal(1,0) = 3; m_diagonal(1,2) = 6;
+    m_diagonal(2,2) = 8; m_diagonal(2,1) = 7; m_diagonal(2,3) = 7;
+    m_diagonal(3,3) = 7; m_diagonal(3,2) = 8; m_diagonal(3,4) = 5;
+    m_diagonal(4,4) = 9; m_diagonal(4,3) = 9; m_diagonal(4,5) = 13;
+    m_diagonal(5,5) = -1; m_diagonal(5,4) = 2;
+
+
     SparseMatrix<double> m2(m1);
     SparseMatrix<double> m3(CCS_MANNER, m1);
+    SparseMatrix<double> m4(TDS_MANNER, m_diagonal);
 
     std::cout << "output m1:"<< std::endl;
     std::cout << m1 << std::endl;
@@ -48,6 +58,16 @@ int main(int argc, char *argv[])
     std::cout << m2 << std::endl;
     std::cout << "output m3:"<< std::endl;
     std::cout << m3 << std::endl;
+    std::cout << "output m4:"<< std::endl;
+    std::cout << m4 << std::endl;
+
+    m2 = m_diagonal;
+    std::cout << "output m2:"<< std::endl;
+    std::cout << m2 << std::endl;
+
+    m3 = m1;
+    std::cout << "output m1:"<< std::endl;
+    std::cout << m1 << std::endl;
 
     return 0;
 }
