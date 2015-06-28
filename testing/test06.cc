@@ -56,8 +56,30 @@ void Flux_benchmark(long size)
 
 void basic_benchmark(long size)
 {
-    double**** v1 = new double[size][size][size][size];
-    double**** v2 = new double[size][size][size][size];
+    double**** v1;
+    double**** v2;
+
+    // Allocate Memory
+    v1 = new double***[size];
+    for (int i = 0; i < size; ++i) {
+        v1[i] = new double**[size];
+        for (int j = 0; j < size; ++j) {
+            v1[i][j] = new double*[size];
+            for (int k = 0; k < size; ++k) {
+                v1[i][j][k] = new double[size];
+            }
+        }
+    }
+    v2 = new double***[size];
+    for (int i = 0; i < size; ++i) {
+        v2[i] = new double**[size];
+        for (int j = 0; j < size; ++j) {
+            v2[i][j] = new double*[size];
+            for (int k = 0; k < size; ++k) {
+                v2[i][j][k] = new double[size];
+            }
+        }
+    }
 
     for (int i=0; i<size; i++) {
         for (int j=0; j<size; j++) {
@@ -68,7 +90,6 @@ void basic_benchmark(long size)
             }
         }
     }
-
     for (int i=0; i<size; i++) {
         for (int j=0; j<size; j++) {
             for (int k=0; k<size; k++) {
@@ -79,7 +100,26 @@ void basic_benchmark(long size)
         }
     }
 
+    // Free Memory
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            for (int k = 0; k < size; ++k) {
+                delete[] v2[i][j][k];
+            }
+            delete[] v2[i][j];
+        }
+        delete[] v2[i];
+    }
     delete[] v2;
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            for (int k = 0; k < size; ++k) {
+                delete[] v1[i][j][k];
+            }
+            delete[] v1[i][j];
+        }
+        delete[] v1[i];
+    }
     delete[] v1;
 }
 
