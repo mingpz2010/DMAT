@@ -84,7 +84,9 @@ Vector_hpc<T>::Vector_hpc(const Vector_hpc<T> & m) : p_(new T[m.dim_]), dim_(m.d
 template <typename T>
 Vector_hpc<T>::~Vector_hpc()
 {
+#ifdef DEBUG
     std::cout << "Vector_hpc destructor"<< std::endl;
+#endif
     if (p_) delete [] p_;
 }
 

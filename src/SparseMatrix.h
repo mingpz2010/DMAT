@@ -34,7 +34,7 @@ template <typename T>
 class SparseMatrix
 {
 private:
-    void init(sparsematrix_manner_t type, Matrix_hpc<T>&);
+    void init(sparsematrix_manner_t type, const Matrix_hpc<T>&);
 protected:
     int type;  // 0-CRS, default, 1-CCS, 2-CDS
     integer_t dim1_;

@@ -81,7 +81,9 @@ Matrix_hpc<T>::Matrix_hpc(matrix_manner_t type, integer_t m, integer_t n)
 template <typename T>
 Matrix_hpc<T>::~Matrix_hpc()
 {
+#ifdef DEBUG
     std::cout << "Matrix_hpc destructor"<< std::endl;
+#endif
 }
 
 template <typename T>
