@@ -21,6 +21,7 @@
 #include <cstdio>
 #include "../src/Matrix_hpc.h"
 
+#define SIZE    8
 #define PI  3.1415926
 
 #define TRACE_PRINT(fmt, args...) do { \
@@ -32,11 +33,11 @@ int main(int argc, char *argv[])
 {
     TRACE_PRINT("start to test Matrix_hpc class!\n");
 
-    Matrix_hpc<double> m1(8, 8);
-    Matrix_hpc<double> m2(8, 8);
+    Matrix_hpc<double> m1(SIZE, SIZE);
+    Matrix_hpc<double> m2(SIZE, SIZE);
 
-    for (int i=0; i<8; i++) {
-        for (int j=0; j<8; j++) {
+    for (int i=0; i<SIZE; i++) {
+        for (int j=0; j<SIZE; j++) {
             m1(i, j) = (i+j)*PI;
         }
     }

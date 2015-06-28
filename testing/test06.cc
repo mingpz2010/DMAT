@@ -22,6 +22,7 @@
 #include <ctime>
 #include "../src/Flux.h"
 
+#define SIZE        10
 #define PI  3.1415926
 
 #define TRACE_PRINT(fmt, args...) do { \
@@ -55,6 +56,29 @@ void Flux_benchmark(long size)
 
 void basic_benchmark(long size)
 {
+    double[][][][] v1 = new double[size][size][size][size];
+    double[][][][] v2 = new double[size][size][size][size];
+
+    for (int i=0; i<size; i++) {
+        for (int j=0; j<size; j++) {
+            for (int k=0; k<size; k++) {
+                for (int r=0; r<size; r++) {
+                    v1[i][j][k][r] = (i+j+k+r)*PI;
+                }
+            }
+        }
+    }
+
+    for (int i=0; i<size; i++) {
+        for (int j=0; j<size; j++) {
+            for (int k=0; k<size; k++) {
+                for (int r=0; r<size; r++) {
+                    v2[i][j][k][r] = v1[i][j][k][r];
+                }
+            }
+        }
+    }
+
 
 }
 
@@ -65,16 +89,16 @@ int main(int argc, char *argv[])
     double start, end;
 
     start = now();
-    Flux_benchmark(10);
+    Flux_benchmark(SIZE);
     end = now();
 
-    TRACE_PRINT("[%d] Flux<double> run time is %.6lf sec.\n", 10, end-start);
+    TRACE_PRINT("[%d] Flux<double> run time is %.6lf sec.\n", SIZE, end-start);
 
     start = now();
-    basic_benchmark(10);
+    basic_benchmark(SIZE);
     end = now();
 
-    TRACE_PRINT("[%d] basic array[][][][] run time is %.6lf sec.\n", 10, end-start);
+    TRACE_PRINT("[%d] basic array[][][][] run time is %.6lf sec.\n", SIZE, end-start);
 
     return 0;
 }

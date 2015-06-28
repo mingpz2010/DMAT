@@ -22,6 +22,7 @@
 #include <ctime>
 #include "../src/Matrix_hpc.h"
 
+#define SIZE    8000
 #define PI  3.1415926
 
 #define TRACE_PRINT(fmt, args...) do { \
@@ -83,16 +84,16 @@ int main(int argc, char *argv[])
     double start, end;
 
     start = now();
-    Matrix_hpc_benchmark(4000);
+    Matrix_hpc_benchmark(SIZE);
     end = now();
 
-    TRACE_PRINT("[%d] Matrix_hpc<double> run time is %.6lf sec.\n", 1000, end-start);
+    TRACE_PRINT("[%d] Matrix_hpc<double> run time is %.6lf sec.\n", SIZE, end-start);
 
     start = now();
-    basic_benchmark(4000);
+    basic_benchmark(SIZE);
     end = now();
 
-    TRACE_PRINT("[%d] basic array[][] run time is %.6lf sec.\n", 1000, end-start);
+    TRACE_PRINT("[%d] basic array[][] run time is %.6lf sec.\n", SIZE, end-start);
 
     return 0;
 }

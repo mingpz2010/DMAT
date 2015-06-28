@@ -20,6 +20,7 @@
 #include <cstdio>
 #include "../src/Flux.h"
 
+#define SIZE    10
 #define PI  3.1415926
 
 #define TRACE_PRINT(fmt, args...) do { \
@@ -31,13 +32,13 @@ int main(int argc, char *argv[])
 {
     TRACE_PRINT("start to test Flux class!\n");
 
-    Flux<double> m1(2, 2, 2, 10);
-    Flux<double> m2(2, 2, 2, 10);
+    Flux<double> m1(2, 2, 2, SIZE);
+    Flux<double> m2(2, 2, 2, SIZE);
 
     for (int i=0; i<2; i++) {
         for (int j=0; j<2; j++) {
             for (int k=0; k<2; k++) {
-                for (int r=0; r<10; r++) {
+                for (int r=0; r<SIZE; r++) {
                     m1(i, j, k, r) = (i+j+k+r)*PI;
                 }
             }

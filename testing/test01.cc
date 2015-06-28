@@ -20,6 +20,7 @@
 #include <cstdio>
 #include "../src/Cmv.h"
 
+#define SIZE    10
 #define PI  3.1415926
 
 #define TRACE_PRINT(fmt, args...) do { \
@@ -31,10 +32,10 @@ int main(int argc, char *argv[])
 {
     TRACE_PRINT("start to test Vector_hpc class!\n");
 
-    Vector_hpc<double> v1(10);
-    Vector_hpc<double> v2(10);
+    Vector_hpc<double> v1(SIZE);
+    Vector_hpc<double> v2(SIZE);
 
-    for (int i=0; i<10; i++) {
+    for (int i=0; i<SIZE; i++) {
         v1(i) = i*PI;
     }
     std::cout << "output v1:"<< std::endl;
