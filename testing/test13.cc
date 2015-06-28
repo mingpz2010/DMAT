@@ -40,14 +40,14 @@ int main(int argc, char *argv[])
     m1(5,1) = 4; m1(5,4) = 2; m1(5,5) = -1;
 
     SparseMatrix<double> m2(m1);
-    SparseMatrix<double> m3(CCS_MANNER, m1);
+    // SparseMatrix<double> m3(CCS_MANNER, m1);
 
     std::cout << "output m1:"<< std::endl;
     std::cout << m1 << std::endl;
     std::cout << "output m2:"<< std::endl;
     std::cout << m2 << std::endl;
-    std::cout << "output m3:"<< std::endl;
-    std::cout << m3 << std::endl;
+    // std::cout << "output m3:"<< std::endl;
+    // std::cout << m3 << std::endl;
 
     return 0;
 }

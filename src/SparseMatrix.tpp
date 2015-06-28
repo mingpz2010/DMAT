@@ -48,7 +48,7 @@ SparseMatrix<T>::SparseMatrix(Matrix_hpc<T>& M)
             }
         }
     }
-    row_ptr[i_max + 1] = nonzeroes + 1;
+    row_ptr[i_max] = nonzeroes + 1;
 }
 
 template <typename T>
@@ -87,7 +87,7 @@ SparseMatrix<T>::SparseMatrix(sparsematrix_manner_t type, Matrix_hpc<T>& M)
                 }
             }
         }
-        row_ptr[i_max + 1] = nonzeroes + 1;
+        row_ptr[i_max] = nonzeroes + 1;
     } else if (type == CCS_MANNER) {
         this->type = 1;
         val = new T[nonzeroes];
@@ -105,7 +105,7 @@ SparseMatrix<T>::SparseMatrix(sparsematrix_manner_t type, Matrix_hpc<T>& M)
                 }
             }
         }
-        col_ptr[j_max + 1] = nonzeroes + 1;
+        col_ptr[j_max] = nonzeroes + 1;
     } else if (type == BCRS_MANNER) {
         this->type = 2;
     } else {
