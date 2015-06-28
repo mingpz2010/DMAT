@@ -1,0 +1,59 @@
+
+**************************************************************************
+Script: checkin-test.py \
+  --eg-git-version-check \
+  --src-dir='/home/mingpz/Downloads/trilinos-11.12.1-Source/cmake/tribits/../..' \
+  --default-builds='MPI_DEBUG,SERIAL_RELEASE' \
+  --extra-repos-file='' \
+  --extra-repos-type='' \
+  --extra-repos='' \
+  --require-extra-repos-exist \
+  --enable-packages='' \
+  --disable-packages='' \
+  --enable-all-packages='auto'\
+  --enable-fwd-packages \
+  --continue-if-no-updates \
+  --continue-if-no-changes-to-push \
+  --continue-if-no-enables \
+  --extra-cmake-options='' \
+  --test-categories='BASIC' \
+  --make-options='' \
+  --ctest-options='' \
+  --ctest-timeout=300 \
+  --no-show-all-tests \
+  --st-extra-builds='' \
+  --extra-builds='' \
+  --send-email-to='' \
+  --skip-case-send-email \
+  --send-email-for-all \
+  --send-email-to-on-push='trilinos-checkin-tests@software.sandia.gov' \
+  --no-force-push \
+  --do-push-readiness-check \
+  --rebase \
+  --append-test-results \
+
+Starting time: 2015年 03月 28日 星期六 17:41:11 CST
+
+**********************************************
+*** Performing checkin testing of Trilinos ***
+**********************************************
+
+scriptsDir = /home/mingpz/Downloads/trilinos-11.12.1-Source/cmake/tribits/python
+
+srcDir = /home/mingpz/Downloads/trilinos-11.12.1-Source/cmake/tribits/../..
+
+baseTestDir = /home/mingpz/Downloads/trilinos-11.12.1-Source
+Warning, the eg command is not in your path! ()
+Setting to default eg in source tree '/home/mingpz/Downloads/trilinos-11.12.1-Source/cmake/tribits/common_tools/git/eg'!
+Traceback (most recent call last):
+  File "./checkin-test.py", line 1341, in main
+    success = runProjectTestsWithCommandLineArgs(cmndLineArgs, configuration)
+  File "./checkin-test.py", line 1215, in runProjectTestsWithCommandLineArgs
+    success = checkinTest(baseDir, options, configuration)
+  File "/home/mingpz/Downloads/trilinos-11.12.1-Source/cmake/tribits/python/CheckinTest.py", line 1834, in checkinTest
+    setupAndAssertEgGitVersions(inOptions)
+  File "/home/mingpz/Downloads/trilinos-11.12.1-Source/cmake/tribits/python/CheckinTest.py", line 232, in setupAndAssertEgGitVersions
+    assertEgGitVersionHelper(egVersionsList[0], "eg version "+g_officialEgVersion)
+  File "/home/mingpz/Downloads/trilinos-11.12.1-Source/cmake/tribits/python/CheckinTest.py", line 215, in assertEgGitVersionHelper
+    +expectedVersion+"!  To turn this check off, pass in --no-eg-git-version-check.")
+Exception: Error, the installed  does not equal the official eg version 1.7.0.4!  To turn this check off, pass in --no-eg-git-version-check.
