@@ -66,7 +66,8 @@ SparseMatrix<T>::SparseMatrix(sparsematrix_manner_t type, Matrix_hpc<T>& M)
         }
     }
 
-    val = col_ind = row_ptr = row_ind = col_ptr = NULL;
+    val = NULL;
+    col_ind = row_ptr = row_ind = col_ptr = NULL;
     dim1_ = i_max; dim2_ = j_max;
 
     if (type == CRS_MANNER) {

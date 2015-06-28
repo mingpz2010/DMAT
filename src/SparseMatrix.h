@@ -49,7 +49,8 @@ public:
     SparseMatrix() {
         type = nonzeroes = 0;
         dim1_ = dim2_ = 0;
-        val = col_ind = row_ptr = row_ind = col_ptr = NULL;
+        val = NULL;
+        col_ind = row_ptr = row_ind = col_ptr = NULL;
     }
     SparseMatrix(Matrix_hpc<T>&);
     SparseMatrix(sparsematrix_manner_t type, Matrix_hpc<T>&);
