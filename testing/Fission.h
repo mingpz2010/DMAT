@@ -58,6 +58,7 @@
 #include <ctime>
 #include <vector>
 #include <fstream>
+#include "unistd.h"
 #include "../src/Matrix_hpc.h"
 
 using namespace std;
