@@ -1535,7 +1535,7 @@ void NeutronTransport3D::start(){
 // Calculates the reaction probabilities using neutron cross-section data evaluated
 // for U235 and U238 for the given kinetic energy.
 //------------------------------------------------------------------------------------------------------------
-void NeutronTransport_Simple::m_getProbabilities(double energy)
+void NeutronTransport3D::m_getProbabilities(double energy)
 {
    //for(int i=0; i<5; i++) m_micro235[i] = m_micro238[i] = 0.0;
 
@@ -1606,7 +1606,7 @@ void NeutronTransport_Simple::m_getProbabilities(double energy)
 //      National Nuclear Data Center (Brookhaven National Lab.)
 //      ENDF Evaluated Nuclear (reaction) Datas File is used.
 //------------------------------------------------------------------------------------------------------------
-void NeutronTransport_Simple::m_getData(void)
+void NeutronTransport3D::m_getData(void)
 {
   ifstream csDataFile ("database/cross-section.data");
 
@@ -1662,7 +1662,7 @@ void NeutronTransport_Simple::m_getData(void)
   cout << "--------------------------------------------------------------------------" << endl << endl;
 }
 
-bool NeutronTransport_Simple::m_isOutside(double xx, double yy, double zz)
+bool NeutronTransport3D::m_isOutside(double xx, double yy, double zz)
 {
     if( (xx>-10 && xx<10.0) && (yy>-10 && yy<10.0) && (zz>-50 && zz<50.0) ) return false;
     return true;
@@ -1671,7 +1671,7 @@ bool NeutronTransport_Simple::m_isOutside(double xx, double yy, double zz)
 //------------------------------------------------------------------------------------------------------------
 // Returns nearest integer of a the double x, 返回离浮点数最近的整数
 //------------------------------------------------------------------------------------------------------------
-int NeutronTransport_Simple::m_nint(double x)
+int NeutronTransport3D::m_nint(double x)
 {
   if( (x - int(x)) >= 0.5) return int(x+1.0);
   else                     return int(x);
@@ -1692,7 +1692,7 @@ int NeutronTransport_Simple::m_nint(double x)
 // Returns a uniform random deviate between 0.0 and 1.0.
 // Based on: Park and Miller's "Minimal Standard" random number generator (Comm. ACM, 31, 1192, 1988)
 //------------------------------------------------------------------------------------------------------------
-double NeutronTransport_Simple::m_randomFlat()
+double NeutronTransport3D::m_randomFlat()
 {
    const  int   im = 2147483647, ia = 16807;
    const  int   iq = 127773,     ir = 2836;
@@ -1715,7 +1715,7 @@ double NeutronTransport_Simple::m_randomFlat()
 // The width of the distribution is sigma and mean is energy dependent.
 // The result Nubar dpends also the nuclei.// 每次裂变产生的中子数目, 服从某种分布
 //------------------------------------------------------------------------------------------------------------
-int NeutronTransport_Simple::m_randomNubar(double energy, bool isU235)
+int NeutronTransport3D::m_randomNubar(double energy, bool isU235)
 {
   double mean, sigma = 1.0;
   double x, y, z;
@@ -1749,7 +1749,7 @@ int NeutronTransport_Simple::m_randomNubar(double energy, bool isU235)
 // This is actually a poission distribution exp(-x/lambda).
 //------------------------------------------------------------------------------------------------------------
 
-double NeutronTransport_Simple::m_randomPathLength(int section)
+double NeutronTransport3D::m_randomPathLength(int section)
 {
    return -m_lambda[section] * log(m_randomFlat());
 }
@@ -1759,7 +1759,7 @@ double NeutronTransport_Simple::m_randomPathLength(int section)
 // The values are taken from a Maxwellian (or Watt) distribution.
 // This distribution is still commonly used to describe the prompt fission neutron spectra.
 //------------------------------------------------------------------------------------------------------------
-double NeutronTransport_Simple::m_randomPromptEnergy()
+double NeutronTransport3D::m_randomPromptEnergy()
 {
   double emin =  0.05;      // minimum value of the kinetic energy in MeV
   double emax = 20.00;      // maximum value of the kinetic energy in MeV
@@ -1785,7 +1785,7 @@ double NeutronTransport_Simple::m_randomPromptEnergy()
 //      elastic : the scattering type (true for elastic and false for in-elastic scattering).
 // Note that aproximated values are used for the calculation.
 //------------------------------------------------------------------------------------------------------------
-double NeutronTransport_Simple::m_randomScatteredEnergy(double Ei, double cosThetaScat, bool elastic)
+double NeutronTransport3D::m_randomScatteredEnergy(double Ei, double cosThetaScat, bool elastic)
 {
     double A = 237.0, Ef, Q;
 
