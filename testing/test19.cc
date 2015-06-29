@@ -42,6 +42,54 @@ double Now()
     return tm;
 }
 
+// Pass n lines
+void File_FilterLine(ifstream &infile, int n)
+{
+    int i;
+    string line;
+
+    if (infile == NULL) {
+        return;
+    }
+
+    for (i=0; i<n; i++) {
+        if (infile.eof()) {
+            break;
+        }
+        getline(infile, line);
+#ifdef _DEBUG
+        cout<<"File filter: "<<line<<endl;
+#endif
+    }
+}
+
+// string to double
+// ENDF data lack of scientific mark e or E
+double S2double(string s)
+{
+    int i, k;
+    double a = 0.0;
+    char buf[128] = {'\0'};
+    char str[128] = {'\0'};
+
+    strcpy(str, s.c_str());
+
+    for (k=0, i=0; i<128; i++, k++) {
+        if (str[k] == '\0') {
+            buf[i] = '\0';
+            break;
+        }
+        if (str[k] == '+' || str[k] == '-') {
+            buf[i++] = 'e';
+        }
+        buf[i] = str[k];
+    }
+
+    a = strtod(buf, NULL);
+
+    return a;
+}
+
 // Basic neutron cross-section class, read data from ENDF file
 // type illustration:
 //  31£¬(n, total)           MF=3 MT=1
@@ -183,54 +231,6 @@ void Nuclear_CrossSection::Print_CrossSection()
     } else {
         (void)0;
     }
-}
-
-// Pass n lines
-void File_FilterLine(ifstream &infile, int n)
-{
-    int i;
-    string line;
-
-    if (infile == NULL) {
-        return;
-    }
-
-    for (i=0; i<n; i++) {
-        if (infile.eof()) {
-            break;
-        }
-        getline(infile, line);
-#ifdef _DEBUG
-        cout<<"File filter: "<<line<<endl;
-#endif
-    }
-}
-
-// string to double
-// ENDF data lack of scientific mark e or E
-double S2double(string s)
-{
-    int i, k;
-    double a = 0.0;
-    char buf[128] = {'\0'};
-    char str[128] = {'\0'};
-
-    strcpy(str, s.c_str());
-
-    for (k=0, i=0; i<128; i++, k++) {
-        if (str[k] == '\0') {
-            buf[i] = '\0';
-            break;
-        }
-        if (str[k] == '+' || str[k] == '-') {
-            buf[i++] = 'e';
-        }
-        buf[i] = str[k];
-    }
-
-    a = strtod(buf, NULL);
-
-    return a;
 }
 
 void Reaction_info()
