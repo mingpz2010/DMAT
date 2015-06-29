@@ -17,6 +17,6 @@ test15        Basic testing for Stencil2D class
 test16        Effiency testing of Stencil2D class
 test17        Basic testing for Stencil3D class
 test18        Effiency testing of Stencil3D class
-test19        Integrated testing example1
-test20        Integrated testing example2
+test19        Integrated testing example1, simplified MC neutron calculation
+test20        Integrated testing example2, using DMAT to optimize test19
 
