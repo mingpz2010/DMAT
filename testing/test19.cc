@@ -242,25 +242,29 @@ void Reaction_info()
     cout<<"Macroscopic cross section : [cm-1] or [m-1] unit"<<endl;
 }
 
+const double low_fuel       =   0.01;
+const double middle_fuel    =   0.01;
+const double rich_fuel      =   0.01;
+
 void MonteCarlo_nt()
 {
     double start, end;
-   int   maxEvent = 10000;  // Maximum number of events (number of neutrons) required (default  1)
-   int     maxGen =   1000;  // Maximum number of generations (defalult 100)
-   double  purity = 0.01;  // Purity of 235 in the medium (default  3%)
-   double  radius;         // Radius of the spherical bulk (default  10 cm)
-   bool    detail = false;  // To print details of each event and generations (default false)
-   int     seed   = 31415;  // A seed to initiate random number generator (default 0)
+    int   maxEvent =  10000;    // Maximum number of events (number of neutrons) required (default  1)
+    int     maxGen =   2000;    // Maximum number of generations (defalult 100)
+    double  purity[ZONE] = {low_fuel, middle_fuel,
+            rich_fuel, middle_fuel, rich_fuel, middle_fuel,
+            rich_fuel, middle_fuel, rich_fuel};  // Purity of 235 in the medium (default  3%)
+    bool    detail = false;     // To print details of each event and generations (default false)
+    int     seed   = 31415;     // A seed to initiate random number generator (default 0)
 
-   radius = 21.0;
-   NeutronTransport nt(maxEvent, maxGen, purity, radius, detail, seed);
+    NeutronTransport3D nt(maxEvent, maxGen, purity, detail, seed);
 
-   start = Now();
-   nt.start();
-   nt.execute();
-   nt.end();
-   end = Now();
-   cout<<"Total run time is "<<end-start<<" sec"<<endl;
+    start = Now();
+    nt.start();
+    nt.run(0);                  // when type=0, run basic programming style, don't use DMAT manner
+    nt.end();
+    end = Now();
+    cout<<"\tTotal run time is \t"<<end-start<<"(s)"<<endl;
 }
 
 int main(int argc, char *argv[])
