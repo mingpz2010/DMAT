@@ -53,6 +53,9 @@ int main(int argc, char *argv[])
     m1.add(m2);
     std::cout << m1 << std::endl;
 
+    m1.newsize(1, 1);
+    std::cout << m1 << std::endl;
+
     return 0;
 }
 
