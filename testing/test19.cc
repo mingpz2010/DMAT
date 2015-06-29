@@ -20,6 +20,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string>
+#include "Fission.h"
 
 #define PI  3.1415926
 
@@ -30,19 +31,29 @@
 
 using namespace std;
 
-// 基本的中子截面类，用于从文件读取截面数据并进行处理，提供计算机用的数据
-// type (用于表示材料的截面类型) :
-//  31，(n, total), MF=3 MT=1, 材料总的微观截面
-//  32，(n, elastic), MF=3 MT=2，材料的微观弹性散射截面
-//  318，(n, fission)，MF=3 MT=18，材料的微观裂变截面
-//  3102，(n, r), MF=3 MT=102，材料的微观r辐射俘获截面
-//  1452, MF=1 MT=452，材料number of neutrons during every fission
-//
+double Now()
+{
+    struct timespec timer;
+    double tm;
+
+    clock_gettime(CLOCK_REALTIME, &timer);
+    tm = timer.tv_sec + timer.tv_nsec*0.000000001;
+
+    return tm;
+}
+
+// Basic neutron cross-section class, read data from ENDF file
+// type illustration:
+//  31，(n, total)           MF=3 MT=1
+//  32，(n, elastic)         MF=3 MT=2
+//  318，(n, fission)        MF=3 MT=18
+//  3102，(n, r)             MF=3 MT=102
+//  1452, MF=1 MT=452       number of neutrons during every fission
 //
 class Nuclear_CrossSection {
 private:
-    int type;  // 截面的类型，按照ENDF的定义，例如type=31代表MF=3,MT=1,代表材料总的微观截面
-    int np;  // 截面数据的个数
+    int type;       // ENDF: type=31 represent MF=3 and MT=1, the total cross-section
+    int np;         // number of cross-section datas
     double *energy;
     double *cross_section;
     void Print_CS3();
@@ -52,10 +63,10 @@ public:
     void Print_CrossSection();
 };
 
-const int CS_NUM_OF_EVERYLINE = 3;  // 每行截面数据有几对有效数据
-const int CS_SIGNIFICANT = 8;       // ENDF中指数形式表达浮点数的底数部分的实际有效位数
+const int CS_NUM_OF_EVERYLINE = 3;  // every line has how many effective datas
+const int CS_SIGNIFICANT = 8;       // ENDF index width of scientific number
 
-// 输入file为输入文件的名字
+// file is the name of CS datas
 Nuclear_CrossSection::Nuclear_CrossSection(int type, string file)
 {
     ifstream infile;
@@ -67,13 +78,13 @@ Nuclear_CrossSection::Nuclear_CrossSection(int type, string file)
     energy = NULL;
     cross_section = NULL;
     infile.open(file.c_str(), ios::in);
-    // 健壮性判断
+    // check the file readable
     if (infile == NULL || infile.peek() == EOF) {
         cout<<"file "<<file<<" is not exist or empty!"<<endl;
         infile.close();
         return;
     }
-    if (type == 31 || type == 32 || type == 318 || type == 3102) { // 微观截面文件的按行读取
+    if (type == 31 || type == 32 || type == 318 || type == 3102) {
         getline(infile, line);
         sscanf(line.c_str(), "%d %d", &n, &tmp);
         np = n;
@@ -85,27 +96,27 @@ Nuclear_CrossSection::Nuclear_CrossSection(int type, string file)
         energy = new double[n];
         cross_section = new double[n];
 
-        line_of_data = (n/CS_NUM_OF_EVERYLINE) + 1;  // 每行三个数据
+        line_of_data = (n/CS_NUM_OF_EVERYLINE) + 1;  // every line has 3 datas
         File_FilterLine(infile, 3);
 
         stringstream ss;
         string pa, pb;
-        // 前面的line_of_data-1行读取, n用作截面对的序号递增
+
         for ( n=0, i=1; i<line_of_data; i++) {
             getline(infile, line);
             ss << line;
             for (k=1; k<=CS_NUM_OF_EVERYLINE; k++) {
-                ss >> pa >> pb;  // 每行依序读取(能量-截面)对
+                ss >> pa >> pb;  // (E, cross-section)
                 energy[n] = S2double(pa);
                 cross_section[n] = S2double(pb);
                 n++;
             }
             ss.clear();
         }
-        // 最后一行的读取需要特殊处理
+        // last line is special
         getline(infile, line);
         ss << line;
-        tmp = np-(line_of_data-1)*CS_NUM_OF_EVERYLINE;  // 最后一行有多少截面对
+        tmp = np-(line_of_data-1)*CS_NUM_OF_EVERYLINE;
 #ifdef _DEBUG
         cout<<"total lines are "<<line_of_data<<" , pairs of last line = "<<tmp<<endl;
 #endif
@@ -139,7 +150,7 @@ Nuclear_CrossSection::~Nuclear_CrossSection()
     }
 }
 
-// 打印MF=3 MT=1的截面数据
+// Print MF=3 and MT=1 cross section data
 void Nuclear_CrossSection::Print_CS3()
 {
     int i;
@@ -174,7 +185,7 @@ void Nuclear_CrossSection::Print_CrossSection()
     }
 }
 
-// 对infile指向的文件，从当前指向位置向后过滤掉n行
+// Pass n lines
 void File_FilterLine(ifstream &infile, int n)
 {
     int i;
@@ -184,7 +195,6 @@ void File_FilterLine(ifstream &infile, int n)
         return;
     }
 
-    // 过滤行的时候，如果过滤行数超过文件尾，则直接到文件尾部
     for (i=0; i<n; i++) {
         if (infile.eof()) {
             break;
@@ -196,10 +206,8 @@ void File_FilterLine(ifstream &infile, int n)
     }
 }
 
-// 用于string字符串转double类型
-// 由于ENDF数据库中数据常为1.003235+7，缺少科学计数法中的e或E
-// 所以本函数先添加e至字符串中，再利用strtod转换为double类型
-// (注：该函数正常使用的前提是输入的字符串s必须是一个ENDF中的double类型)
+// string to double
+// ENDF data lack of scientific mark e or E
 double S2double(string s)
 {
     int i, k;
@@ -209,7 +217,6 @@ double S2double(string s)
 
     strcpy(str, s.c_str());
 
-    // k指标为s字符串，i指标为添加e或E的字符串
     for (k=0, i=0; i<128; i++, k++) {
         if (str[k] == '\0') {
             buf[i] = '\0';
@@ -233,6 +240,27 @@ void Reaction_info()
     cout<<"Macroscopic cross section : [cm-1] or [m-1] unit"<<endl;
 }
 
+void MonteCarlo_nt()
+{
+    double start, end;
+   int   maxEvent = 10000;  // Maximum number of events (number of neutrons) required (default  1)
+   int     maxGen =   1000;  // Maximum number of generations (defalult 100)
+   double  purity = 0.01;  // Purity of 235 in the medium (default  3%)
+   double  radius;         // Radius of the spherical bulk (default  10 cm)
+   bool    detail = false;  // To print details of each event and generations (default false)
+   int     seed   = 31415;  // A seed to initiate random number generator (default 0)
+
+   radius = 21.0;
+   NeutronTransport nt(maxEvent, maxGen, purity, radius, detail, seed);
+
+   start = Now();
+   nt.start();
+   nt.execute();
+   nt.end();
+   end = Now();
+   cout<<"Total run time is "<<end-start<<" sec"<<endl;
+}
+
 int main(int argc, char *argv[])
 {
     TRACE_PRINT("start to integrated example 1!\n");
@@ -243,6 +271,8 @@ int main(int argc, char *argv[])
     // read cross section parameters and print it
     Nuclear_CrossSection U235(3102, "U235_MF3_MT102.txt");
     U235.Print_CrossSection();
+
+    MonteCarlo_nt();
 
     return 0;
 }
