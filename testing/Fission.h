@@ -640,6 +640,7 @@ void NeutronTransport3D::execute_opt(int k)
                 p_start[i] %= m_nMax;
             }
           } // end of event loop *************************************************
+          sleep(1);
       }
 
       for (int i=0; i<ZONE; i++) {
@@ -706,6 +707,7 @@ void NeutronTransport3D::execute(int k)
                 p_start[i] %= m_nMax;
             }
           } // end of event loop *************************************************
+          sleep(1);
       }
 
       for (int i=0; i<ZONE; i++) {
