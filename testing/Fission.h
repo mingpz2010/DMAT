@@ -58,7 +58,7 @@
 #include <ctime>
 #include <vector>
 #include <fstream>
-#include "../"
+#include "../src/Matrix_hpc.h"
 
 using namespace std;
 
