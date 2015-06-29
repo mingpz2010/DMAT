@@ -1164,7 +1164,7 @@ bool NeutronTransport3D::m_isOutside(double xx, double yy, double zz)
 }
 
 //------------------------------------------------------------------------------------------------------------
-// Returns nearest integer of a the double x, 返回离浮点数最近的整数
+// Returns nearest integer of a the double x
 //------------------------------------------------------------------------------------------------------------
 int NeutronTransport3D::m_nint(double x)
 {
@@ -1202,13 +1202,16 @@ double NeutronTransport3D::m_randomFlat()
 
    r = m * (m_randomSeed/128);
 
+   printf("r = %g\n", r);
+   sleep(1);
+
    return r;
 }
 
 //------------------------------------------------------------------------------------------------------------
 // Returns a normally distributed integer number of neutron generated per fission.
 // The width of the distribution is sigma and mean is energy dependent.
-// The result Nubar dpends also the nuclei.// 每次裂变产生的中子数目, 服从某种分布
+// The result Nubar dpends also the nuclei.
 //------------------------------------------------------------------------------------------------------------
 int NeutronTransport3D::m_randomNubar(double energy, bool isU235)
 {
