@@ -620,6 +620,7 @@ void NeutronTransport3D::execute_opt(int k)
              pe_opt(i,j) = m_eThermal;
              j++;
               }
+          sleep(1);
           }
       }
 
@@ -687,6 +688,7 @@ void NeutronTransport3D::execute(int k)
              pe[i][j] = m_eThermal;
              j++;
               }
+          sleep(1);
           }
       }
 
@@ -1202,9 +1204,6 @@ double NeutronTransport3D::m_randomFlat()
    if(m_randomSeed < 0) m_randomSeed += im;
 
    r = m * (m_randomSeed/128);
-
-   printf("r = %g\n", r);
-   sleep(1);
 
    return r;
 }
