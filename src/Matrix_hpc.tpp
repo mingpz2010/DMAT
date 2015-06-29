@@ -90,7 +90,7 @@ template <typename T>
 Matrix_hpc<T>& Matrix_hpc<T>::newsize(integer_t m, integer_t n)
 {
     if (m<=0 || n<=0) {
-        return;
+        return *this;
     }
     if (Vector_hpc<T>::p_) delete [] Vector_hpc<T>::p_;
     dim1_ = m;
