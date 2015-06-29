@@ -620,7 +620,6 @@ void NeutronTransport3D::execute_opt(int k)
              pe_opt(i,j) = m_eThermal;
              j++;
               }
-          sleep(1);
           }
       }
 
@@ -641,6 +640,7 @@ void NeutronTransport3D::execute_opt(int k)
             }
           } // end of event loop *************************************************
           sleep(1);
+          printf("%g\n", m_randomFlat());
       }
 
       for (int i=0; i<ZONE; i++) {
@@ -689,7 +689,6 @@ void NeutronTransport3D::execute(int k)
              pe[i][j] = m_eThermal;
              j++;
               }
-          sleep(1);
           }
       }
 
@@ -708,6 +707,7 @@ void NeutronTransport3D::execute(int k)
             }
           } // end of event loop *************************************************
           sleep(1);
+          printf("%g\n", m_randomFlat());
       }
 
       for (int i=0; i<ZONE; i++) {
