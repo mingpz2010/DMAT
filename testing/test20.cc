@@ -269,7 +269,7 @@ void MonteCarlo_nt()
 
 int main(int argc, char *argv[])
 {
-    TRACE_PRINT("start to integrated example 1!\n");
+    TRACE_PRINT("start to integrated example 2!\n");
     TRACE_PRINT("FOUR ASSEMBLIES : Monte Carlo NEUTRON SIMULATION!\n");
 
     Reaction_info();
