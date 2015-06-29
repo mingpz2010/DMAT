@@ -43,6 +43,7 @@
 //          2014.11.23,   add memset() to ensure init conditions!
 //          2014.12.15,   enable 3D neutron simulation
 //          2015.05.02,   simulate nine cube assemblies to simplified model
+//          2015.06.20,   use DMAT library to optimize simulation
 //
 #ifndef FISSION_H_
 #define FISSION_H_
@@ -57,6 +58,7 @@
 #include <ctime>
 #include <vector>
 #include <fstream>
+#include "../"
 
 using namespace std;
 
@@ -88,6 +90,13 @@ private:
     // To save position of neutrons
     int p_start[ZONE], p_enter[ZONE];
     double *px[ZONE], *py[ZONE], *pz[ZONE], *pe[ZONE], *pux[ZONE], *puy[ZONE], *puz[ZONE];
+    Matrix_hpc<double> px_opt;
+    Matrix_hpc<double> py_opt;
+    Matrix_hpc<double> pz_opt;
+    Matrix_hpc<double> pe_opt;
+    Matrix_hpc<double> pux_opt;
+    Matrix_hpc<double> puy_opt;
+    Matrix_hpc<double> puz_opt;
 
     int    m_randomSeed;
     double m_randomFlat(void);
@@ -97,6 +106,7 @@ private:
     double m_randomScatteredEnergy(double, double, bool);
 
     int    m_chain_new(int section, double x, double y, double z, double e, double ux, double uy, double uz);
+    int    m_chain_new_opt(int section, double x, double y, double z, double e, double ux, double uy, double uz);
     int    m_nint(double);
     void   m_getData(void);
     void   m_getProbabilities(double);
@@ -187,14 +197,16 @@ void NeutronTransport3D::run(int type)
         }
     }
 
-    for (int i=0; i<ZONE; i++) {
-        delete [] px[i];
-        delete [] py[i];
-        delete [] pz[i];
-        delete [] pe[i];
-        delete [] pux[i];
-        delete [] puy[i];
-        delete [] puz[i];
+    if (type == 0) {
+        for (int i=0; i<ZONE; i++) {
+            if (px[i] != NULL)      delete [] px[i];
+            if (py[i] != NULL)      delete [] py[i];
+            if (pz[i] != NULL)      delete [] pz[i];
+            if (pe[i] != NULL)      delete [] pe[i];
+            if (pux[i] != NULL)     delete [] pux[i];
+            if (puy[i] != NULL)     delete [] puy[i];
+            if (puz[i] != NULL)     delete [] puz[i];
+        }
     }
 }
 
@@ -575,7 +587,69 @@ int NeutronTransport3D::m_enter_other_section(int source,
 
 void NeutronTransport3D::execute_opt(int k)
 {
+    memset(number_of_enter, 0, sizeof(int)*ZONE);
+    if (k == 0) {
+        for (int i=0; i<ZONE; i++) {
+              p_start[i] = 0;  p_enter[i] = m_evtMax;
+              px_opt = px_opt.newsize(ZONE, m_nMax);
+              py_opt = py_opt.newsize(ZONE, m_nMax);
+              pz_opt = pz_opt.newsize(ZONE, m_nMax);
+              pe_opt = pe_opt.newsize(ZONE, m_nMax);
+              pux_opt = pux_opt.newsize(ZONE, m_nMax);
+              puy_opt = puy_opt.newsize(ZONE, m_nMax);
+              puz_opt = puz_opt.newsize(ZONE, m_nMax);
+          // initial positions of the neutrons for the first generation
+          for(int j=0; j<m_evtMax; )
+          {
+             double phi = 2.0*m_PI*m_randomFlat();
+             double costh = 2.0*m_randomFlat()-1.0;
+             double sinth = sqrt(1.0-costh*costh);
+             double rad = 10 * sqrt(27) * m_randomFlat();  // cube组件采用球坐标系
+             px_opt(i,j) = rad*sinth*cos(phi);
+             py_opt(i,j) = rad*sinth*sin(phi);
+             pz_opt(i,j) = rad*costh;
+             if ( m_isOutside(px_opt(i,j), py_opt(i,j), pz_opt(i,j)) ) {
+                 continue;
+             }
+             pux_opt(i,j) = -px_opt(i,j);
+             puy_opt(i,j) = -py_opt(i,j);
+             puz_opt(i,j) = -pz_opt(i,j);
 
+             //x[j] = y[j] = z[j] = ux[j] = uy[j] = uz[j] = 0.0;
+             pe_opt(i,j) = m_eThermal;
+             j++;
+              }
+          }
+      }
+
+      // event loop **********************************************************
+      for (int i=0; i<ZONE; i++) {
+          int n = m_Count[i][k];
+          for(int m = 0; m<n; m++) {
+            // Each event starts with n = 1 neutron
+
+            // Total # of neutrons generated for this event
+            // generation loop
+            m_Count[i][k+1] += m_chain_new_opt(i, px_opt(i, p_start[i]), py_opt(i, p_start[i]),
+                    pz_opt(i, p_start[i]), pe_opt(i, p_start[i]), pux_opt(i, p_start[i]),
+                    puy_opt(i, p_start[i]), puz_opt(i, p_start[i]));;  // k+1 generation
+            p_start[i]++;
+            if (p_start[i] >= m_nMax) {
+                p_start[i] %= m_nMax;
+            }
+          } // end of event loop *************************************************
+      }
+
+      for (int i=0; i<ZONE; i++) {
+          m_Count[i][k+1] += number_of_enter[i];
+          // cout<<"n = "<<n<<" p_start = "<<p_start[i]<<" p_enter = "<<p_enter[i]<<endl;
+#if 1
+          cout << "Assemble: " << setw(7) << i+1
+               << " | Generation: " << setw(5) << k+1
+               << " | Total # of genenerated neutrons: " << m_Count[i][k+1]
+               << endl;
+#endif
+      }
 }
 
 void NeutronTransport3D::execute(int k)
@@ -641,6 +715,151 @@ void NeutronTransport3D::execute(int k)
                << endl;
 #endif
       }
+}
+
+int NeutronTransport3D::m_chain_new_opt
+(int section, double x, double y, double z, double e, double ux, double uy, double uz)
+{
+    bool isAbsorbed  = false;
+    bool isScattered = false;
+    bool isFission   = false;
+    bool isCaptured  = false;
+    bool isElastic   = false;
+    bool isInElastic = false;
+    bool isPossible  = true;
+
+    m_getProbabilities( e );
+    int ng = 0;
+    if( m_randomFlat() < m_pAbs[section] ){
+        isAbsorbed = true;
+        if( m_randomFlat() < m_pFis[section] ) isFission  = true; // fission
+        else                          isCaptured = true; // capture
+    } // if scattering occur
+    else{
+        isScattered = true;
+        if( m_randomFlat() < m_pEla[section] ) isElastic   = true; // elastic scatt.
+        else                          isInElastic = true; // in-elastic scatt.
+    } //************************************************************************
+
+    if(isFission) {
+        // is the nucleus U235 ?
+        bool isU235 = false;
+        if(m_randomFlat() < m_p235[section]) isU235 = true;
+
+        // Get number of prompt neutrons produced for the fission
+        int np = m_randomNubar(e, isU235);
+
+        for(int l=1; l<=np; l++) {
+         // Get a random free path length
+         double d = m_randomPathLength(section);
+
+         // Send the prompt neutron to a isotropiaclly random direction in space
+         double phi  = 2.0*m_PI*m_randomFlat();
+         double theta= acos(2.0*m_randomFlat()-1.0);
+         double uux = sin(theta)*cos(phi);
+         double uuy = sin(theta)*sin(phi);
+         double uuz = cos(theta);
+         double xx  = x + d*uux;
+         double yy  = y + d*uuy;
+         double zz  = z + d*uuz;
+
+         // Assign a random kinetic energy to the prompt neutron
+         double ee = m_randomPromptEnergy();
+
+         // Check if the neutron is outside of the bulk
+         if( m_isOutside(xx, yy, zz) ) {
+             int index = m_enter_other_section(section, xx, yy, zz);
+             if (index >= 0) {  // >=0，因为组件数目在计算机中是从0开始计数
+                 px_opt(index, p_enter[index]) = xx;
+                 py_opt(index, p_enter[index]) = yy;
+                 pz_opt(index, p_enter[index]) = zz;
+                 pe_opt(index, p_enter[index]) = ee;
+                 pux_opt(index, p_enter[index]) = uux;
+                 puy_opt(index, p_enter[index]) = uuy;
+                 puz_opt(index, p_enter[index]) = uuz;
+                 p_enter[index]++;
+                 if (p_enter[index] >= m_nMax) {
+                     p_enter[index] %= m_nMax;
+                 }
+                 number_of_enter[index]++;
+             }
+         } else{
+                 px_opt(section, p_enter[section]) = xx;
+                 py_opt(section, p_enter[section]) = yy;
+                 pz_opt(section, p_enter[section]) = zz;
+                 pe_opt(section, p_enter[section]) = ee;
+                 pux_opt(section, p_enter[section]) = uux;
+                 puy_opt(section, p_enter[section]) = uuy;
+                 puz_opt(section, p_enter[section]) = uuz;
+                 p_enter[section]++;
+                 if (p_enter[section] >= m_nMax) {
+                     p_enter[section] %= m_nMax;
+                 }
+                 ng++;
+             }
+         } // end of prompt neutron loop
+      } // end of isFission
+    else if(isScattered) {
+        // Get a random free path length for this energy
+          double d = m_randomPathLength(section);
+
+          // Send the scattered neutron to a isotropiaclly random direction in space
+          double phi  = 2.0*m_PI*m_randomFlat();
+          double theta= acos(2.0*m_randomFlat()-1.0);
+          double uux = sin(theta)*cos(phi);
+          double uuy = sin(theta)*sin(phi);
+          double uuz = cos(theta);
+          double xx  = x + d*uux;
+          double yy  = y + d*uuy;
+          double zz  = z + d*uuz;
+
+          // Scattering angle
+          // i.e. opening angle between new and old direction (it is found from dot product)
+          double cosThetaS = ux*uux + uy*uuy + uz*uuz;
+
+          // Determine the random kinetic energy to this scattered neutron
+          double ee = m_randomScatteredEnergy(e, cosThetaS, isElastic);
+          if(ee<0.0) isPossible = false;
+
+          // Check if the neutron is outside of the bulk
+          if( m_isOutside(xx, yy, zz) ) {
+              int index = m_enter_other_section(section, xx, yy, zz);
+              if (index >= 0) {
+                  px_opt(section, p_enter[section]) = xx;
+                   py_opt(section, p_enter[section]) = yy;
+                   pz_opt(section, p_enter[section]) = zz;
+                   pe_opt(section, p_enter[section]) = ee;
+                   pux_opt(section, p_enter[section]) = uux;
+                   puy_opt(section, p_enter[section]) = uuy;
+                   puz_opt(section, p_enter[section]) = uuz;
+                  p_enter[index]++;
+                  if (p_enter[index] >= m_nMax) {
+                      p_enter[index] %= m_nMax;
+                  }
+                  number_of_enter[index]++;
+              }
+          } else if(isPossible){
+              px_opt(section, p_enter[section]) = xx;
+               py_opt(section, p_enter[section]) = yy;
+               pz_opt(section, p_enter[section]) = zz;
+               pe_opt(section, p_enter[section]) = ee;
+               pux_opt(section, p_enter[section]) = uux;
+               puy_opt(section, p_enter[section]) = uuy;
+               puz_opt(section, p_enter[section]) = uuz;
+              p_enter[section]++;
+              if (p_enter[section] >= m_nMax) {
+                  p_enter[section] %= m_nMax;
+              }
+               ng++;
+          }
+          else {
+              (void)0;
+          }
+       } else if(isCaptured)
+       {
+             (void)0;
+       }
+    return ng;
 }
 
 int NeutronTransport3D::m_chain_new
