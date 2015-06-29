@@ -250,7 +250,7 @@ void MonteCarlo_nt()
 {
     double start, end;
     int   maxEvent =  10000;    // Maximum number of events (number of neutrons) required (default  1)
-    int     maxGen =   2000;    // Maximum number of generations (defalult 100)
+    int     maxGen =   200;    // Maximum number of generations (defalult 100)
     double  purity[ZONE] = {low_fuel, middle_fuel,
             rich_fuel, middle_fuel, rich_fuel, middle_fuel,
             rich_fuel, middle_fuel, rich_fuel};  // Purity of 235 in the medium (default  3%)
