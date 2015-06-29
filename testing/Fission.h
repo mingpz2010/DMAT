@@ -803,7 +803,8 @@ void NeutronTransport3D::start(){
    m_getData();
 
    cout << endl << "Press [return] to continue..." << endl;
-   getchar();
+   cout << "Here we utilize automatic pass this human enter!" << endl;
+   // getchar();
 }
 
 //------------------------------------------------------------------------------------------------------------
