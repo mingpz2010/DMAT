@@ -19,4 +19,6 @@ test17        Basic testing for Stencil3D class
 test18        Effiency testing of Stencil3D class
 test19        Integrated testing example1, simplified MC neutron calculation
 test20        Integrated testing example2, using DMAT to optimize test19
+test21        Integrated testing example3, 1D neutron diffusion calculation(FDM Method)
+test22        Integrated testing example4, using DMAT to optimize test21
 
