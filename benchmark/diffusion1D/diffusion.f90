@@ -137,13 +137,14 @@ label4:		do while (i < mesh)
 			call vector_copy(mesh, flux2_last, flux2)
 			source1(mesh) = 0
 			call chase_method(mesh, mat_of_coeff1, flux1, source1, 1e-16)
-
+			! call seidel(mesh, mat_of_coeff1, flux1, source1, 1e-16)
 			i = 1
 label5:		do while (i <= mesh)
 				source2(i) = (chi2*p(i))/keff + mat3%tr1to2 * flux1(i)
 				i = i + 1
 			end do label5
 			call chase_method(mesh, mat_of_coeff2, flux2, source2, 1e-16)
+			!call seidel(mesh, mat_of_coeff2, flux2, source2, 1e-16)
 			
 			keff_last = keff
 			keff = 0

@@ -22,5 +22,5 @@ program main
     print *,"----------------------------------------"
     call my_testing2()
     call my_testing3()
-    call diffusion_solver(1500)
+    call diffusion_solver(1200)
 end program main

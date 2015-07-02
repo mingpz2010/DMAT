@@ -130,11 +130,11 @@ contains
         real, dimension(n):: tmp, residual_vec
         real:: residual, factor, left, right
         
-        ! print *,"Seidel method: n = ",n, " eps = ", eps
+        print *,"Seidel method: n = ",n, " eps = ", eps
         residual_vec(1) = 0.1
         tmp(1) = 0.1
         itr = 1
-        do while (itr<=100)
+        do while (itr<=10000)
             i = 1
             do while (i<=n)
                 factor = 1/a(i, i)
@@ -172,12 +172,12 @@ contains
  !----------------------------------------------------   
  !----------------------------------------------------              
             !i = 1
-            !do while (i<=n)
-            !    residual_vec(i) = x(i) - tmp(i)
-            !    i = i + 1
-            !end do
+           ! do while (i<=n)
+           !     residual_vec(i) = x(i) - tmp(i)
+           !     i = i + 1
+           ! end do
             ! 第二种停机准则，判断相邻两次迭代值差的最大范数
-            ! residual = max_norm(n, residual_vec)
+           ! residual = max_norm(n, residual_vec)
 !----------------------------------------------------
  
 !----------------------------------------------------   
@@ -197,7 +197,7 @@ contains
             
             itr = itr + 1  ! 防止迭代一直不收敛
             ! 调试用
-            ! print *, "itr = ", itr, ", residual = ", residual
+            print *, "itr = ", itr, ", residual = ", residual
         end do
     end subroutine
     
