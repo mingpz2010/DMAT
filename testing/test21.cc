@@ -188,9 +188,15 @@ void diffusion_solver(int single_mesh)
 
     cout << "keff = " << keff << endl;
 
-    delete[] dia;
-    delete[] left;
-    delete[] right;
+    if (dia != NULL) {
+        delete[] dia;
+    }
+    if (left != NULL) {
+        delete[] left;
+    }
+    if (right != NULL) {
+        delete[] right;
+    }
 }
 
 int main(int argc, char *argv[])
