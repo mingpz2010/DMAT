@@ -2,9 +2,9 @@ module diffusion
     implicit none
     
     type material
-        real(kind=ieee_double), dimension(2):: tr, a, vf, kf
-        real(kind=ieee_double):: tr1to2, d1, d2
-        real(kind=ieee_double):: exposure
+        real, dimension(2):: tr, a, vf, kf
+        real:: tr1to2, d1, d2
+        real:: exposure
     end type material
     
 contains    
@@ -16,11 +16,11 @@ contains
 		type(material):: mat1
 		type(material):: mat2
 		type(material):: mat3
-		real(kind=ieee_double):: chi1, chi2, mesh_space
-		real(kind=ieee_double), allocatable:: flux1(:), flux2(:), source1(:), source2(:), p(:)
-		real(kind=ieee_double), allocatable:: flux1_last(:), flux2_last(:)
-		real(kind=ieee_double), allocatable:: mat_of_coeff1(:,:), mat_of_coeff2(:,:)
-		real(kind=ieee_double):: keff, keff_last, cjk, cjf1, cjf2
+		real:: chi1, chi2, mesh_space
+		real, allocatable:: flux1(:), flux2(:), source1(:), source2(:), p(:)
+		real, allocatable:: flux1_last(:), flux2_last(:)
+		real, allocatable:: mat_of_coeff1(:,:), mat_of_coeff2(:,:)
+		real:: keff, keff_last, cjk, cjf1, cjf2
 		
 		!-------------------------------
 		! 鏉愭枡鍙傛暟1, 2, 3
