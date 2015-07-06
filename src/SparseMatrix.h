@@ -36,7 +36,7 @@ class SparseMatrix
 private:
     void init(sparsematrix_manner_t type, const Matrix_hpc<T>&);
 protected:
-    int type;  // 0-CRS, default, 1-CCS, 2-CDS
+    int type;  // 0-CRS, default, 1-CCS, 2-TDS
     integer_t dim1_;
     integer_t dim2_;
     integer_t nonzeroes;
@@ -76,6 +76,8 @@ public:
     inline integer_t row(integer_t k) const { return row_ind[k]; }
     inline integer_t p_col(integer_t k) const { return col_ptr[k]; }
     inline int type_of_sparse() const { return type; }
+
+    void chase_method(integer_t N, T *x, T *b);
 
     // In order to unified, CRS manner is stored
     SparseMatrix<T> & operator=(const Matrix_hpc<T>&);

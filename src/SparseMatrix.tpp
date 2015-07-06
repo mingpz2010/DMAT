@@ -162,6 +162,58 @@ SparseMatrix<T>::SparseMatrix(sparsematrix_manner_t type, Matrix_hpc<T>& M)
 }
 
 template <typename T>
+void SparseMatrix<T>::chase_method(integer_t N, T *x, T *b)
+{
+    if (type != 2) {
+        std::cerr << "Error: SparseMatrix is not TDS manner for chase method!" << std::endl;
+        exit(-1);
+    }
+
+    T ans = 1.;
+    for (int i=0; i<N; i++) {
+        ans *= val[i];
+    }
+    if (ans == 0.) {
+        std::cerr << "Error: SparseMatrix chase method coeff error!" << std::endl;
+        exit(-1);
+    }
+
+    if (N == 1) {
+        x[0] = b[0]/val[0];
+        return;
+    }
+    if (N == 2) {
+        x[1] = b[1]/val[1];
+        x[0] = (b[0]-right_val[0]*x[1])/val[0];
+        return;
+    }
+
+    T *beta;
+    beta = new T[N];
+    T *d;
+    d = new T[N];
+    if (beta == NULL || d == NULL) {
+        std::cerr << "Error: SparseMatrix chase method memory alloc failure!" << std::endl;
+        exit(-1);
+    }
+
+    beta[0] = val[0];
+    x[0] = b[0];
+    for (int i=1; i<N; i++) {
+        d[i] = left_val[i]/beta[i-1];
+        beta[i] = val[i] - d[i]*c[i-1];
+        x[i] = b[i] - d[i]*x[i-1];
+    }
+    x[N-1] = x[N-1] / beta[N-1];
+    for (int i=N-2; i>=0; i--) {
+        x[i] = (x[i]-right_val[i]*x[i+1])/beta[i];
+    }
+
+    delete[] beta;
+    delete[] d;
+}
+
+template <typename T>
 SparseMatrix<T>& SparseMatrix<T>::operator=(const Matrix_hpc<T>& M)
 {
     integer_t i_max = M.dim1();
