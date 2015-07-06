@@ -10,8 +10,8 @@ contains
     subroutine vector_copy(n, dest, src)
         implicit none
         integer:: n, i
-        real, intent(out):: dest(:)
-        real:: src(:)
+        real(kind=ieee_double), intent(out):: dest(:)
+        real(kind=ieee_double):: src(:)
         
         i = 1
         do while (i<=n)
@@ -23,10 +23,10 @@ contains
     subroutine matrix_mul_vector(n, a, x)
         implicit none
         integer:: n,i,j
-        real:: a(:,:)
-        real, intent(out):: x(:)
-        real, dimension(n):: b
-        real:: su
+        real(kind=ieee_double):: a(:,:)
+        real(kind=ieee_double), intent(out):: x(:)
+        real(kind=ieee_double), dimension(n):: b
+        real(kind=ieee_double):: su
         
         i = 1
         do while (i<=n)
@@ -50,9 +50,9 @@ contains
     subroutine matrix_mul_vector2(n, y, a, x)
         implicit none
         integer:: n,i,j
-        real:: a(:,:), x(:)
-        real, intent(out):: y(:)
-        real:: su
+        real(kind=ieee_double):: a(:,:), x(:)
+        real(kind=ieee_double), intent(out):: y(:)
+        real(kind=ieee_double):: su
         
         i = 1
         do while (i<=n)
@@ -70,8 +70,8 @@ contains
     subroutine matrix_mul_number(n, a, x)
         implicit none
         integer:: n,i,j
-        real, intent(out):: a(:,:)
-        real:: x
+        real(kind=ieee_double), intent(out):: a(:,:)
+        real(kind=ieee_double):: x
         
         i = 1
         do while (i<=n)
@@ -88,7 +88,7 @@ contains
         implicit none
         integer, intent(in):: n
         integer:: i
-        real, dimension(n):: a
+        real(kind=ieee_double), dimension(n):: a
         
         max_norm = abs(a(1))
         i = 1
@@ -104,7 +104,7 @@ contains
         implicit none
         integer:: n
         integer:: i
-        real, dimension(n):: x1, x2
+        real(kind=ieee_double), dimension(n):: x1, x2
         
         max_norm2 = abs((x1(1) - x2(1))/(x1(1)))
         i = 1
@@ -194,9 +194,9 @@ contains
     subroutine chase_method(n, a, x, b, eps)
         implicit none
         integer:: n,i,j
-        real, intent(out):: x(:)
-        real:: a(:,:), b(:), eps
-        real, dimension(n):: aa, dia, c, d, beta
+        real(kind=ieee_double), intent(out):: x(:)
+        real(kind=ieee_double):: a(:,:), b(:), eps
+        real(kind=ieee_double), dimension(n):: aa, dia, c, d, beta
         
         i = 1
         do while (i<=n)
