@@ -19,8 +19,8 @@
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
+#include "../src/Cmv.h"
 #include "../src/SparseMatrix.h"
-#include "../src/Vector_hpc.h"
 
 typedef struct material {
     double tr[2];
