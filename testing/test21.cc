@@ -77,7 +77,7 @@ void diffusion_solver(int single_mesh)
     mat2.d2 = 1./(3*mat2.tr[1]);
     cout << "MAT2 : " << mat2.d1 <<" , " << mat2.d2 << endl;
 
-    mat->exposure = 16.55;
+    mat3.exposure = 16.55;
     mat3.tr[0]=2.366212e-1; mat3.tr[1]=9.308326e-1;
     mat3.a[0]=9.668583e-3; mat3.a[1]=8.506164e-2;
     mat3.vf[0]=5.050670e-3; mat3.vf[1]=1.188626e-1;
