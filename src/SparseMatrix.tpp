@@ -93,7 +93,7 @@ void SparseMatrix<T>::init(sparsematrix_manner_t type, const Matrix_hpc<T>& M)
             val[0] = M(0,0);
         } else if (i_max == 2) {
             val[0] = M(0,0); val[1] = M(1,1);
-            left_val[0] = 0; left_val[1] = M(1, 0);
+            left_val[0] = 0; left_val[1] = 0;
             right_val[0] = M(0,1); right_val[1] = 0;
         } else {
             for (integer_t i=1; i<i_max-1; i++) {
@@ -306,14 +306,14 @@ std::ostream& operator<<(std::ostream &s, const SparseMatrix<T> &M)
             s.width(10); s << k+1 <<"    ";
             s.width(20); s << M.val[k]; s << std::endl;
             if (k>0) {
+                s.width(10); s << k+1 <<"    ";
                 s.width(10); s << k <<"    ";
-                s.width(10); s << k-1 <<"    ";
-                s.width(20); s << M.right_val[k]; s << std::endl;
+                s.width(20); s << M.left_val[k]; s << std::endl;
             }
             if (k<i_max-1) {
-                s.width(10); s << k <<"    ";
                 s.width(10); s << k+1 <<"    ";
-                s.width(20); s << M.left_val[k]; s << std::endl;
+                s.width(10); s << k+2 <<"    ";
+                s.width(20); s << M.right_val[k]; s << std::endl;
             }
         }
     }
