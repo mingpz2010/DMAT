@@ -70,7 +70,8 @@ contains
 		print *, "1D Reactor geometry is : (mesh = ", mesh, ")"
         print *,geom
 		
-		! 缃戞牸鍒掑垎涔嬪悗锛屼袱缇ゆ墿鏁ｆ柟绋嬬殑绯绘暟鐭╅樀鍒濆鍖�label1:	do i=1,13
+		! 缃戞牸鍒掑垎涔嬪悗锛屼袱缇ゆ墿鏁ｆ柟绋嬬殑绯绘暟鐭╅樀鍒濆鍖�
+		label1:	do i=1,13
 		    k = 1
 		    idx = (i-1) * single_mesh  ! 璧峰搴忓彿
 label2:		do while (k <= single_mesh)
@@ -109,7 +110,8 @@ label2:		do while (k <= single_mesh)
 		!    i = i + 1
 		!end do
 		
-		! 鍒濆杩唬鍙傛暟鍜屾簮椤硅祴鍊�		keff = 0.9
+		! 鍒濆杩唬鍙傛暟鍜屾簮椤硅祴鍊�		
+		keff = 0.9
 		itr = 1
 		i = 1
 		do while (i <= mesh)
