@@ -78,6 +78,8 @@ public:
     inline int type_of_sparse() const { return type; }
 
     void chase_method(integer_t N, T *x, T *b);
+    void chase_method(integer_t N, Vector_hpc<T> &x, Vector_hpc<T> &b);
+    void tds_alloc(integer_t N, T *dia, T *left, T *right);
 
     // In order to unified, CRS manner is stored
     SparseMatrix<T> & operator=(const Matrix_hpc<T>&);

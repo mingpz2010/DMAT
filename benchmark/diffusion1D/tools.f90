@@ -109,8 +109,8 @@ contains
         max_norm2 = abs((x1(1) - x2(1))/(x1(1)))
         i = 1
         do while (i <= n)
-            if (abs((x1(1) - x2(1))/(x1(1))) > max_norm2) then
-                max_norm2 = abs((x1(1) - x2(1))/(x1(1)))
+            if (abs((x1(i) - x2(i))/(x1(i))) > max_norm2) then
+                max_norm2 = abs((x1(i) - x2(i))/(x1(i)))
             end if
             i = i+1
         end do

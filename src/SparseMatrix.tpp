@@ -214,6 +214,114 @@ void SparseMatrix<T>::chase_method(integer_t N, T *x, T *b)
 }
 
 template <typename T>
+void SparseMatrix<T>::chase_method(integer_t N, Vector_hpc<T> &x, Vector_hpc<T> &b)
+{
+    if (type != 2) {
+        std::cerr << "Error: SparseMatrix is not TDS manner for chase method!" << std::endl;
+        exit(-1);
+    }
+
+    T ans = 1.;
+    for (int i=0; i<N; i++) {
+        ans *= val[i];
+    }
+    if (ans == 0.) {
+        std::cerr << "Error: SparseMatrix chase method coeff error!" << std::endl;
+        exit(-1);
+    }
+
+    if (N == 1) {
+        x(0) = b(0)/val[0];
+        return;
+    }
+    if (N == 2) {
+        x(1) = b(1)/val[1];
+        x(0) = (b(0)-right_val[0]*x(1))/val[0];
+        return;
+    }
+
+    T *beta;
+    beta = new T[N];
+    T *d;
+    d = new T[N];
+    if (beta == NULL || d == NULL) {
+        std::cerr << "Error: SparseMatrix chase method memory alloc failure!" << std::endl;
+        exit(-1);
+    }
+
+    beta[0] = val[0];
+    x(0) = b(0);
+    for (int i=1; i<N; i++) {
+        d[i] = left_val[i]/beta[i-1];
+        beta[i] = val[i] - d[i]*right_val[i-1];
+        x(i) = b(i) - d[i]*x(i-1);
+    }
+    x(N-1) = x(N-1) / beta[N-1];
+    for (int i=N-2; i>=0; i--) {
+        x(i) = (x(i)-right_val[i]*x(i+1))/beta[i];
+    }
+
+    delete[] beta;
+    delete[] d;
+}
+
+template <typename T>
+void SparseMatrix<T>::tds_alloc(integer_t N, T *dia, T *left, T *right)
+{
+    if (N<=0 || dia == NULL || left == NULL || right == NULL) {
+        std::cerr << "Error: SparseMatrix tds_init failure!" << std::endl;
+        exit(-1);
+    }
+
+    this->type = 2;
+
+    if (val != NULL) {
+        delete[] val;
+    }
+    if (col_ind != NULL) {
+        delete[] col_ind;
+    }
+    if (row_ptr != NULL) {
+        delete[] row_ptr;
+    }
+    if (row_ind != NULL) {
+        delete[] row_ind;
+    }
+    if (col_ptr != NULL) {
+        delete[] col_ptr;
+    }
+    if (left_val != NULL) {
+        delete[] left_val;
+    }
+    if (right_val != NULL) {
+        delete[] right_val;
+    }
+
+    val = new T[N];
+    left_val = new T[N];
+    right_val = new T[N];
+    dim1_ = dim2_ = N;
+    nonzeroes = 3*N - 2;
+
+    if (N == 1) {
+        val[0] = dia[0];
+    } else if (N == 2) {
+        val[0] = dia[0]; val[1] = dia[1];
+        left_val[0] = 0; left_val[1] = 0;
+        right_val[0] = right[0]; right_val[1] = 0;
+    } else {
+        for (integer_t i=1; i<N-1; i++) {
+            val[i] = dia[i];
+            left_val[i] = left[i];
+            right_val[i] = right[i];
+        }
+        val[0] = dia[i];  val[N-1] = dia[N-1];
+        left_val[0] = 0;  left_val[N-1] = left[N-1];
+        right_val[0] = right[0];  right_val[N-1] = 0;
+    }
+}
+
+template <typename T>
 SparseMatrix<T>& SparseMatrix<T>::operator=(const Matrix_hpc<T>& M)
 {
     integer_t i_max = M.dim1();

@@ -53,6 +53,7 @@ template<typename T> Vector_hpc<T> operator+(const Vector_hpc<T> &c1, const Vect
 template<typename T> Vector_hpc<T> operator+(const Vector_hpc<T> &c1, T num);
 template<typename T> Vector_hpc<T> operator+(T num, const Vector_hpc<T> &c1);
 template<typename T> std::ostream& operator<<(std::ostream &s, const Vector_hpc<T> &A);
+template<typename T> T max_NRM2(integer_t N, const Vector_hpc<T> &x1, const Vector_hpc<T> &x2);
 
 template <typename T>
 class Vector_hpc
@@ -125,6 +126,7 @@ public:
     void copyFortran(int ref, T *, INTEGER dim);
 
     friend std::ostream& operator<< <>(std::ostream &s, const Vector_hpc<T> &A);
+    friend T max_NRM2 <>(integer_t N, const Vector_hpc<T> &x1, const Vector_hpc<T> &x2);
 };
 
 #include "Cmv.tpp"

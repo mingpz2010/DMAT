@@ -358,3 +358,19 @@ std::ostream& operator<<(std::ostream& s, const Vector_hpc<T>& V)
     return s;
 }
 
+
+template <typename T>
+T max_NRM2(integer_t N, const Vector_hpc<T> &x1, const Vector_hpc<T> &x2)
+{
+    T ans;
+
+    ans = fabs((x1(0) - x2(0))/(x1(0)));
+    for (integer_t i=1; i<N; i++) {
+        if (fabs((x1(i) - x2(i))/(x1(i))) > ans) {
+            ans = fabs((x1(i) - x2(i))/(x1(i)));
+        }
+    }
+
+    return ans;
+}
+
