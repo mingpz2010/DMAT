@@ -1,6 +1,6 @@
 #!/bin/sh
-gfortran -c tools.f90
-gfortran -c diffusion.f90
-gfortran -c testing.f90
-gfortran -c main.f90
-gfortran -fbounds-check -o pro2 main.o testing.o diffusion.o tools.o
+gfortran -fdefault-real-8 -std=f95 -c tools.f90
+gfortran -fdefault-real-8 -std=f95 -c diffusion.f90
+gfortran -fdefault-real-8 -std=f95 -c testing.f90
+gfortran -fdefault-real-8 -std=f95 -c main.f90
+gfortran -fdefault-real-8 -std=f95 -o pro2 main.o testing.o diffusion.o tools.o
