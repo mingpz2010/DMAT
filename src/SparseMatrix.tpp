@@ -201,7 +201,7 @@ void SparseMatrix<T>::chase_method(integer_t N, T *x, T *b)
     x[0] = b[0];
     for (int i=1; i<N; i++) {
         d[i] = left_val[i]/beta[i-1];
-        beta[i] = val[i] - d[i]*c[i-1];
+        beta[i] = val[i] - d[i]*right_val[i-1];
         x[i] = b[i] - d[i]*x[i-1];
     }
     x[N-1] = x[N-1] / beta[N-1];
