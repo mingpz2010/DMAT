@@ -146,10 +146,6 @@ void diffusion_solver(int single_mesh)
     dia[mesh-1] = 1;
     mat_of_coeff2.tds_alloc(mesh, dia, left, right);
 
-    delete[] dia;
-    delete[] left;
-    delete[] right;
-
     keff = 0.9;
     int itr = 1;
     for (int i=0; i<mesh; i++) {
@@ -191,6 +187,10 @@ void diffusion_solver(int single_mesh)
     }
 
     cout << "keff = " << keff << endl;
+
+    delete[] dia;
+    delete[] left;
+    delete[] right;
 }
 
 int main(int argc, char *argv[])
