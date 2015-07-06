@@ -107,10 +107,10 @@ void diffusion_solver(int single_mesh)
 
     int k;
     for (int i=0; i<13; i++) {
-        k = 1;
+        k = 0;
         int idx = (i-1) * single_mesh;
-        while (k <= single_mesh) {
-            dia[idx+k-1] = (2.*mat->d1)/(mesh_space*mesh_space)+mat->a[0]+mat->tr1to2;
+        while (k < single_mesh) {
+            dia[idx+k] = (2.*mat->d1)/(mesh_space*mesh_space)+mat->a[0]+mat->tr1to2;
             k = k + 1;
         }
     }
@@ -127,10 +127,10 @@ void diffusion_solver(int single_mesh)
     mat_of_coeff1.tds_alloc(mesh, dia, left, right);
 
     for (int i=0; i<13; i++) {
-        k = 1;
+        k = 0;
         int idx = (i-1) * single_mesh;
-        while (k <= single_mesh) {
-            dia[idx+k-1] = (2.*mat->d2)/(mesh_space*mesh_space)+mat->a[1];
+        while (k < single_mesh) {
+            dia[idx+k] = (2.*mat->d2)/(mesh_space*mesh_space)+mat->a[1];
             k = k + 1;
         }
     }
@@ -161,6 +161,7 @@ void diffusion_solver(int single_mesh)
     cjk = 1;
     cjf1 = 1;
     cjf2 = 1;
+    cout << "Start to Iteration!" << endl;
     while (cjk >= 1e-16 || cjf1>=1e-16 || cjf2>=1e-16) {
         for (int i=0; i<mesh; i++) {
             source1(i) = (chi1*p(i))/keff;

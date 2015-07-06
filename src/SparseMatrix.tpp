@@ -305,6 +305,7 @@ void SparseMatrix<T>::tds_alloc(integer_t N, T *dia, T *left, T *right)
 
     if (N == 1) {
         val[0] = dia[0];
+        left_val[0] = right_val[0] = 0.;
     } else if (N == 2) {
         val[0] = dia[0]; val[1] = dia[1];
         left_val[0] = 0; left_val[1] = 0;
