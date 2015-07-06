@@ -55,37 +55,39 @@ void diffusion_solver(int single_mesh)
     SparseMatrix<double> mat_of_coeff1;
     SparseMatrix<double> mat_of_coeff2;
     double keff, keff_last, cjk, cjf1, cjf2;
+    material_t *mat;
 
     mat1.exposure = 0.2;
-    mat1.tr(0)=2.368355e-1; mat1.tr(1)=9.082422e-1;
-    mat1.a(0)=8.603111e-3; mat1.a(1)=7.853449e-2;
-    mat1.vf(0)=6.160544e-3; mat1.vf(1)=1.207603e-1;
-    mat1.kf(0)=8.158099e-14; mat1.kf(1)=1.599168e-12;
+    mat1.tr[0]=2.368355e-1; mat1.tr[1]=9.082422e-1;
+    mat1.a[0]=8.603111e-3; mat1.a[1]=7.853449e-2;
+    mat1.vf[0]=6.160544e-3; mat1.vf[1]=1.207603e-1;
+    mat1.kf[0]=8.158099e-14; mat1.kf[1]=1.599168e-12;
     mat1.tr1to2=1.708253e-2;
-    mat1.d1 = 1./(3*mat1.tr(0));
-    mat1.d2 = 1./(3*mat1.tr(1));
+    mat1.d1 = 1./(3*mat1.tr[0]);
+    mat1.d2 = 1./(3*mat1.tr[1]);
     cout << "MAT1 : " << mat1.d1 <<" , " << mat1.d2 << endl;
 
     mat2.exposure = 8.11;
-    mat2.tr(0)=2.367121e-1; mat2.tr(1)=9.239672e-1;
-    mat2.a(0)=9.150915e-3; mat2.a(1)=8.516051e-2;
-    mat2.vf(0)=5.585696e-3; mat2.vf(1)=1.250261e-1;
-    mat2.kf(0)=7.144699e-14; mat2.kf(1)=1.599212e-12;
+    mat2.tr[0]=2.367121e-1; mat2.tr[1]=9.239672e-1;
+    mat2.a[0]=9.150915e-3; mat2.a[1]=8.516051e-2;
+    mat2.vf[0]=5.585696e-3; mat2.vf[1]=1.250261e-1;
+    mat2.kf[0]=7.144699e-14; mat2.kf[1]=1.599212e-12;
     mat2.tr1to2=1.690581e-2;
-    mat2.d1 = 1./(3*mat2.tr(0));
-    mat2.d2 = 1./(3*mat2.tr(1));
+    mat2.d1 = 1./(3*mat2.tr[0]);
+    mat2.d2 = 1./(3*mat2.tr[1]);
     cout << "MAT2 : " << mat2.d1 <<" , " << mat2.d2 << endl;
 
-    mat3.exposure = 16.55;
-    mat3.tr(0)=2.366212e-1; mat3.tr(1)=9.308326e-1;
-    mat3.a(0)=9.668583e-3; mat3.a(1)=8.506164e-2;
-    mat3.vf(0)=5.050670e-3; mat3.vf(1)=1.188626e-1;
-    mat3.kf(0)=6.310672e-14; mat3.kf(1)=1.485153e-12;
-    mat3.tr1to2=1.675986e-2;
-    mat3.d1 = 1./(3*mat3.tr(0));
-    mat3.d2 = 1./(3*mat3.tr(1));
-    cout << "MAT3 : " << mat3.d1 <<" , " << mat3.d2 << endl;
+    mat->exposure = 16.55;
+    mat->tr[0]=2.366212e-1; mat->tr[1]=9.308326e-1;
+    mat->a[0]=9.668583e-3; mat->a[1]=8.506164e-2;
+    mat->vf[0]=5.050670e-3; mat->vf[1]=1.188626e-1;
+    mat->kf[0]=6.310672e-14; mat->kf[1]=1.485153e-12;
+    mat->tr1to2=1.675986e-2;
+    mat->d1 = 1./(3*mat->tr[0]);
+    mat->d2 = 1./(3*mat->tr[1]);
+    cout << "MAT3 : " << mat->d1 <<" , " << mat->d2 << endl;
 
+    mat = &mat3;
     chi1 = 1.0; chi2 = 0.;
     keff = 1.0;
     mesh = single_mesh * 13; mesh_space = 20.0/single_mesh;
@@ -108,16 +110,16 @@ void diffusion_solver(int single_mesh)
         k = 1;
         int idx = (i-1) * single_mesh;
         while (k <= single_mesh) {
-            dia[idx+k-1] = (2.*mat3.d1)/(mesh_space*mesh_space)+mat3.a(0)+mat3.tr1to2;
+            dia[idx+k-1] = (2.*mat->d1)/(mesh_space*mesh_space)+mat->a[0]+mat->tr1to2;
             k = k + 1;
         }
     }
     for (int i=0; i<mesh; i++) {
         if (i>0) {
-            left[i] = -mat3.d1/(mesh_space*mesh_space);
+            left[i] = -mat->d1/(mesh_space*mesh_space);
         }
         if (i<mesh-1) {
-            right[i] = -mat3.d1/(mesh_space*mesh_space);
+            right[i] = -mat->d1/(mesh_space*mesh_space);
         }
     }
     left[0] = 0; right[mesh-1] = 0;
@@ -128,16 +130,16 @@ void diffusion_solver(int single_mesh)
         k = 1;
         int idx = (i-1) * single_mesh;
         while (k <= single_mesh) {
-            dia[idx+k-1] = (2.*mat3.d2)/(mesh_space*mesh_space)+mat3.a(1);
+            dia[idx+k-1] = (2.*mat->d2)/(mesh_space*mesh_space)+mat->a[1];
             k = k + 1;
         }
     }
     for (int i=0; i<mesh; i++) {
         if (i>0) {
-            left[i] = -mat3.d2/(mesh_space*mesh_space);
+            left[i] = -mat->d2/(mesh_space*mesh_space);
         }
         if (i<mesh-1) {
-            right[i] = -mat3.d2/(mesh_space*mesh_space);
+            right[i] = -mat->d2/(mesh_space*mesh_space);
         }
     }
     left[0] = 0; right[mesh-1] = 0;
@@ -151,9 +153,9 @@ void diffusion_solver(int single_mesh)
     keff = 0.9;
     int itr = 1;
     for (int i=0; i<mesh; i++) {
-        flux1(i) = keff/((mat3.vf(0)+mat3.vf(1))*(mesh*mesh_space));
+        flux1(i) = keff/((mat->vf[0]+mat->vf[1])*(mesh*mesh_space));
         flux2(i) = flux1(i);
-        p(i) = mat3.vf(0)*flux1(i)+mat3.vf(1)*flux2(i);
+        p(i) = mat->vf[0]*flux1(i)+mat->vf[1]*flux2(i);
     }
 
     cjk = 1;
@@ -169,14 +171,14 @@ void diffusion_solver(int single_mesh)
         mat_of_coeff1.chase_method(mesh, flux1, source1);
 
         for (int i=0; i<mesh; i++) {
-            source2(i) = (chi2*p(i))/keff + mat3.tr1to2 * flux1(i);
+            source2(i) = (chi2*p(i))/keff + mat->tr1to2 * flux1(i);
         }
         mat_of_coeff1.chase_method(mesh, flux2, source2);
 
         keff_last = keff;
         keff = 0;
         for (int i=0; i<mesh; i++) {
-            p(i) = mat3.vf(0)*flux1(i)+mat3.vf(1)*flux2(i);
+            p(i) = mat->vf[0]*flux1(i)+mat->vf[1]*flux2(i);
             keff = keff + p(i) * mesh_space;
         }
         cjk = fabs(keff-keff_last)/keff_last;
