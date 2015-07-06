@@ -108,7 +108,7 @@ void diffusion_solver(int single_mesh)
     int k;
     for (int i=0; i<13; i++) {
         k = 0;
-        int idx = (i-1) * single_mesh;
+        int idx = i * single_mesh;
         while (k < single_mesh) {
             dia[idx+k] = (2.*mat->d1)/(mesh_space*mesh_space)+mat->a[0]+mat->tr1to2;
             k = k + 1;
@@ -128,7 +128,7 @@ void diffusion_solver(int single_mesh)
 
     for (int i=0; i<13; i++) {
         k = 0;
-        int idx = (i-1) * single_mesh;
+        int idx = i * single_mesh;
         while (k < single_mesh) {
             dia[idx+k] = (2.*mat->d2)/(mesh_space*mesh_space)+mat->a[1];
             k = k + 1;
@@ -176,7 +176,7 @@ void diffusion_solver(int single_mesh)
         keff = 0;
         for (int i=0; i<mesh; i++) {
             p(i) = mat->vf[0]*flux1(i)+mat->vf[1]*flux2(i);
-            keff = keff + p(i) * mesh_space;
+            keff += p(i) * mesh_space;
         }
         cjk = fabs(keff-keff_last)/keff_last;
         itr = itr + 1;
