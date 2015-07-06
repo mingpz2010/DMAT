@@ -162,6 +162,32 @@ SparseMatrix<T>::SparseMatrix(sparsematrix_manner_t type, Matrix_hpc<T>& M)
 }
 
 template <typename T>
+SparseMatrix<T>::~SparseMatrix()
+{
+    if (val != NULL) {
+        delete[] val;
+    }
+    if (col_ind != NULL) {
+        delete[] col_ind;
+    }
+    if (row_ptr != NULL) {
+        delete[] row_ptr;
+    }
+    if (row_ind != NULL) {
+        delete[] row_ind;
+    }
+    if (col_ptr != NULL) {
+        delete[] col_ptr;
+    }
+    if (left_val != NULL) {
+        delete[] left_val;
+    }
+    if (right_val != NULL) {
+        delete[] right_val;
+    }
+}
+
+template <typename T>
 void SparseMatrix<T>::chase_method(integer_t N, T *x, T *b)
 {
     if (type != 2) {
@@ -277,24 +303,31 @@ void SparseMatrix<T>::tds_alloc(integer_t N, T *dia, T *left, T *right)
 
     if (val != NULL) {
         delete[] val;
+        val = NULL;
     }
     if (col_ind != NULL) {
         delete[] col_ind;
+        col_ind = NULL;
     }
     if (row_ptr != NULL) {
         delete[] row_ptr;
+        row_ptr = NULL;
     }
     if (row_ind != NULL) {
         delete[] row_ind;
+        row_ind = NULL;
     }
     if (col_ptr != NULL) {
         delete[] col_ptr;
+        col_ptr = NULL;
     }
     if (left_val != NULL) {
         delete[] left_val;
+        left_val = NULL;
     }
     if (right_val != NULL) {
         delete[] right_val;
+        right_val = NULL;
     }
 
     val = new T[N];

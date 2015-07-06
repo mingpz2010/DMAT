@@ -59,6 +59,7 @@ public:
     }
     SparseMatrix(Matrix_hpc<T>&);
     SparseMatrix(sparsematrix_manner_t type, Matrix_hpc<T>&);
+    ~SparseMatrix();
     inline T& operator()(integer_t k) {
         return val[k];
     }
