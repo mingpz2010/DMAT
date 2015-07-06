@@ -308,12 +308,12 @@ std::ostream& operator<<(std::ostream &s, const SparseMatrix<T> &M)
             if (k>0) {
                 s.width(10); s << k <<"    ";
                 s.width(10); s << k-1 <<"    ";
-                s.width(20); s << M.left_val[k]; s << std::endl;
+                s.width(20); s << M.right_val[k]; s << std::endl;
             }
             if (k<i_max-1) {
                 s.width(10); s << k <<"    ";
                 s.width(10); s << k+1 <<"    ";
-                s.width(20); s << M.right_val[k]; s << std::endl;
+                s.width(20); s << M.left_val[k]; s << std::endl;
             }
         }
     }
