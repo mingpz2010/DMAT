@@ -24,6 +24,7 @@
 #include <fstream>
 #include <cstdio>
 #include <cstdlib>
+#include <cmath>
 
 #ifdef integer_t
 #undef integer_t

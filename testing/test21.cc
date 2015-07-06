@@ -19,6 +19,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
+#include <cmath>
 #include "../src/Cmv.h"
 #include "../src/SparseMatrix.h"
 
@@ -152,7 +153,7 @@ void diffusion_solver(int single_mesh)
     for (int i=0; i<mesh; i++) {
         flux1(i) = keff/((mat3.vf(0)+mat3.vf(1))*(mesh*mesh_space));
         flux2(i) = flux1(i);
-        p(i) = mat3.vf(0)*flux1(i)+mat3.vf(1)*flux2(i)
+        p(i) = mat3.vf(0)*flux1(i)+mat3.vf(1)*flux2(i);
     }
 
     cjk = 1;
