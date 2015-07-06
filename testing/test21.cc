@@ -78,14 +78,14 @@ void diffusion_solver(int single_mesh)
     cout << "MAT2 : " << mat2.d1 <<" , " << mat2.d2 << endl;
 
     mat->exposure = 16.55;
-    mat->tr[0]=2.366212e-1; mat->tr[1]=9.308326e-1;
-    mat->a[0]=9.668583e-3; mat->a[1]=8.506164e-2;
-    mat->vf[0]=5.050670e-3; mat->vf[1]=1.188626e-1;
-    mat->kf[0]=6.310672e-14; mat->kf[1]=1.485153e-12;
-    mat->tr1to2=1.675986e-2;
-    mat->d1 = 1./(3*mat->tr[0]);
-    mat->d2 = 1./(3*mat->tr[1]);
-    cout << "MAT3 : " << mat->d1 <<" , " << mat->d2 << endl;
+    mat3.tr[0]=2.366212e-1; mat3.tr[1]=9.308326e-1;
+    mat3.a[0]=9.668583e-3; mat3.a[1]=8.506164e-2;
+    mat3.vf[0]=5.050670e-3; mat3.vf[1]=1.188626e-1;
+    mat3.kf[0]=6.310672e-14; mat3.kf[1]=1.485153e-12;
+    mat3.tr1to2=1.675986e-2;
+    mat3.d1 = 1./(3*mat3.tr[0]);
+    mat3.d2 = 1./(3*mat3.tr[1]);
+    cout << "MAT3 : " << mat3.d1 <<" , " << mat3.d2 << endl;
 
     mat = &mat3;
     chi1 = 1.0; chi2 = 0.;
