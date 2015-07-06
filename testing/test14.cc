@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     }
     std::cout << std::endl;
     std::cout << "standard solution are:" << std::endl;
-    std::cout << "0.04516851 -0.27415747 0.23599264 0.22018732 -0.48268941 0.25865529" << std::endl;
+    std::cout << "0.14929150 0.24645749 -0.27766532 0.21373144 0.34504049 -0.30991903" << std::endl;
 
     TRACE_PRINT("start to test SparseMatrix class efficiency!\n");
 
