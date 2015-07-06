@@ -170,7 +170,7 @@ void diffusion_solver(int single_mesh)
         for (int i=0; i<mesh; i++) {
             source2(i) = (chi2*p(i))/keff + mat->tr1to2 * flux1(i);
         }
-        mat_of_coeff1.chase_method(mesh, flux2, source2);
+        mat_of_coeff2.chase_method(mesh, flux2, source2);
 
         keff_last = keff;
         keff = 0;
