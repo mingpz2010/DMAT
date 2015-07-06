@@ -204,7 +204,7 @@ int main(int argc, char *argv[])
     std::cout << "Start to perform 1D diffusion calculation"<< std::endl;
     std::cout << "-----------------------------------------"<< std::endl;
 
-    diffusion_solver(1200);
+    diffusion_solver(300);
 
     return 0;
 }
