@@ -1,0 +1,3 @@
+#!/bin/sh
+rm -f *.o *.mod
+rm -f pro2
