@@ -10,7 +10,6 @@ module diffusion
 contains    
 	subroutine diffusion_solver(single_mesh)
 	    use tools
-		implicit none
 		
 		integer:: single_mesh, mesh, i, j, k, idx, itr
 		integer, dimension(13):: geom=(/3,3,3,3,3,3,3,3,3,3,3,3,3/)
@@ -24,7 +23,7 @@ contains
 		real(kind=ieee_double):: keff, keff_last, cjk, cjf1, cjf2
 		
 		!-------------------------------
-		! 材料参数1, 2, 3
+		! 鏉愭枡鍙傛暟1, 2, 3
 		!-------------------------------
 		mat1%exposure = 0.2
 		mat1%tr(1)=2.368355e-1; mat1%tr(2)=9.082422e-1
@@ -32,8 +31,8 @@ contains
 		mat1%vf(1)=6.160544e-3; mat1%vf(2)=1.207603e-1
 		mat1%kf(1)=8.158099e-14; mat1%kf(2)=1.599168e-12
 		mat1%tr1to2=1.708253e-2
-		mat1%d1 = 1./(3*mat1%tr(1))  ! 快群扩散系数计算
-		mat1%d2 = 1./(3*mat1%tr(2))  ! 满群扩散系数计算
+		mat1%d1 = 1./(3*mat1%tr(1))  ! 蹇兢鎵╂暎绯绘暟璁＄畻
+		mat1%d2 = 1./(3*mat1%tr(2))  ! 婊＄兢鎵╂暎绯绘暟璁＄畻
 		print *, mat1%d1, mat1%d2
 
 		mat2%exposure = 8.11
@@ -42,8 +41,8 @@ contains
 		mat2%vf(1)=5.585696e-3; mat2%vf(2)=1.250261e-1
 		mat2%kf(1)=7.144699e-14; mat2%kf(2)=1.599212e-12
 		mat2%tr1to2=1.690581e-2
-		mat2%d1 = 1./(3*mat2%tr(1))  ! 快群扩散系数计算
-		mat2%d2 = 1./(3*mat2%tr(2))  ! 满群扩散系数计算
+		mat2%d1 = 1./(3*mat2%tr(1))  ! 蹇兢鎵╂暎绯绘暟璁＄畻
+		mat2%d2 = 1./(3*mat2%tr(2))  ! 婊＄兢鎵╂暎绯绘暟璁＄畻
 		print *, mat2%d1, mat2%d2
 
 		mat3%exposure = 16.55
@@ -52,16 +51,16 @@ contains
 		mat3%vf(1)=5.050670e-3; mat3%vf(2)=1.188626e-1
 		mat3%kf(1)=6.310672e-14; mat3%kf(2)=1.485153e-12
 		mat3%tr1to2=1.675986e-2
-		mat3%d1 = 1./(3*mat3%tr(1))  ! 快群扩散系数计算
-		mat3%d2 = 1./(3*mat3%tr(2))  ! 满群扩散系数计算
+		mat3%d1 = 1./(3*mat3%tr(1))  ! 蹇兢鎵╂暎绯绘暟璁＄畻
+		mat3%d2 = 1./(3*mat3%tr(2))  ! 婊＄兢鎵╂暎绯绘暟璁＄畻
 		print *, mat3%d1, mat3%d2
 		
 		!-------------------------------
-		! 能谱参数
+		! 鑳借氨鍙傛暟
 		!-------------------------------
 		chi1 = 1.0; chi2 = 0.
 		!-------------------------------
-		! 迭代参数
+		! 杩唬鍙傛暟
 		!-------------------------------
 		keff = 1.0
 		mesh = single_mesh * 13; mesh_space = 20.0/single_mesh
@@ -71,10 +70,9 @@ contains
 		print *, "1D Reactor geometry is : (mesh = ", mesh, ")"
         print *,geom
 		
-		! 网格划分之后，两群扩散方程的系数矩阵初始化
-label1:	do i=1,13
+		! 缃戞牸鍒掑垎涔嬪悗锛屼袱缇ゆ墿鏁ｆ柟绋嬬殑绯绘暟鐭╅樀鍒濆鍖�label1:	do i=1,13
 		    k = 1
-		    idx = (i-1) * single_mesh  ! 起始序号
+		    idx = (i-1) * single_mesh  ! 璧峰搴忓彿
 label2:		do while (k <= single_mesh)
 		        mat_of_coeff1(idx+k, idx+k) = (2.*mat3%d1)/ &
 		                (mesh_space*mesh_space)+mat3%a(1)+mat3%tr1to2
@@ -104,15 +102,14 @@ label2:		do while (k <= single_mesh)
 		end do
 		mat_of_coeff1(mesh, mesh) = 1
 		mat_of_coeff2(mesh, mesh) = 1
-		! 调试用途
+		! 璋冭瘯鐢ㄩ�
 		!i = 1
 		!do while (i<=mesh)
 		!    print *, mat_of_coeff1(mesh,i)
 		!    i = i + 1
 		!end do
 		
-		! 初始迭代参数和源项赋值
-		keff = 0.9
+		! 鍒濆杩唬鍙傛暟鍜屾簮椤硅祴鍊�		keff = 0.9
 		itr = 1
 		i = 1
 		do while (i <= mesh)
@@ -122,7 +119,7 @@ label2:		do while (k <= single_mesh)
 		    i = i + 1
 		end do
 		
-		! 主要的inner iteration部分
+		! 涓昏鐨刬nner iteration閮ㄥ垎
 		cjk = 1
 		cjf1 = 1
 		cjf2 = 1
