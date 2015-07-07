@@ -2,9 +2,9 @@ module diffusion
     implicit none
     
     type material
-        real(kind=ieee_double), dimension(2):: tr, a, vf, kf
-        real(kind=ieee_double):: tr1to2, d1, d2
-        real(kind=ieee_double):: exposure
+        real, dimension(2):: tr, a, vf, kf
+        real:: tr1to2, d1, d2
+        real:: exposure
     end type material
     
 contains    
@@ -17,11 +17,11 @@ contains
 		type(material):: mat1
 		type(material):: mat2
 		type(material):: mat3
-		real(kind=ieee_double):: chi1, chi2, mesh_space
-		real(kind=ieee_double), allocatable:: flux1(:), flux2(:), source1(:), source2(:), p(:)
-		real(kind=ieee_double), allocatable:: flux1_last(:), flux2_last(:)
-		real(kind=ieee_double), allocatable:: mat_of_coeff1(:,:), mat_of_coeff2(:,:)
-		real(kind=ieee_double):: keff, keff_last, cjk, cjf1, cjf2
+		real:: chi1, chi2, mesh_space
+		real, allocatable:: flux1(:), flux2(:), source1(:), source2(:), p(:)
+		real, allocatable:: flux1_last(:), flux2_last(:)
+		real, allocatable:: mat_of_coeff1(:,:), mat_of_coeff2(:,:)
+		real:: keff, keff_last, cjk, cjf1, cjf2
 		
 		!-------------------------------
 		! 材料参数1, 2, 3
@@ -104,12 +104,13 @@ label2:		do while (k <= single_mesh)
 		end do
 		mat_of_coeff1(mesh, mesh) = 1
 		mat_of_coeff2(mesh, mesh) = 1
-		! 调试用途
-		!i = 1
-		!do while (i<=mesh)
-		!    print *, mat_of_coeff1(mesh,i)
-		!    i = i + 1
-		!end do
+
+		i = 1
+		print *, "mat_of_coeff1(DIA) : "
+		do while (i<=mesh)
+		    print *, mat_of_coeff1(i,i)
+		    i = i + 1
+		end do
 		
 		! 初始迭代参数和源项赋值
 		keff = 0.9
@@ -136,6 +137,15 @@ label4:		do while (i < mesh)
 			call vector_copy(mesh, flux1_last, flux1)
 			call vector_copy(mesh, flux2_last, flux2)
 			source1(mesh) = 0
+			
+			i = 1
+			print *, "source1 : "
+			do while (i<=mesh)
+		    	print *, source1(i)
+		    	i = i + 1
+			end do
+			stop
+			
 			call chase_method(mesh, mat_of_coeff1, flux1, source1, 1e-16)
 			! call seidel(mesh, mat_of_coeff1, flux1, source1, 1e-16)
 			i = 1

@@ -85,7 +85,8 @@ void diffusion_solver(int single_mesh)
     mat3.tr1to2=1.675986e-2;
     mat3.d1 = 1./(3*mat3.tr[0]);
     mat3.d2 = 1./(3*mat3.tr[1]);
-    cout << "MAT3 : " << mat3.d1 <<" , " << mat3.d2 << endl;
+    // cout << "MAT3 : " << mat3.d1 <<" , " << mat3.d2 << endl;
+    printf("MAT3 : %.12lf , %.12lf\n", mat3.d1, mat3.d2);
 
     mat = &mat3;
     chi1 = 1.0; chi2 = 0.;
@@ -126,6 +127,22 @@ void diffusion_solver(int single_mesh)
     dia[mesh-1] = 1;
     mat_of_coeff1.tds_alloc(mesh, dia, left, right);
 
+    cout << "mat_of_coeff1(DIA) : " << endl;
+    for (int i=0; i<mesh; i++) {
+        printf("%.8lf ", dia[i]);
+    }
+    printf("\n");
+    cout << "mat_of_coeff1(left) : " << endl;
+    for (int i=0; i<mesh; i++) {
+        printf("%.8lf ", left[i]);
+    }
+    printf("\n");
+    cout << "mat_of_coeff1(right) : " << endl;
+    for (int i=0; i<mesh; i++) {
+        printf("%.8lf ", right[i]);
+    }
+    printf("\n");
+
     for (int i=0; i<13; i++) {
         k = 0;
         int idx = i * single_mesh;
@@ -165,6 +182,12 @@ void diffusion_solver(int single_mesh)
         flux1_last = flux1;
         flux2_last = flux2;
         source1(mesh-1) = 0.;
+        cout << "source1 : " << endl;
+        for (int i=0; i<mesh; i++) {
+            printf("%.8lf ", source1(i));
+        }
+        printf("\n");
+        exit(0);
         mat_of_coeff1.chase_method(mesh, flux1, source1);
 
         for (int i=0; i<mesh; i++) {
@@ -204,7 +227,7 @@ int main(int argc, char *argv[])
     std::cout << "Start to perform 1D diffusion calculation"<< std::endl;
     std::cout << "-----------------------------------------"<< std::endl;
 
-    diffusion_solver(300);
+    diffusion_solver(2);
 
     return 0;
 }

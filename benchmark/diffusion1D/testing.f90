@@ -8,10 +8,10 @@ contains
 		
 		implicit none
 		integer:: i, k
-		real(kind=ieee_double):: answer, factor
-		real(kind=ieee_double), dimension(8):: a = (/0.1,0.2,0.3,0.4,0.3,0.2,0.1,0.05/)
-		real(kind=ieee_double), dimension(9, 9):: mat
-		real(kind=ieee_double), dimension(9):: x, b
+		real:: answer, factor
+		real, dimension(8):: a = (/0.1,0.2,0.3,0.4,0.3,0.2,0.1,0.05/)
+		real, dimension(9, 9):: mat
+		real, dimension(9):: x, b
 		
 		answer = max_norm(8,a)
 		print *,"max norm of a is ",answer
@@ -45,14 +45,14 @@ contains
 	
 	subroutine my_testing2()
         implicit none
-        real(kind=ieee_double), dimension(10):: a=(/1,2,3,4,5,6,7,8,9,10/)
+        real, dimension(10):: a=(/1,2,3,4,5,6,7,8,9,10/)
         
         print *, "sum of a = ", sum(a)
     end subroutine my_testing2
     
     subroutine my_testing3()
         implicit none
-        real(kind=ieee_double):: a, b
+        real:: a, b
         
         a = 1e-32
         b = 1e-33
