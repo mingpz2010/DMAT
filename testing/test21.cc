@@ -127,6 +127,7 @@ void diffusion_solver(int single_mesh)
     dia[mesh-1] = 1;
     mat_of_coeff1.tds_alloc(mesh, dia, left, right);
 
+#if 0
     cout << "mat_of_coeff1(DIA) : " << endl;
     printf("%.16lf %.16lf %.16lf", dia[0], dia[mesh/2], dia[mesh-1]);
     printf("\n");
@@ -136,6 +137,7 @@ void diffusion_solver(int single_mesh)
     cout << "mat_of_coeff1(right) : " << endl;
     printf("%.16lf %.16lf %.16lf", right[0], right[mesh/2], right[mesh-1]);
     printf("\n");
+#endif
 
     for (int i=0; i<13; i++) {
         k = 0;
@@ -176,14 +178,17 @@ void diffusion_solver(int single_mesh)
         flux1_last = flux1;
         flux2_last = flux2;
         source1(mesh-1) = 0.;
+#if 0
         cout << "source1 : " << endl;
         printf("%.16lf %.16lf %.16lf", source1[0], source1[mesh/2], source1[mesh-1]);
         printf("\n");
+#endif
         mat_of_coeff1.chase_method(mesh, flux1, source1);
+#if 1
         cout << "flux1 : " << endl;
         printf("%.16lf %.16lf %.16lf", flux1[0], flux1[mesh/2], flux1[mesh-1]);
         printf("\n");
-
+#endif
         for (int i=0; i<mesh; i++) {
             source2(i) = (chi2*p(i))/keff + mat->tr1to2 * flux1(i);
         }
@@ -199,7 +204,7 @@ void diffusion_solver(int single_mesh)
         itr = itr + 1;
         cjf1 = max_NRM2<double>(mesh, flux1, flux1_last);
         cjf2 = max_NRM2<double>(mesh, flux2, flux2_last);
-        if (itr == 4) {
+        if (itr == 2) {
             exit(0);
         }
         printf("itr = %d: keff = %.8lf, CJK = %.4le, CJF1 = %.4le, CJF2 = %.4le\n",

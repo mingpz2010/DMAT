@@ -210,6 +210,16 @@ contains
             i = i + 1
         end do
         
+        print *, "dia(i) : "
+		print *, dia(1)
+		print *, dia(n)
+		print *, "aa(i) : "
+		print *, aa(1)
+		print *, aa(n)
+		print *, "c(i) : "
+		print *, c(1)
+		print *, c(n)
+        
         beta(1) = dia(1)
         x(1) = b(1)
         i = 2
