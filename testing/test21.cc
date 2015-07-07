@@ -180,6 +180,9 @@ void diffusion_solver(int single_mesh)
         printf("%.16lf %.16lf %.16lf", source1[0], source1[mesh/2], source1[mesh-1]);
         printf("\n");
         mat_of_coeff1.chase_method(mesh, flux1, source1);
+        cout << "flux1 : " << endl;
+        printf("%.16lf %.16lf %.16lf", flux1[0], flux1[mesh/2], flux1[mesh-1]);
+        printf("\n");
 
         for (int i=0; i<mesh; i++) {
             source2(i) = (chi2*p(i))/keff + mat->tr1to2 * flux1(i);
