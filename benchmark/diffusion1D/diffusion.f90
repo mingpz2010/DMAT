@@ -97,11 +97,11 @@ label2:		do while (k <= single_mesh)
 		    i = i + 1
 		end do
 		i = 1
-		do while (i<=mesh)
-		    mat_of_coeff1(mesh,i) = 0
-		    mat_of_coeff2(mesh,i) = 0
-		    i = i + 1
-		end do
+		!do while (i<=mesh)
+		!    mat_of_coeff1(mesh,i) = 0
+		!    mat_of_coeff2(mesh,i) = 0
+		!    i = i + 1
+		!end do
 		mat_of_coeff1(mesh, mesh) = 1
 		mat_of_coeff2(mesh, mesh) = 1
 
