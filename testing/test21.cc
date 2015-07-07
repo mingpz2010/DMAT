@@ -184,7 +184,7 @@ void diffusion_solver(int single_mesh)
         printf("\n");
 #endif
         mat_of_coeff1.chase_method(mesh, flux1, source1);
-#if 1
+#if 0
         cout << "flux1 : " << endl;
         printf("%.16lf %.16lf %.16lf", flux1[0], flux1[mesh/2], flux1[mesh-1]);
         printf("\n");
@@ -204,9 +204,11 @@ void diffusion_solver(int single_mesh)
         itr = itr + 1;
         cjf1 = max_NRM2<double>(mesh, flux1, flux1_last);
         cjf2 = max_NRM2<double>(mesh, flux2, flux2_last);
+#if 0
         if (itr == 2) {
             exit(0);
         }
+#endif
         printf("itr = %d: keff = %.8lf, CJK = %.4le, CJF1 = %.4le, CJF2 = %.4le\n",
                 itr-1, keff, cjk, cjf1, cjf2);
     }

@@ -275,12 +275,14 @@ void SparseMatrix<T>::chase_method(integer_t N, Vector_hpc<T> &x, Vector_hpc<T> 
         exit(-1);
     }
 
+#if 0
     std::cout << "val : " << std::endl;
     printf("%.16lf %.16lf\n", val[0], val[N-1]);
     std::cout << "left : " << std::endl;
     printf("%.16lf %.16lf\n", left_val[0], left_val[N-1]);
     std::cout << "right : " << std::endl;
     printf("%.16lf %.16lf\n", right_val[0], right_val[N-1]);
+#endif
     beta[0] = val[0];
     x(0) = b(0);
     for (int i=1; i<N; i++) {
@@ -356,7 +358,7 @@ void SparseMatrix<T>::tds_alloc(integer_t N, T *dia, T *left, T *right)
             left_val[i] = left[i];
             right_val[i] = right[i];
         }
-        val[0] = dia[i];  val[N-1] = dia[N-1];
+        val[0] = dia[0];  val[N-1] = dia[N-1];
         left_val[0] = 0;  left_val[N-1] = left[N-1];
         right_val[0] = right[0];  right_val[N-1] = 0;
     }
