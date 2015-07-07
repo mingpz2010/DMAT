@@ -105,12 +105,18 @@ label2:		do while (k <= single_mesh)
 		mat_of_coeff1(mesh, mesh) = 1
 		mat_of_coeff2(mesh, mesh) = 1
 
-		i = 1
 		print *, "mat_of_coeff1(DIA) : "
-		do while (i<=mesh)
-		    print *, mat_of_coeff1(i,i)
-		    i = i + 1
-		end do
+		print *, mat_of_coeff1(1,1)
+		print *, mat_of_coeff1(mesh/2,mesh/2)
+		print *, mat_of_coeff1(mesh,mesh)
+		print *, "mat_of_coeff1(left) : "
+		print *, mat_of_coeff1(2,1)
+		print *, mat_of_coeff1(mesh/2,mesh/2-1)
+		print *, mat_of_coeff1(mesh,mesh-1)
+		print *, "mat_of_coeff1(right) : "
+		print *, mat_of_coeff1(1,2)
+		print *, mat_of_coeff1(mesh/2,mesh/2+1)
+		print *, mat_of_coeff1(mesh-1,mesh)
 		
 		! 初始迭代参数和源项赋值
 		keff = 0.9
@@ -138,12 +144,10 @@ label4:		do while (i < mesh)
 			call vector_copy(mesh, flux2_last, flux2)
 			source1(mesh) = 0
 			
-			i = 1
 			print *, "source1 : "
-			do while (i<=mesh)
-		    	print *, source1(i)
-		    	i = i + 1
-			end do
+		   	print *, source1(1)
+		   	print *, source1(mesh/2)
+		   	print *, source1(mesh)
 			stop
 			
 			call chase_method(mesh, mat_of_coeff1, flux1, source1, 1e-16)

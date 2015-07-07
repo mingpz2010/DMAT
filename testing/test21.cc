@@ -128,19 +128,13 @@ void diffusion_solver(int single_mesh)
     mat_of_coeff1.tds_alloc(mesh, dia, left, right);
 
     cout << "mat_of_coeff1(DIA) : " << endl;
-    for (int i=0; i<mesh; i++) {
-        printf("%.16lf ", dia[i]);
-    }
+    printf("%.16lf %.16lf %.16lf", dia[0], dia[mesh/2], dia[mesh-1]);
     printf("\n");
     cout << "mat_of_coeff1(left) : " << endl;
-    for (int i=0; i<mesh; i++) {
-        printf("%.16lf ", left[i]);
-    }
+    printf("%.16lf %.16lf %.16lf", left[0], left[mesh/2], left[mesh-1]);
     printf("\n");
     cout << "mat_of_coeff1(right) : " << endl;
-    for (int i=0; i<mesh; i++) {
-        printf("%.16lf ", right[i]);
-    }
+    printf("%.16lf %.16lf %.16lf", right[0], right[mesh/2], right[mesh-1]);
     printf("\n");
 
     for (int i=0; i<13; i++) {
@@ -183,9 +177,7 @@ void diffusion_solver(int single_mesh)
         flux2_last = flux2;
         source1(mesh-1) = 0.;
         cout << "source1 : " << endl;
-        for (int i=0; i<mesh; i++) {
-            printf("%.16lf ", source1(i));
-        }
+        printf("%.16lf %.16lf %.16lf", source1[0], source1[mesh/2], source1[mesh-1]);
         printf("\n");
         exit(0);
         mat_of_coeff1.chase_method(mesh, flux1, source1);
