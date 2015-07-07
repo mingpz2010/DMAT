@@ -148,7 +148,6 @@ label4:		do while (i < mesh)
 		   	print *, source1(1)
 		   	print *, source1(mesh/2)
 		   	print *, source1(mesh)
-			stop
 			
 			call chase_method(mesh, mat_of_coeff1, flux1, source1, 1e-16)
 			! call seidel(mesh, mat_of_coeff1, flux1, source1, 1e-16)
