@@ -129,17 +129,17 @@ void diffusion_solver(int single_mesh)
 
     cout << "mat_of_coeff1(DIA) : " << endl;
     for (int i=0; i<mesh; i++) {
-        printf("%.8lf ", dia[i]);
+        printf("%.16lf ", dia[i]);
     }
     printf("\n");
     cout << "mat_of_coeff1(left) : " << endl;
     for (int i=0; i<mesh; i++) {
-        printf("%.8lf ", left[i]);
+        printf("%.16lf ", left[i]);
     }
     printf("\n");
     cout << "mat_of_coeff1(right) : " << endl;
     for (int i=0; i<mesh; i++) {
-        printf("%.8lf ", right[i]);
+        printf("%.16lf ", right[i]);
     }
     printf("\n");
 
@@ -184,7 +184,7 @@ void diffusion_solver(int single_mesh)
         source1(mesh-1) = 0.;
         cout << "source1 : " << endl;
         for (int i=0; i<mesh; i++) {
-            printf("%.8lf ", source1(i));
+            printf("%.16lf ", source1(i));
         }
         printf("\n");
         exit(0);
