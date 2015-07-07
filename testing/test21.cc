@@ -196,6 +196,9 @@ void diffusion_solver(int single_mesh)
         itr = itr + 1;
         cjf1 = max_NRM2<double>(mesh, flux1, flux1_last);
         cjf2 = max_NRM2<double>(mesh, flux2, flux2_last);
+        if (itr == 4) {
+            exit(0);
+        }
         printf("itr = %d: keff = %.8lf, CJK = %.4le, CJF1 = %.4le, CJF2 = %.4le\n",
                 itr-1, keff, cjk, cjf1, cjf2);
     }

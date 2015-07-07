@@ -173,6 +173,9 @@ label6:		do while (i <= mesh)
 			cjf1 = max_norm2(mesh, flux1, flux1_last)
 			cjf2 = max_norm2(mesh, flux2, flux2_last)
 			itr = itr + 1
+			if (itr == 4) then
+			    stop
+			end if
 			print *,"itr = ", itr-1, ": keff = ", keff, ", CJK = ", cjk &
 			        , "CJF1 = ", cjf1, "CJF2 = ", cjf2
 		end do label3
