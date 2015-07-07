@@ -275,11 +275,11 @@ void SparseMatrix<T>::chase_method(integer_t N, Vector_hpc<T> &x, Vector_hpc<T> 
         exit(-1);
     }
 
-    cout << "val : " << endl;
+    std::cout << "val : " << std::endl;
     printf("%.16lf %.16lf\n", val[0], val[N-1]);
-    cout << "left : " << endl;
+    std::cout << "left : " << std::endl;
     printf("%.16lf %.16lf\n", left_val[0], left_val[N-1]);
-    cout << "right : " << endl;
+    std::cout << "right : " << std::endl;
     printf("%.16lf %.16lf\n", right_val[0], right_val[N-1]);
     beta[0] = val[0];
     x(0) = b(0);
