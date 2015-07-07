@@ -1,4 +1,7 @@
 test program illustration:
+(Some test program need third party library, so you should install benchmark/
+ directory library Eigen and Trilinos first. After installed, the library is
+ located in /lib directory.)
 test01        Basic testing for Vector_hpc class
 test02        Effiency testing of Vector_hpc class
 test03        Basic testing for Matrix_hpc class
@@ -20,5 +23,8 @@ test18        Effiency testing of Stencil3D class
 test19        Integrated testing example1, simplified MC neutron calculation
 test20        Integrated testing example2, using DMAT to optimize test19
 test21        Integrated testing example3, 1D neutron diffusion calculation(FDM Method)
-test22        < Continued to thinking...... >
+test22        Paper: DMAT efficiency testing example1
+test23        Paper: DMAT efficiency testing example2
+test24        Paper: DMAT efficiency testing example3
+
 
