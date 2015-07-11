@@ -19,7 +19,7 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
-#include "../src/Dimscal.h"
+// #include "../lib/trilinos_install/*.h"
 
 #define SIZEA   10
 #define SIZEB   20
@@ -35,8 +35,8 @@ double now()
 int main(int argc, char *argv[])
 {
     double start, end;
-    Dimscal x<double>(SIZEA, SIZEB, SIZEC);
-    Dimscal y<double>(SIZEA, SIZEB, SIZEC);
+    double x[SIZEA][SIZEB][SIZEC];
+    double y[SIZEA][SIZEB][SIZEC];
 
     start = now();
     x = y;

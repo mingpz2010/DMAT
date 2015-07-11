@@ -19,11 +19,13 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
-#include "../src/Dimscal.h"
+#include "../lib/eigen_install/Eigen/Core"
 
 #define SIZEA   10
 #define SIZEB   20
 #define SIZEC   5
+
+using namespace Eigen;
 
 double now()
 {
@@ -35,11 +37,17 @@ double now()
 int main(int argc, char *argv[])
 {
     double start, end;
-    Dimscal x<double>(SIZEA, SIZEB, SIZEC);
-    Dimscal y<double>(SIZEA, SIZEB, SIZEC);
+    MatrixXd *x[SIZEA];
+    MatrixXd *y[SIZEA];
+    for (int i=0; i<SIZEA; i++) {
+        x[i] = new MatrixXd(SIZEB, SIZEC);
+        y[i] = new MatrixXd(SIZEB, SIZEC);
+    }
 
     start = now();
-    x = y;
+    for (int i=0; i<SIZEA; i++) {
+        (*x[i]) = (*y[i]);
+    }
     end = now();
 
     std::cout<<"Operation 1(assignment_Eigen) cost time "<< end-start <<" (s)" << std::endl;
