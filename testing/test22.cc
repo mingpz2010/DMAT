@@ -18,9 +18,30 @@
 
 #include <iostream>
 #include <cstdio>
+#include <ctime>
+#include "../src/Dimscal.h"
+
+#define SIZEA   10
+#define SIZEB   20
+#define SIZEC   5
+
+double now()
+{
+    std::clock_t t = clock();
+
+    return static_cast<double>(t)/CLOCKS_PER_SEC;
+}
 
 int main(int argc, char *argv[])
 {
+    double start, end;
+    Dimscal x<double>(SIZEA, SIZEB, SIZEC);
+    Dimscal y<double>(SIZEA, SIZEB, SIZEC);
+
+    start = now();
+    x = y;
+    end = now();
+
     return 0;
 }
 

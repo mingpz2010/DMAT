@@ -18,9 +18,31 @@
 
 #include <iostream>
 #include <cstdio>
+#include <ctime>
+#include "../src/Dimscal.h"
+
+#define SIZEA   10
+#define SIZEB   20
+#define SIZEC   5
+
+double now()
+{
+    std::clock_t t = clock();
+
+    return static_cast<double>(t)/CLOCKS_PER_SEC;
+}
 
 int main(int argc, char *argv[])
 {
+    double start, end;
+    Dimscal x<double>(SIZEA, SIZEB, SIZEC);
+
+    start = now();
+    x.blas_testing(a,b,c);
+    end = now();
+
+    std::cout<<"Operation 2(arithmetic) cost time "<< end-start <<" (s)" << std::endl;
+
     return 0;
 }
 

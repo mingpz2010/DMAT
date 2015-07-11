@@ -36,6 +36,7 @@ public:
     Stencil3D(stencil3d_func, integer_t, integer_t, integer_t);
 
     void stencil_reg(stencil3d_func f);
+    void stencil_reg(integer_t num, integer_t position[][3]);
     void boundary(stencil3d_func);
 
     void run();
