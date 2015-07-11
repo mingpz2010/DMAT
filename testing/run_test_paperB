@@ -1,0 +1,12 @@
+#!/bin/sh
+CPP=g++
+FLAGS=-O2
+
+echo "start to run testing based on GNU compiler g++"
+$CPP $FLAGS test22.cc -o test22
+$CPP $FLAGS test22_eigen.cc -o test22_e
+$CPP $FLAGS test22_trilinos.cc -o test22_t
+
+./test22
+./test22_e
+./test22_t
