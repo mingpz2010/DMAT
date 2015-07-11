@@ -19,7 +19,7 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
-#include "../src/Dimscal.h"
+#include "../lib/eigen_install/Eigen/Core"
 
 #define SIZEA   10
 #define SIZEB   20
@@ -35,13 +35,24 @@ double now()
 int main(int argc, char *argv[])
 {
     double start, end;
-    Dimscal x<double>(SIZEA, SIZEB, SIZEC);
+    double a = 0.9, b = 1e-10, c = 2.5;
+
+    MatrixXd *x[SIZEA];
+    for (int i=0; i<SIZEA; i++) {
+        x[i] = new MatrixXd(SIZEB, SIZEC);
+    }
 
     start = now();
-    x.blas_testing(a,b,c);
+    for (int i=0; i<SIZEA; i++) {
+        for (int j=0; j<SIZEB; j++) {
+            for (int k=0; k<SIZEC; k++) {
+                (*x[i])(j,k) = ((*x[i])(j,k) * a + b) / c;
+            }
+        }
+    }
     end = now();
 
-    std::cout<<"Operation 2(arithmetic) cost time "<< end-start <<" (s)" << std::endl;
+    std::cout<<"Operation 2(arithmetic_eigen) cost time "<< end-start <<" (s)" << std::endl;
 
     return 0;
 }

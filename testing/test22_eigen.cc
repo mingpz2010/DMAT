@@ -37,6 +37,8 @@ double now()
 int main(int argc, char *argv[])
 {
     double start, end;
+    double a = 0.9, b = 1e-10, c = 2.5;
+
     MatrixXd *x[SIZEA];
     MatrixXd *y[SIZEA];
     for (int i=0; i<SIZEA; i++) {

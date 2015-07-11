@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
     stencil.run();
     end = now();
 
-    std::cout<<"Operation 3(Stencil3D) cost time "<< end-start <<" (s)" << std::endl;
+    std::cout<<"Operation 3(Stencil3D_trilinos) cost time "<< end-start <<" (s)" << std::endl;
 
     return 0;
 }

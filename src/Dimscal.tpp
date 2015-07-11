@@ -41,6 +41,18 @@ Dimscal<T>::Dimscal(integer_t m, integer_t n, integer_t k)
 }
 
 template <typename T>
+void Dimscal<T>::blas_op(T a, T b, T c)
+{
+    if (c == 0)  return;
+
+    for (integer_t i=0; i<Vector_hpc<T>::dim_; i++) {
+        Vector_hpc<T>::p_[i] *= a;
+        Vector_hpc<T>::p_[i] += b;
+        Vector_hpc<T>::p_[i] /= c;
+    }
+}
+
+template <typename T>
 T Dimscal<T>::maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim3)
 {
     if (Vector_hpc<T>::dim_ <= 0) {

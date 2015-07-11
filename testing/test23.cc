@@ -35,10 +35,11 @@ double now()
 int main(int argc, char *argv[])
 {
     double start, end;
+    double a = 0.9, b = 1e-10, c = 2.5;
     Dimscal x<double>(SIZEA, SIZEB, SIZEC);
 
     start = now();
-    x.blas_testing(a,b,c);
+    x.blas_op(a,b,c);
     end = now();
 
     std::cout<<"Operation 2(arithmetic) cost time "<< end-start <<" (s)" << std::endl;

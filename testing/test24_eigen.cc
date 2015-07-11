@@ -49,22 +49,24 @@ void stencil_calc(Dimscal<T>& d)
 int main(int argc, char *argv[])
 {
     double start, end;
-    Stencil3D stencil<double>(SIZEA, SIZEB, SIZEC);
-    long pos[6][3] = {{-1,0,0},{1,0,0},{0,-1,0},{0,1,0},{0,0,-1},{0,0,1}};
+    MatrixXd *x[SIZEA];
 
-#if 0
-    // Original Manner
-    stencil.stencil_reg(stencil_calc);
-#endif
-
-    // New Manner
-    stencil.stencil_reg(6, pos);
+    for (int i=0; i<SIZEA; i++) {
+        x[i] = new MatrixXd(SIZEB, SIZEC);
+    }
 
     start = now();
-    stencil.run();
+    for(int i=0; i<SIZEA; i++) {
+        for (int j=0; j<SIZEB; j++) {
+            for (int k=0; k<SIZEC; k++) {
+                (*x[i])(j,k) = (1.0/6)*((*x[i-1])(j,k)+(*x[i+1])(j,k)+(*x[i])(j+1,k)+
+                        (*x[i])(j-1,k)+(*x[i])(j,k+1)+(*x[i])(j,k-1));
+            }
+        }
+    }
     end = now();
 
-    std::cout<<"Operation 3(Stencil3D) cost time "<< end-start <<" (s)" << std::endl;
+    std::cout<<"Operation 3(Stencil3D_eigen) cost time "<< end-start <<" (s)" << std::endl;
 
     return 0;
 }

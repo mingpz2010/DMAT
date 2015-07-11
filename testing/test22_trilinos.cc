@@ -19,7 +19,7 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
-// #include "../lib/trilinos_install/*.h"
+#include "../lib/trilinos_install/include/Trilinos_version.h"
 
 #define SIZEA   10
 #define SIZEB   20
