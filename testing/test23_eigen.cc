@@ -26,6 +26,8 @@
 #define SIZEB   200
 #define SIZEC   200
 
+using namespace Eigen;
+
 double now()
 {
     std::clock_t t = clock();
