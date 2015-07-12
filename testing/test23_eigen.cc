@@ -20,6 +20,7 @@
 #include <cstdio>
 #include <ctime>
 #include "../lib/eigen_install/include/eigen3/Eigen/Core"
+#include "../lib/eigen_install/include/eigen3/Eigen/Dense"
 
 #define SIZEA   100
 #define SIZEB   200
@@ -40,6 +41,13 @@ int main(int argc, char *argv[])
     MatrixXd *x[SIZEA];
     for (int i=0; i<SIZEA; i++) {
         x[i] = new MatrixXd(SIZEB, SIZEC);
+    }
+    for (int i=0; i<SIZEA; i++) {
+        for (int j=0; j<SIZEB; j++) {
+            for (int k=0; k<SIZEC; k++) {
+                (*x[i])(j,k) = random();
+            }
+        }
     }
 
     start = now();

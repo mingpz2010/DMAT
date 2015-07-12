@@ -38,6 +38,14 @@ int main(int argc, char *argv[])
     double a = 0.9, b = 1e-10, c = 2.5;
     Dimscal<double> x(SIZEA, SIZEB, SIZEC);
 
+    for (int i=0; i<SIZEA; i++) {
+        for (int j=0; j<SIZEB; j++) {
+            for (int k=0; k<SIZEC; k++) {
+                x(i,j,k) = random();
+            }
+        }
+    }
+
     start = now();
     x.blas_op(a,b,c);
     end = now();
