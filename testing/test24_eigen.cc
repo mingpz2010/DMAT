@@ -19,7 +19,7 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
-#include "../lib/eigen_install/include/Eigen3/Eigen/Core"
+#include "../lib/eigen_install/include/eigen3/Eigen/Core"
 
 #define SIZEA   10
 #define SIZEB   20
@@ -30,20 +30,6 @@ double now()
     std::clock_t t = clock();
 
     return static_cast<double>(t)/CLOCKS_PER_SEC;
-}
-
-template <typename T>
-void stencil_calc(Dimscal<T>& d)
-{
-    // Original Manner
-    for(int i=0; i<d.dim1(); i++) {
-        for (int j=0; j<d.dim2(); j++) {
-            for (int k=0; k<d.dim3(); k++) {
-                d(i,j,k) = (1.0/6)*(d(i-1,j,k)+d(i+1,j,k)+d(i,j+1,k)+
-                        d(i,j-1,k)+d(i,j,k+1)+d(i,j,k-1));
-            }
-        }
-    }
 }
 
 int main(int argc, char *argv[])

@@ -19,11 +19,11 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
-#include "../lib/eigen_install/Eigen/Core"
+#include "../lib/eigen_install/include/eigen3/Eigen/Core"
 
-#define SIZEA   10
-#define SIZEB   20
-#define SIZEC   5
+#define SIZEA   100
+#define SIZEB   200
+#define SIZEC   200
 
 double now()
 {

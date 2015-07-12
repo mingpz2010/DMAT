@@ -19,11 +19,11 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
-#include "../lib/eigen_install/include/Eigen3/Eigen/Core"
+#include "../src/Dimscal.h"
 
-#define SIZEA   10
-#define SIZEB   20
-#define SIZEC   5
+#define SIZEA   100
+#define SIZEB   200
+#define SIZEC   200
 
 double now()
 {
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 {
     double start, end;
     double a = 0.9, b = 1e-10, c = 2.5;
-    Dimscal x<double>(SIZEA, SIZEB, SIZEC);
+    Dimscal<double> x(SIZEA, SIZEB, SIZEC);
 
     start = now();
     x.blas_op(a,b,c);
