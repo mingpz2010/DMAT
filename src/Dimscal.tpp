@@ -59,7 +59,7 @@ T Dimscal<T>::maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim3)
         dim1 = dim2 = dim3 = -1;
         return 0.;
     }
-    if (dim_ == 1) {
+    if (Vector_hpc<T>::dim_ == 1) {
         dim1 = dim2 = dim3 = 0;
         return Vector_hpc<T>::p_[0];
     }
