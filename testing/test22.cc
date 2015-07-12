@@ -35,8 +35,8 @@ double now()
 int main(int argc, char *argv[])
 {
     double start, end;
-    Dimscal x<double>(SIZEA, SIZEB, SIZEC);
-    Dimscal y<double>(SIZEA, SIZEB, SIZEC);
+    Dimscal<double> x(SIZEA, SIZEB, SIZEC);
+    Dimscal<double> y(SIZEA, SIZEB, SIZEC);
 
     start = now();
     x = y;
