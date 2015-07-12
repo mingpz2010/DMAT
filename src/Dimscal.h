@@ -54,6 +54,8 @@ public:
         }
     }
 
+    Dimscal<T> & operator=(const Dimscal<T>&);
+
     // common functions
     T maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim3);
     void blas_op(T a, T b, T c);

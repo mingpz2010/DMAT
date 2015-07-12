@@ -87,6 +87,14 @@ T Dimscal<T>::maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim3)
 }
 
 template <typename T>
+Dimscal<T>& Dimscal<T>::operator=(const Dimscal<T>& M)
+{
+    for (integer_t i=0; i<Vector_hpc<T>::dim_; i++) {
+        Vector_hpc<T>::p_[i] = M.Vector_hpc<T>::p_[i];
+    }
+}
+
+template <typename T>
 std::ostream& operator<<(std::ostream &s, const Dimscal<T> &M)
 {
     integer_t N = M.size();
