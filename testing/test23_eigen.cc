@@ -24,7 +24,7 @@
 
 #define SIZEA   100
 #define SIZEB   200
-#define SIZEC   20000
+#define SIZEC   8000
 
 using namespace Eigen;
 
