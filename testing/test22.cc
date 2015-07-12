@@ -21,7 +21,7 @@
 #include <ctime>
 #include "../src/Dimscal.h"
 
-#define SIZEA   10
+#define SIZEA   100
 #define SIZEB   200
 #define SIZEC   50
 
