@@ -19,7 +19,7 @@
 #include <iostream>
 #include <cstdio>
 #include <ctime>
-#include "../src/Dimscal.h"
+#include "../lib/eigen_install/include/Eigen3/Eigen/Core"
 
 #define SIZEA   10
 #define SIZEB   20
