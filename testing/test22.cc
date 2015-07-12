@@ -23,7 +23,7 @@
 
 #define SIZEA   100
 #define SIZEB   200
-#define SIZEC   4000
+#define SIZEC   2000
 
 double now()
 {
