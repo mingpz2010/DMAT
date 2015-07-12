@@ -42,6 +42,7 @@ int main(int argc, char *argv[])
     for (int i=0; i<SIZEA; i++) {
         x[i] = new MatrixXd(SIZEB, SIZEC);
     }
+
     for (int i=0; i<SIZEA; i++) {
         for (int j=0; j<SIZEB; j++) {
             for (int k=0; k<SIZEC; k++) {
