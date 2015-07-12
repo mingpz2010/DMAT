@@ -21,9 +21,9 @@
 #include <ctime>
 #include "../src/Stencil3D.h"
 
-#define SIZEA   10
-#define SIZEB   20
-#define SIZEC   5
+#define SIZEA   100
+#define SIZEB   200
+#define SIZEC   200
 
 double now()
 {
