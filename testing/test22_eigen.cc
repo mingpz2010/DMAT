@@ -20,6 +20,7 @@
 #include <cstdio>
 #include <ctime>
 #include "../lib/eigen_install/include/eigen3/Eigen/Core"
+#include "../lib/eigen_install/include/eigen3/Eigen/Dense"
 
 #define SIZEA   100
 #define SIZEB   200
