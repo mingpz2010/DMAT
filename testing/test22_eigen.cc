@@ -45,6 +45,13 @@ int main(int argc, char *argv[])
         x[i] = new MatrixXd(SIZEB, SIZEC);
         y[i] = new MatrixXd(SIZEB, SIZEC);
     }
+    for (int i=0; i<SIZEA; i++) {
+        for (int j=0; j<SIZEB; j++) {
+            for (int k=0; k<SIZEC; k++) {
+                (*y[i])(j,k) = random();
+            }
+        }
+    }
 
     start = now();
     for (int i=0; i<SIZEA; i++) {
@@ -52,7 +59,8 @@ int main(int argc, char *argv[])
     }
     end = now();
 
-    std::cout<<"Operation 1(assignment_Eigen) cost time "<< end-start <<" (s)" << std::endl;
+    // std::cout<<"Operation 1(assignment_Eigen) cost time "<< end-start <<" (s)" << std::endl;
+    printf("Operation 1(assignment_eigen) cost time %.10lf\n", end - start);
 
     return 0;
 }
