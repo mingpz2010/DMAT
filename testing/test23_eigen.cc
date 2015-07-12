@@ -22,9 +22,9 @@
 #include "../lib/eigen_install/include/eigen3/Eigen/Core"
 #include "../lib/eigen_install/include/eigen3/Eigen/Dense"
 
-#define SIZEA   200
+#define SIZEA   100
 #define SIZEB   200
-#define SIZEC   2000
+#define SIZEC   20000
 
 using namespace Eigen;
 

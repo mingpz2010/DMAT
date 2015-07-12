@@ -21,9 +21,9 @@
 #include <ctime>
 #include "../src/Dimscal.h"
 
-#define SIZEA   200
+#define SIZEA   100
 #define SIZEB   200
-#define SIZEC   2000
+#define SIZEC   20000
 
 double now()
 {
