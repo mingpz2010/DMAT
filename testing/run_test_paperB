@@ -7,13 +7,10 @@ $CPP $FLAGS test22.cc -o test22
 $CPP $FLAGS test22_eigen.cc -o test22_e
 $CPP $FLAGS test23.cc -o test23
 $CPP $FLAGS test23_eigen.cc -o test23_e
-$CPP $FLAGS test24.cc -o test24
-$CPP $FLAGS test24_eigen.cc -o test24_e
 
 
 ./test22
 ./test22_e
 ./test23
 ./test23_e
-./test24
-./test24_e
+
