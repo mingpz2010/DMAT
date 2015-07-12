@@ -52,7 +52,8 @@ int main(int argc, char *argv[])
     }
     end = now();
 
-    std::cout<<"Operation 3(Stencil3D_eigen) cost time "<< end-start <<" (s)" << std::endl;
+    // std::cout<<"Operation 3(Stencil3D_eigen) cost time "<< end-start <<" (s)" << std::endl;
+    printf("Operation 3(Stencil3D_eigen) cost time %.8lf\n", end - start);
 
     return 0;
 }

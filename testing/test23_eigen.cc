@@ -52,7 +52,8 @@ int main(int argc, char *argv[])
     }
     end = now();
 
-    std::cout<<"Operation 2(arithmetic_eigen) cost time "<< end-start <<" (s)" << std::endl;
+    // std::cout<<"Operation 2(arithmetic_eigen) cost time "<< end-start <<" (s)" << std::endl;
+    printf("Operation 2(arithmetic_eigen) cost time %.8lf\n", end-start);
 
     return 0;
 }

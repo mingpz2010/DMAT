@@ -42,7 +42,8 @@ int main(int argc, char *argv[])
     x.blas_op(a,b,c);
     end = now();
 
-    std::cout<<"Operation 2(arithmetic) cost time "<< end-start <<" (s)" << std::endl;
+    // std::cout<<"Operation 2(arithmetic) cost time "<< end-start <<" (s)" << std::endl;
+    printf("Operation 2(arithmetic) cost time %.8lf\n", end-start);
 
     return 0;
 }
