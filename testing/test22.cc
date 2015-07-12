@@ -22,7 +22,7 @@
 #include "../src/Dimscal.h"
 
 #define SIZEA   10
-#define SIZEB   20
+#define SIZEB   200
 #define SIZEC   50
 
 double now()
@@ -37,6 +37,14 @@ int main(int argc, char *argv[])
     double start, end;
     Dimscal<double> x(SIZEA, SIZEB, SIZEC);
     Dimscal<double> y(SIZEA, SIZEB, SIZEC);
+
+    for (int i=0; i<SIZEA; i++) {
+        for (int j=0; j<SIZEB; j++) {
+            for (int k=0; k<SIZEC; k++) {
+                y(i,j,k) = random();
+            }
+        }
+    }
 
     start = now();
     x = y;
