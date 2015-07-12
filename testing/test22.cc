@@ -23,7 +23,7 @@
 
 #define SIZEA   10
 #define SIZEB   20
-#define SIZEC   5
+#define SIZEC   50
 
 double now()
 {
@@ -42,7 +42,8 @@ int main(int argc, char *argv[])
     x = y;
     end = now();
 
-    std::cout<<"Operation 1(assignment) cost time "<< end-start <<" (s)" << std::endl;
+    // std::cout<<"Operation 1(assignment) cost time "<< end-start <<" (s)" << std::endl;
+    printf("Operation 1(assignment) cost time %.10lf\n", end - start);
 
     return 0;
 }
