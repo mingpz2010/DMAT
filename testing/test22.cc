@@ -42,6 +42,8 @@ int main(int argc, char *argv[])
     x = y;
     end = now();
 
+    std::cout<<"Operation 1(assignment) cost time "<< end-start <<" (s)" << std::endl;
+
     return 0;
 }
 
