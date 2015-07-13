@@ -60,6 +60,7 @@ public:
         }
     }
 
+    inline T *ptr() { return Vector_hpc<T>::p_; }
     inline integer_t size() const { return Vector_hpc<T>::dim_;}
     inline integer_t dim() const { return Vector_hpc<T>::dim_;}
     inline integer_t dim1() const { return dim1_;}
@@ -72,6 +73,16 @@ public:
         }
     }
     inline void set_nonzero(integer_t n) { nonzeroes = n; }
+
+    // BLAS cutting and implementation
+    void blas_op(T a, T b, T c);
+    void swap(const Matrix_hpc<T>& M);
+    void scal(T a);
+    void copy(const Matrix_hpc<T>& M);
+    T dot(const Matrix_hpc<T>& M);
+    T nrm2();
+    T asum();
+    T iamax();
 
     Matrix_hpc<T> & newsize(integer_t, integer_t);
     Matrix_hpc<T> & operator=(const Matrix_hpc<T>&);

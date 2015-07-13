@@ -123,6 +123,16 @@ public:
     T min();
     T mean();
 
+    // BLAS cutting and implementation
+    void blas_op(T a, T b, T c);
+    void swap(const Matrix_hpc<T>& M);
+    void scal(T a);
+    void copy(const Matrix_hpc<T>& M);
+    T dot(const Matrix_hpc<T>& M);
+    T nrm2();
+    T asum();
+    T iamax();
+
     // something related to Fortran
     void copyFortran(int ref, T *, INTEGER dim);
 

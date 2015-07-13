@@ -81,9 +81,7 @@ Matrix_hpc<T>::Matrix_hpc(matrix_manner_t type, integer_t m, integer_t n)
 template <typename T>
 Matrix_hpc<T>::~Matrix_hpc()
 {
-#ifdef DEBUG
-    std::cout << "Matrix_hpc destructor"<< std::endl;
-#endif
+
 }
 
 template <typename T>
@@ -106,6 +104,18 @@ Matrix_hpc<T>& Matrix_hpc<T>::newsize(integer_t m, integer_t n)
     nonzeroes = 0;
 
     return *this;
+}
+
+template <typename T>
+void Matrix_hpc<T>::blas_op(T a, T b, T c)
+{
+    if (c == 0)  return;
+
+    for (integer_t i=0; i<Vector_hpc<T>::dim_; i++) {
+        Vector_hpc<T>::p_[i] *= a;
+        Vector_hpc<T>::p_[i] += b;
+        Vector_hpc<T>::p_[i] /= c;
+    }
 }
 
 template <typename T>

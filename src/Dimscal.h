@@ -45,9 +45,11 @@ public:
             integer_t dim3) {
         return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3];
     }
+    inline T *ptr() { return Vector_hpc<T>::p_; }
     inline integer_t dim1() { return dim1_; }
     inline integer_t dim2() { return dim2_; }
     inline integer_t dim3() { return dim3_; }
+    inline integer_t dim() { return Vector_hpc<T>::dim_; }
     inline void mul(T num) {
         for (integer_t i=0; i<Vector_hpc<T>::dim_; i++) {
             Vector_hpc<T>::p_[i] *= num;
