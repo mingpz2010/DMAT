@@ -18,6 +18,7 @@
 
 #include <iostream>
 #include <cstdio>
+#include "../src/Stencil2D.h"
 
 #define PI  3.1415926
 
@@ -29,6 +30,10 @@
 int main(int argc, char *argv[])
 {
     TRACE_PRINT("start to test Stencil2D class!\n");
+
+    Stencil2D<double> demo(100, 100);
+
+    demo.run();
 
     return 0;
 }

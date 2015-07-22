@@ -1,5 +1,4 @@
 /*
-    <test07.cc, testing for c++ language library version.>
     Copyright (C) <2014-2020>  <PingzhouMing>
 
     This program is free software; you can redistribute it and/or modify
@@ -29,12 +28,8 @@
 
 int main(int argc, char *argv[])
 {
-    TRACE_PRINT("start to test Dimscal class!\n");
-
-    Dimscal<double> d1;
-    Dimscal<double> d2(30, 20, 30);
+    TRACE_PRINT("start to test LegendreScal class!\n");
 
     return 0;
 }
-
 

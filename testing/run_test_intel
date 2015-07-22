@@ -16,7 +16,7 @@ INDEX=1
 for file in test01.cc test02.cc test03.cc test04.cc test05.cc test06.cc \
     test07.cc test08.cc test09.cc test10.cc test11.cc test12.cc \
     test13.cc test14.cc test15.cc test16.cc test17.cc test18.cc \
-    test19.cc test20.cc
+    test25.cc test26.cc
 do
     echo "$file compile"
     $CPP $FLAGS $file -o "test${INDEX}.exe"
@@ -46,7 +46,7 @@ echo "start to run every testing program!"
 for file in test01.cc test02.cc test03.cc test04.cc test05.cc test06.cc \
     test07.cc test08.cc test09.cc test10.cc test11.cc test12.cc \
     test13.cc test14.cc test15.cc test16.cc test17.cc test18.cc \
-    test19.cc test20.cc
+    test25.cc test26.cc
 do
     echo "test${INDEX}.exe run and check correctness"
     if [ -e "./test${INDEX}.exe" ]; then

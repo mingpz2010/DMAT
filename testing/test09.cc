@@ -30,6 +30,9 @@ int main(int argc, char *argv[])
 {
     TRACE_PRINT("start to test CrossSection class!\n");
 
+    CrossSection<double> c1;
+    CrossSection<double> c2(2, 2, 10, 20, 10);
+
     return 0;
 }
 

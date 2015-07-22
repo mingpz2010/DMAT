@@ -18,6 +18,7 @@
 
 #include <iostream>
 #include <cstdio>
+#include "../src/DenseMatrix.h"
 
 #define PI  3.1415926
 
@@ -29,6 +30,11 @@
 int main(int argc, char *argv[])
 {
     TRACE_PRINT("start to test DenseMatrix class!\n");
+
+    DenseMatrix<double> m1;
+    DenseMatrix<double> m2(20, 20);
+    DenseMatrix<double> m3(ROW_MAJOR, 20, 20);
+    DenseMatrix<double> m4(COL_MAJOR, 20, 20);
 
     return 0;
 }

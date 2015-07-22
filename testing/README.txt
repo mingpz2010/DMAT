@@ -1,6 +1,6 @@
 test program illustration:
 (Some test program need third party library, so you should install benchmark/
- directory library Eigen and Trilinos first. After installed, the library is
+ directory library Eigen and Trilinos first. After installing, the library is
  located in /lib directory.)
 test01        Basic testing for Vector_hpc class
 test02        Effiency testing of Vector_hpc class
@@ -15,7 +15,7 @@ test10        Effiency testing of CrossSection class
 test11        Basic testing for DenseMatrix class
 test12        Effiency testing of DenseMatrix class
 test13        Basic testing for SparseMatrix class
-test14        Effiency testing of SparseMatrix class and TDS manner rightness?
+test14        Effiency testing of SparseMatrix class and TDS manner is whether rightness
 test15        Basic testing for Stencil2D class
 test16        Effiency testing of Stencil2D class
 test17        Basic testing for Stencil3D class
@@ -26,5 +26,6 @@ test21        Integrated testing example3, 1D neutron diffusion calculation(FDM 
 test22        Paper: DMAT efficiency testing example1
 test23        Paper: DMAT efficiency testing example2
 test24        Paper: DMAT efficiency testing example3
-
+test25        Basic testing for LegendreScal class
+test26        Effiency testing of LegendreScal class
 

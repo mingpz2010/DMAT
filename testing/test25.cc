@@ -1,5 +1,4 @@
 /*
-    <test07.cc, testing for c++ language library version.>
     Copyright (C) <2014-2020>  <PingzhouMing>
 
     This program is free software; you can redistribute it and/or modify
@@ -19,6 +18,7 @@
 
 #include <iostream>
 #include <cstdio>
+#include "../src/LegendreScal.h"
 
 #define PI  3.1415926
 
@@ -29,12 +29,11 @@
 
 int main(int argc, char *argv[])
 {
-    TRACE_PRINT("start to test Dimscal class!\n");
+    TRACE_PRINT("start to test LegendreScal class!\n");
 
-    Dimscal<double> d1;
-    Dimscal<double> d2(30, 20, 30);
+    LegendreScal<double> A;
+    LegendreScal<double> B(2,2,10,20,10,3);
 
     return 0;
 }
-
 
