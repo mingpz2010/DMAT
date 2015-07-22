@@ -10,7 +10,7 @@
 
 ##Abstract data type
 
-> The reason for introducing the notion of abstract data types was to allow interchangeable software modules. You cannot have interchangeable modules unless these modules share similar complexity behavior. If I replace one module with another module with the same functional behavior but with different complexity tradeoffs, the user of this code will be unpleasantly surprised. I could tell him anything I like about data abstraction, and he still would not want to use the code. Complexity assertions have to be part of the interface.    ¡ª¡ª [Wikipedia](https://en.wikipedia.org/wiki/Abstract_data_type)
+> The reason for introducing the notion of abstract data types was to allow interchangeable software modules. You cannot have interchangeable modules unless these modules share similar complexity behavior. If I replace one module with another module with the same functional behavior but with different complexity tradeoffs, the user of this code will be unpleasantly surprised. I could tell him anything I like about data abstraction, and he still would not want to use the code. Complexity assertions have to be part of the interface. [Wikipedia](https://en.wikipedia.org/wiki/Abstract_data_type)
 
   As the vector and matrix operation are the basic of several scientific computing softwares. The C++ template of vector, matrix and multiple dimensional array will be researched. `MV++` s a small, efficient, set of concrete vector and simple matrix classes for numerical computing. It is not intended as a general vector container class, but rather designed specifically for optimized numerical computations on RISC and pipelined architectures. It is one step above a C/C++ array. `BLAS` are routines that provide standard building blocks for performing basic vector and matrix operations. The Level 1 BLAS perform scalar, vector and vector-vector operations, the Level 2 BLAS perform matrix-vector operations, and the Level 3 BLAS perform matrix-matrix operations. Because the BLAS are efficient, portable, and widely available, they are commonly used in the development of high quality linear algebra software, LAPACK for example. 
 
@@ -91,7 +91,7 @@ cond(no)->op
 
 ## Feedback
 
-- MAIL£º<mingpz@mail.ustc.edu.cn>
+- MAIL: <mingpz@mail.ustc.edu.cn>
 
 ---------
 Thank you for your attention to this library. Please download and utilize it in a appropriate style as your requirement.
