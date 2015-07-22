@@ -43,6 +43,26 @@ void Stencil2D<T>::stencil_reg(stencil2d_func f)
 }
 
 template <typename T>
+void Stencil2D<T>::stencil_reg(integer_t num, integer_t position[][2])
+{
+    integer_t move1 = m.dim2();
+    integer_t move2 = 1;
+    Vector_hpc<T> sum(m.dim());
+
+    for (integer_t i = 0; i<m.dim(); i++) {
+        T tmp = 0.;
+        for (integer_t k=0; k<num; k++) {
+            tmp += *(m.ptr()+move1*position[k][0]+move2*position[k][1]);
+        }
+        sum[i] = tmp;
+    }
+
+    for (integer_t i = 0; i<m.dim(); i++) {
+        *(m.ptr()+i) = (1.0/num)*sum[i];
+    }
+}
+
+template <typename T>
 void Stencil2D<T>::boundary(stencil2d_func f)
 {
     if (m.dim() != 0) {

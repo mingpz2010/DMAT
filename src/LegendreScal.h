@@ -15,40 +15,45 @@
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
-#ifndef DIMSCAL_H_
-#define DIMSCAL_H_
+#ifndef LEGENDRESCAL_H_
+#define LEGENDRESCAL_H_
 
 #include "Cmv.h"
 
-// It derived from Vector_hpc, 3D ADT
-
-template<typename T> class Dimscal;
-template<typename T> std::ostream& operator<<(std::ostream &s, const Dimscal<T> &M);
+template<typename T> class LegendreScal;
 
 template <typename T>
-class Dimscal : public Vector_hpc<T>
+class LegendreScal : public Vector_hpc<T>
 {
 protected:
     integer_t dim1_;
     integer_t dim2_;
     integer_t dim3_;
-    integer_t w1, w2;
+    integer_t dim4_;
+    integer_t dim5_;
+    integer_t dim6_;
+    integer_t w1, w2, w3, w4, w5;
 public:
-    Dimscal() : Vector_hpc<T>() { dim1_= dim2_ = dim3_ = 0; w1 = w2 = 0; }
-    Dimscal(integer_t, integer_t, integer_t);
-    inline const T& operator() (integer_t dim1, integer_t dim2,
-            integer_t dim3) const {
-        return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3];
+    LegendreScal() : Vector_hpc<T>() {
+        dim1_= dim2_ = dim3_ = dim4_ = dim5_ = dim6_ = 0;
+        w1 = w2 = w3 = w4 = w5 = 0;
     }
-    inline T& operator() (integer_t dim1, integer_t dim2,
-            integer_t dim3) {
-        return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3];
+    LegendreScal(integer_t, integer_t, integer_t, integer_t, integer_t, integer_t);
+    inline const T& operator() (integer_t dim1, integer_t dim2, integer_t dim3,
+            integer_t dim4, integer_t dim5, integer_t dim6) const {
+        return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3*w3+dim4*w4+dim5*w5+dim6];
+    }
+    inline T& operator() (integer_t dim1, integer_t dim2, integer_t dim3,
+            integer_t dim4, integer_t dim5, integer_t dim6) {
+        return Vector_hpc<T>::p_[dim1*w1+dim2*w2+dim3*w3+dim4*w4+dim5*w5+dim6];
     }
     inline T *ptr() { return Vector_hpc<T>::p_; }
     inline integer_t dim1() { return dim1_; }
     inline integer_t dim2() { return dim2_; }
     inline integer_t dim3() { return dim3_; }
+    inline integer_t dim4() { return dim4_; }
+    inline integer_t dim5() { return dim5_; }
+    inline integer_t dim6() { return dim6_; }
     inline integer_t dim() { return Vector_hpc<T>::dim_; }
     inline void mul(T num) {
         for (integer_t i=0; i<Vector_hpc<T>::dim_; i++) {
@@ -56,16 +61,14 @@ public:
         }
     }
 
-    Dimscal<T> & operator=(const Dimscal<T>&);
+    LegendreScal<T> & newsize(integer_t, integer_t, integer_t,
+            integer_t, integer_t, integer_t);
 
-    // common functions
-    T maxPos(integer_t& dim1, integer_t& dim2, integer_t& dim3);
-    void blas_op(T a, T b, T c);
-    Dimscal<T> & newsize(integer_t, integer_t, integer_t);
-
-    friend std::ostream& operator<< <>(std::ostream &s, const Dimscal<T> &M);
+    LegendreScal<T> & operator=(const LegendreScal<T>&);
 };
 
-#include "Dimscal.tpp"
+#include "LegendreScal.tpp"
 
-#endif /* DIMSCAL_H_ */
+
+
+#endif /* LEGENDRESCAL_H_ */

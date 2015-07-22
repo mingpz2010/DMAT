@@ -36,6 +36,7 @@ public:
     Stencil2D(stencil2d_func, integer_t, integer_t);
 
     void stencil_reg(stencil2d_func);
+    void stencil_reg(integer_t num, integer_t position[][2]);
     void boundary(stencil2d_func);
 
     void run();
@@ -44,3 +45,5 @@ public:
 #include "Stencil2D.tpp"
 
 #endif /* STENCIL2D_H_ */
+
+

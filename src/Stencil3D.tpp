@@ -56,7 +56,7 @@ void Stencil3D<T>::stencil_reg(integer_t num, integer_t position[][3])
         for (integer_t k=0; k<num; k++) {
             tmp += *(m.ptr()+move1*position[k][0]+move2*position[k][1]+move3*position[k][2]);
         }
-        sum [i] = tmp;
+        sum[i] = tmp;
     }
 
     for (integer_t i = 0; i<m.dim(); i++) {

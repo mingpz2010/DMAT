@@ -46,7 +46,7 @@ template <typename T>
 Flux<T>& Flux<T>::newsize(integer_t m, integer_t n, integer_t k, integer_t d)
 {
     if (m<=0 || n<=0 || k<=0 || d<=0) {
-        return;
+        return *this;
     }
     if (Vector_hpc<T>::p_) delete [] Vector_hpc<T>::p_;
     dim1_ = m;

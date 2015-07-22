@@ -41,6 +41,43 @@ Dimscal<T>::Dimscal(integer_t m, integer_t n, integer_t k)
 }
 
 template <typename T>
+Dimscal<T>& Dimscal<T>::newsize(integer_t m, integer_t n, integer_t k)
+{
+    if (m<=0 || n<=0 || k<=0) {
+        if (Vector_hpc<T>::p_ != NULL) {
+            delete[] Vector_hpc<T>::p_;
+        }
+        Vector_hpc<T>::p_ = NULL;
+        Vector_hpc<T>::dim_ = 0;
+        dim1_ = dim2_ = dim3_ = 0;
+        w1 = w2 = 0;
+        std::cerr << "Error: bad value in Dimscal newsize " << std::endl;
+        return *this;
+    }
+
+    if (Vector_hpc<T>::p_ != NULL) {
+        delete[] Vector_hpc<T>::p_;
+    }
+    dim1_ = m;
+    dim2_ = n;
+    dim3_ = k;
+    w1 = n*k;
+    w2 = k;
+    Vector_hpc<T>::p_ = new T[m*n*k];
+    if (Vector_hpc<T>::p_ == NULL) {
+        Vector_hpc<T>::p_ = NULL;
+        Vector_hpc<T>::dim_ = 0;
+        dim1_ = dim2_ = dim3_  = 0;
+        w1 = w2 = 0;
+        std::cerr << "Error: bad alloc in Dimscal newsize " << std::endl;
+        return *this;
+    }
+    Vector_hpc<T>::dim_ = m*n*k;
+
+    return *this;
+}
+
+template <typename T>
 void Dimscal<T>::blas_op(T a, T b, T c)
 {
     if (c == 0)  return;
