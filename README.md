@@ -68,17 +68,7 @@ $$	\sum_{k=0}^\infty P_{n}(x)t^{n}=\frac{1}{\sqrt{1-2xt+t^{2}}} $$
 
 
 ### System Arichitecture
-```flow
-st=>start: Start
-e=>end
-op=>operation: My Operation
-cond=>condition: Yes or No?
-
-st->op->cond
-cond(yes)->e
-cond(no)->op
-```
-
+![architecture](./DMAT structure.png)
 
 
 ### Development Calendar
