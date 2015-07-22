@@ -72,9 +72,9 @@ $$	\sum_{k=0}^\infty P_{n}(x)t^{n}=\frac{1}{\sqrt{1-2xt+t^{2}}} $$
 
 
 ### Development Calendar
-2015.5.1   Analysis MV++ NIST national library.
-2015.6.2   Accomplish BLAS routines analysis and research some cache optimizations.
-2015.7.1   Implement the basic library and use it in one 3D reactor core software.
+2015.5.1   Analysis MV++ NIST national library.<p>
+2015.6.2   Accomplish BLAS routines analysis and research some cache optimizations.<p>
+2015.7.1   Implement the basic library and use it in one 3D reactor core software.<p>
 2015.7.22  The BLAS routine was cutted and implemented in DMAT library.
 
 
