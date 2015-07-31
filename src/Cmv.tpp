@@ -329,6 +329,137 @@ T Vector_hpc<T>::mean()
     return ans/dim_;
 }
 
+//
+//  Here is the BLAS-cutted interfaces
+//
+template <typename T>
+void Vector_hpc<T>::dswap(const Vector_hpc<T>& M)
+{
+    if (dim_ <= 0 || dim_ != M.dim())  return;
+
+    T tmp;
+    for ( integer_t i=0; i<dim_; i++) {
+        T = M[i];
+        M[i] = p_[i];
+        p_[i] = T;
+    }
+}
+
+template <typename T>
+void Vector_hpc<T>::dscal(T a)
+{
+    // unroll loops to depth of length 8
+    integer_t N = size();
+    integer_t Nminus8 = N-8;
+    integer_t i;
+
+    for (i=0; i<Nminus8; )
+    {
+        p_[i] *= a; ++i;
+        p_[i] *= a; ++i;
+        p_[i] *= a; ++i;
+        p_[i] *= a; ++i;
+        p_[i] *= a; ++i;
+        p_[i] *= a; ++i;
+        p_[i] *= a; ++i;
+        p_[i] *= a; ++i;
+    }
+
+    for (; i<N; p_[i] *= a, ++i);   // finish off last piece...
+}
+
+template <typename T>
+void Vector_hpc<T>::dcopy(const Vector_hpc<T>& M)
+{
+    // unroll loops to depth of length 4
+    integer_t N = size();
+    integer_t Nminus4 = N-4;
+    integer_t i;
+
+    for (i=0; i<Nminus4; )
+    {
+        p_[i] = M[i];  ++i;
+        p_[i] = M[i];  ++i;
+        p_[i] = M[i];  ++i;
+        p_[i] = M[i];  ++i;
+    }
+
+    for (; i<N; p_[i] = M[i], ++i);   // finish off last piece...
+}
+
+template <typename T>
+void Vector_hpc<T>::daxpy(T a, const Vector_hpc<T>& M)
+{
+    // unroll loops to depth of length 4
+    integer_t N = size();
+    integer_t Nminus4 = N-4;
+    integer_t i;
+
+    for (i=0; i<Nminus4; )
+    {
+        p_[i] += a*M[i];  ++i;
+        p_[i] += a*M[i];  ++i;
+        p_[i] += a*M[i];  ++i;
+        p_[i] += a*M[i];  ++i;
+    }
+
+    for (; i<N; p_[i] += a*M[i], ++i);   // finish off last piece...
+}
+
+template <typename T>
+T Vector_hpc<T>::ddot(const Vector_hpc<T>& M)
+{
+    if (dim_ <= 0 || dim_ != M.dim())  return 0;
+
+    T ans = 0.;
+    for ( integer_t i=0; i<dim_; i++) {
+        ans += p_[i] * M[i];
+    }
+
+    return ans;
+}
+
+template <typename T>
+T Vector_hpc<T>::dnrm2()
+{
+    T ans = 0.;
+    for ( integer_t i=0; i<dim_; i++) {
+        ans += p_[i]*p_[i];
+    }
+
+    return sqrt(ans);
+}
+
+template <typename T>
+T Vector_hpc<T>::dasum()
+{
+    T ans = 0.;
+    for ( integer_t i=0; i<dim_; i++) {
+        ans += fabs(p_[i]);
+    }
+
+    return ans;
+}
+
+template <typename T>
+integer_t Vector_hpc<T>::idamax(T& ans)
+{
+    if (dim_ <= 0) {
+        return -1;
+    }
+
+    ans = p_[0];
+    integer_t index = 0;
+    for (integer_t i=0; i<dim_; i++) {
+        if (fabs(p_[i]) > ans) {
+            ans = fabs(p_[i]);
+            index = i;
+        }
+    }
+
+    return index;
+}
+
 template <typename T>
 void Vector_hpc<T>::copyFortran(int ref, T *from, INTEGER dim)
 {
@@ -357,7 +488,6 @@ std::ostream& operator<<(std::ostream& s, const Vector_hpc<T>& V)
 
     return s;
 }
-
 
 template <typename T>
 T max_NRM2(integer_t N, const Vector_hpc<T> &x1, const Vector_hpc<T> &x2)

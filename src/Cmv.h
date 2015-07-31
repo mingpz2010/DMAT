@@ -124,14 +124,14 @@ public:
     T mean();
 
     // BLAS cutting and implementation
-    void blas_op(T a, T b, T c);
-    void swap(const Matrix_hpc<T>& M);
-    void scal(T a);
-    void copy(const Matrix_hpc<T>& M);
-    T dot(const Matrix_hpc<T>& M);
-    T nrm2();
-    T asum();
-    T iamax();
+    void dswap(const Vector_hpc<T>& M);
+    void dscal(T a);
+    void dcopy(const Vector_hpc<T>& M);
+    void daxpy(T a, const Vector_hpc<T>& M);
+    T ddot(const Vector_hpc<T>& M);
+    T dnrm2();
+    T dasum();
+    integer_t idamax(T& ans);
 
     // something related to Fortran
     void copyFortran(int ref, T *, INTEGER dim);

@@ -106,6 +106,9 @@ Matrix_hpc<T>& Matrix_hpc<T>::newsize(integer_t m, integer_t n)
     return *this;
 }
 
+//
+//  Here is the BLAS-cutted interfaces
+//
 template <typename T>
 void Matrix_hpc<T>::blas_op(T a, T b, T c)
 {
@@ -116,6 +119,105 @@ void Matrix_hpc<T>::blas_op(T a, T b, T c)
         Vector_hpc<T>::p_[i] += b;
         Vector_hpc<T>::p_[i] /= c;
     }
+}
+
+template <typename T>
+void Matrix_hpc<T>::dswap(const Matrix_hpc<T>& M)
+{
+    if (dim_ <= 0 || dim_ != M.dim())  return;
+
+    T tmp;
+    for ( integer_t i=0; i<dim_; i++) {
+        T = M.Vector_hpc<T>::p_[i];
+        M.Vector_hpc<T>::p_[i] = Vector_hpc<T>::p_[i];
+        Vector_hpc<T>::p_[i] = T;
+    }
+}
+
+template <typename T>
+void Matrix_hpc<T>::dscal(T a)
+{
+    // unroll loops to depth of length 8
+    integer_t N = size();
+    integer_t Nminus8 = N-8;
+    integer_t i;
+
+    for (i=0; i<Nminus8; )
+    {
+        Vector_hpc<T>::p_[i] *= a; ++i;
+        Vector_hpc<T>::p_[i] *= a; ++i;
+        Vector_hpc<T>::p_[i] *= a; ++i;
+        Vector_hpc<T>::p_[i] *= a; ++i;
+        Vector_hpc<T>::p_[i] *= a; ++i;
+        Vector_hpc<T>::p_[i] *= a; ++i;
+        Vector_hpc<T>::p_[i] *= a; ++i;
+        Vector_hpc<T>::p_[i] *= a; ++i;
+    }
+
+    for (; i<N; Vector_hpc<T>::p_[i] *= a, ++i);   // finish off last piece...
+}
+
+template <typename T>
+void Matrix_hpc<T>::dcopy(const Matrix_hpc<T>& M)
+{
+    // unroll loops to depth of length 4
+    integer_t N = size();
+    integer_t Nminus4 = N-4;
+    integer_t i;
+
+    for (i=0; i<Nminus4; )
+    {
+        Vector_hpc<T>::p_[i] = M.Vector_hpc<T>::p_[i];  ++i;
+        Vector_hpc<T>::p_[i] = M.Vector_hpc<T>::p_[i];  ++i;
+        Vector_hpc<T>::p_[i] = M.Vector_hpc<T>::p_[i];  ++i;
+        Vector_hpc<T>::p_[i] = M.Vector_hpc<T>::p_[i];  ++i;
+    }
+
+    for (; i<N; Vector_hpc<T>::p_[i] = M.Vector_hpc<T>::p_[i], ++i);  // finish off last piece...
+}
+
+template <typename T>
+void Matrix_hpc<T>::daxpy(const Matrix_hpc<T>& M)
+{
+    // unroll loops to depth of length 4
+    integer_t N = size();
+    integer_t Nminus4 = N-4;
+    integer_t i;
+
+    for (i=0; i<Nminus4; )
+    {
+        Vector_hpc<T>::p_[i] += a*M.Vector_hpc<T>::p_[i];  ++i;
+        Vector_hpc<T>::p_[i] += a*M.Vector_hpc<T>::p_[i];  ++i;
+        Vector_hpc<T>::p_[i] += a*M.Vector_hpc<T>::p_[i];  ++i;
+        Vector_hpc<T>::p_[i] += a*M.Vector_hpc<T>::p_[i];  ++i;
+    }
+
+    for (; i<N; ++i) {
+        // finish off last piece...
+        Vector_hpc<T>::p_[i] += a*M.Vector_hpc<T>::p_[i];
+    }
+}
+
+template <typename T>
+T Matrix_hpc<T>::dnrm2()
+{
+    T ans = 0.;
+    for ( integer_t i=0; i<dim_; i++) {
+        ans += (Vector_hpc<T>::p_[i]*Vector_hpc<T>::p_[i]);
+    }
+
+    return sqrt(ans);
+}
+
+template <typename T>
+T Matrix_hpc<T>::dasum()
+{
+    T ans = 0.;
+    for ( integer_t i=0; i<dim_; i++) {
+        ans += fabs(Vector_hpc<T>::p_[i]);
+    }
+
+    return ans;
 }
 
 template <typename T>
