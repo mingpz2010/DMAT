@@ -221,6 +221,62 @@ T Matrix_hpc<T>::dasum()
 }
 
 template <typename T>
+void Matrix_hpc<T>::dgemv(const Vector_hpc<T>& v)
+{
+    if (dim2_ != v.dim() || dim1_ != dim2_) {
+        std::cerr << "DGEMV dimension is not match!" << std::endl;
+        return;
+    }
+
+    Vector_hpc<T> v_tmp(v);
+    T ans;
+    if (type == 0) {
+        for (integer_t i=0; i<dim1_; i++) {
+            ans = 0.;
+            for (integer_t j=0; j<dim2_; j++) {
+                ans += Vector_hpc<T>::p_[i*dim2_ + j]*v_tmp[j];
+            }
+            v[i] = ans;
+        }
+    } else {
+        for (integer_t i=0; i<dim1_; i++) {
+            ans = 0.;
+            for (integer_t j=0; j<dim2_; j++) {
+                ans += Vector_hpc<T>::p_[i + j*dim1_]*v_tmp[j];
+            }
+            v[i] = ans;
+        }
+    }
+}
+
+template <typename T>
+void Matrix_hpc<T>::dgemv(const Vector_hpc<T>& v1, const Vector_hpc<T>& v2)
+{
+    if (dim2_ != v1.dim() || dim1_ != v2.dim()) {
+        std::cerr << "DGEMV dimension is not match!" << std::endl;
+        return;
+    }
+    T ans;
+    if (type == 0) {
+        for (integer_t i=0; i<dim1_; i++) {
+            ans = 0.;
+            for (integer_t j=0; j<dim2_; j++) {
+                ans += Vector_hpc<T>::p_[i*dim2_ + j]*v1[j];
+            }
+            v2[i] = ans;
+        }
+    } else {
+        for (integer_t i=0; i<dim1_; i++) {
+            ans = 0.;
+            for (integer_t j=0; j<dim2_; j++) {
+                ans += Vector_hpc<T>::p_[i + j*dim1_]*v1[j];
+            }
+            v2[i] = ans;
+        }
+    }
+}
+
+template <typename T>
 Matrix_hpc<T>& Matrix_hpc<T>::operator=(const Matrix_hpc<T>& M)
 {
     integer_t N = M.size();

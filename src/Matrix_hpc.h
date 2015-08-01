@@ -82,6 +82,8 @@ public:
     void daxpy(const Matrix_hpc<T>& M);
     T dnrm2();
     T dasum();
+    void dgemv(const Vector_hpc<T>& v);     // v = M*v
+    void dgemv(const Vector_hpc<T>& v1, const Vector_hpc<T>& v2);   // v2 = M*v1
 
     Matrix_hpc<T> & newsize(integer_t, integer_t);
     Matrix_hpc<T> & operator=(const Matrix_hpc<T>&);

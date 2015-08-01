@@ -47,6 +47,7 @@ int main(int argc, char *argv[])
     std::cout << v2 << std::endl;
 
     double ans;
+    integer_t index;
 
     ans = v1.max();
     std::cout<< "v1 max : "<< ans << std::endl;
@@ -54,10 +55,32 @@ int main(int argc, char *argv[])
     std::cout<< "v1 mean : "<< ans << std::endl;
     ans = v1.min();
     std::cout<< "v1 min : "<< ans << std::endl;
-    v1.mul(3.14159);
-    std::cout << v1 << std::endl;
 
+    // Basic arthmetic operation testing
+    double tmp[SIZE] = {1, 2, 3, 4, 5, 6};
+    v1.add(v2);
+    v1.add(tmp);
+    v1.sub(v2);
+    v1.sub(tmp);
+    v1.mul(3.14159);
+    v1.div(2);
+    v1.fill(5.0);
+    std::cout << v1 << std::endl;
     std::cout << v1+v2 << std::endl;
+
+    // BLAS operation testing
+    v1.fill(2.0);
+    v2.fill(3.0);
+    v1.dswap(v1);
+    v1.dswap(v2);
+    v1.dscal(PI);
+    v1.dcopy(v2);
+    v1.daxpy(2.0, v2);
+    ans = v1.ddot(v2);
+    ans = v1.dnrm2();
+    ans = v1.dasum();
+    index = v1.idamax(ans);
+    std::cout<<"v1 IDAMAX : index = "<<index<<" , Value = "<<ans<<std::endl;
 
     return 0;
 }

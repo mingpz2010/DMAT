@@ -49,12 +49,12 @@ int main(int argc, char *argv[])
     std::cout << "output m2:"<< std::endl;
     m2 = m1;
     std::cout << m2 << std::endl;
-
     m1.add(m2);
     std::cout << m1 << std::endl;
-
     m1.newsize(1, 1);
     std::cout << m1 << std::endl;
+
+    // BLAS operation testing
 
     return 0;
 }
