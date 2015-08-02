@@ -55,6 +55,22 @@ int main(int argc, char *argv[])
     std::cout << m1 << std::endl;
 
     // BLAS operation testing
+    double ans;
+    Vector_hpc<double> v1(size);
+    Vector_hpc<double> v2(size);
+    for (int i=0; i<SIZE; i++) {
+        v1[i] = (i+1) * 2.5;
+        v2[i] = 0.;
+    }
+
+    m1.dswap(m2);
+    m1.dscal(PI);
+    m1.dcopy(m2);
+    m1.daxpy(0.2, m2);
+    ans = m1.dnrm2();
+    ans = m1.dasum();
+    m1.dgemv(v1);
+    m1.dgemv(v1,v2);
 
     return 0;
 }

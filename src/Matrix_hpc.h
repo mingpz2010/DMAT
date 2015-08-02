@@ -26,6 +26,14 @@ typedef enum Matrix_store_manner {
     COL_MAJOR
 }matrix_manner_t;
 
+typedef enum Matrix_property {
+    M_NORMAL,
+    M_BANDED,
+    M_SYMMETRIC,
+    M_SYMMETRIC_BANDED,
+    M_TRIANGULAR
+}matrix_property_t;
+
 // " More C++ Idioms/Making New Friends "
 // From the <More C++ Idioms> wiki book
 // Declare friend function
@@ -37,8 +45,11 @@ class Matrix_hpc : public Vector_hpc<T>
 {
 protected:
     int type;  // 0-ROW_MAJOR, default, 1-COL_MAJOR
+    int property;
     integer_t dim1_;
     integer_t dim2_;
+    integer_t ksub;
+    integer_t ksupper;
     integer_t nonzeroes;
 public:
     Matrix_hpc();
@@ -76,14 +87,36 @@ public:
 
     // BLAS cutting and implementation
     void blas_op(T a, T b, T c);
+    // BLAS-1
     void dswap(const Matrix_hpc<T>& M);
     void dscal(T a);
     void dcopy(const Matrix_hpc<T>& M);
-    void daxpy(const Matrix_hpc<T>& M);
+    void daxpy(T a, const Matrix_hpc<T>& M);
     T dnrm2();
     T dasum();
-    void dgemv(const Vector_hpc<T>& v);     // v = M*v
-    void dgemv(const Vector_hpc<T>& v1, const Vector_hpc<T>& v2);   // v2 = M*v1
+
+    // BLAS-2
+    void dgemv(Vector_hpc<T>& v);     // v = M*v
+    void dgemv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2);   // v2 = M*v1
+    void dgbmv(Vector_hpc<T>& v);
+    void dgbmv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2);
+    void dsymv(Vector_hpc<T>& v);
+    void dsymv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2);
+    void dsbmv(Vector_hpc<T>& v) { dgbmv(v); }
+    void dsbmv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2) { dgbmv(v1, v2); }
+    void dspmv(Vector_hpc<T>& v) { dsymv(v); }
+    void dspmv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2) { dsymv(v1, v2); }
+    void dtrmv(Vector_hpc<T>& v);
+    void dtrmv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2);
+    void dtrsv(Vector_hpc<T>& x, const Vector_hpc<T>& b);
+
+    // BLAS-3
+    void dgemm(Matrix_hpc<T>& m);       // m = M*m
+    void dgemm(const Matrix_hpc<T>& m1, Matrix_hpc<T>& m2);  // m2 = M * m1
+    void dsymm(Matrix_hpc<T>& m);
+    void dsymm(const Matrix_hpc<T>& m1, Matrix_hpc<T>& m2);
+    void dtrmm(Matrix_hpc<T>& m);
+    void dtrmm(const Matrix_hpc<T>& m1, Matrix_hpc<T>& m2);
 
     Matrix_hpc<T> & newsize(integer_t, integer_t);
     Matrix_hpc<T> & operator=(const Matrix_hpc<T>&);
