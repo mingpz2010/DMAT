@@ -23,27 +23,26 @@ Matrix_hpc<T>::Matrix_hpc()
     property = M_NORMAL;
     Vector_hpc<T>::p_ = NULL;
     Vector_hpc<T>::dim_ = 0;
-	dim1_ = dim2_ = 0;
+	dim1_ = 0;
 	nonzeroes = 0;
 }
 
 template <typename T>
-Matrix_hpc<T>::Matrix_hpc(integer_t m, integer_t n)
+Matrix_hpc<T>::Matrix_hpc(integer_t n)
 {
 	if (m<=0 || n<=0) {
 	    property = M_NORMAL;
 	    Vector_hpc<T>::p_ = NULL;
 	    Vector_hpc<T>::dim_ = 0;
-	    dim1_ = dim2_ = 0;
+	    dim1_ = 0;
 	    std::cerr << "Error: bad value in Matrix_hpc constructor " << std::endl;
 	    return;
 	}
 	type = 0;
 	property = M_NORMAL;
-	dim1_ = m;
-	dim2_ = n;
-	Vector_hpc<T>::p_ = new T[m*n];
-	Vector_hpc<T>::dim_ = m*n;
+	dim1_ = n;
+	Vector_hpc<T>::p_ = new T[n*n];
+	Vector_hpc<T>::dim_ = n*n;
 	zero();
     if (Vector_hpc<T>::p_ == NULL) {
         std::cerr << "Error: NULL pointer in Matrix_hpc<T> constructor " << std::endl;
@@ -54,12 +53,12 @@ Matrix_hpc<T>::Matrix_hpc(integer_t m, integer_t n)
 }
 
 template <typename T>
-Matrix_hpc<T>::Matrix_hpc(matrix_manner_t type, integer_t m, integer_t n)
+Matrix_hpc<T>::Matrix_hpc(matrix_manner_t type, integer_t n)
 {
     if (m<=0 || n<=0) {
         Vector_hpc<T>::p_ = NULL;
         Vector_hpc<T>::dim_ = 0;
-        dim1_ = dim2_ = 0;
+        dim1_ = 0;
         std::cerr << "Error: bad value in Matrix_hpc constructor " << std::endl;
         return;
     }
@@ -69,10 +68,9 @@ Matrix_hpc<T>::Matrix_hpc(matrix_manner_t type, integer_t m, integer_t n)
         this->type = 1;
     }
     property = M_NORMAL;
-    dim1_ = m;
-    dim2_ = n;
-    Vector_hpc<T>::p_ = new T[m*n];
-    Vector_hpc<T>::dim_ = m*n;
+    dim1_ = n;
+    Vector_hpc<T>::p_ = new T[n*n];
+    Vector_hpc<T>::dim_ = n*n;
     zero();
     if (Vector_hpc<T>::p_ == NULL) {
         std::cerr << "Error: NULL pointer in Matrix_hpc<T> constructor " << std::endl;
@@ -89,21 +87,20 @@ Matrix_hpc<T>::~Matrix_hpc()
 }
 
 template <typename T>
-Matrix_hpc<T>& Matrix_hpc<T>::newsize(integer_t m, integer_t n)
+Matrix_hpc<T>& Matrix_hpc<T>::newsize(integer_t n)
 {
-    if (m<=0 || n<=0) {
+    if (n<=0) {
         return *this;
     }
     if (Vector_hpc<T>::p_) delete [] Vector_hpc<T>::p_;
-    dim1_ = m;
-    dim2_ = n;
-    Vector_hpc<T>::p_ = new T[m*n];
+    dim1_ = n;
+    Vector_hpc<T>::p_ = new T[n*n];
     if (Vector_hpc<T>::p_ == NULL)
     {
     	std::cerr << "Error : NULL pointer in operator= Matrix_hpc newsize" << std::endl;
         exit(-1);
     }
-    Vector_hpc<T>::dim_ = m*n;
+    Vector_hpc<T>::dim_ = n*n;
     zero();
     nonzeroes = 0;
 
@@ -227,7 +224,7 @@ T Matrix_hpc<T>::dasum()
 template <typename T>
 void Matrix_hpc<T>::dgemv(Vector_hpc<T>& v)
 {
-    if (dim2_ != v.dim() || dim1_ != dim2_) {
+    if (dim1_ != v.dim()) {
         std::cerr << "DGEMV dimension is not match!" << std::endl;
         return;
     }
@@ -237,15 +234,15 @@ void Matrix_hpc<T>::dgemv(Vector_hpc<T>& v)
     if (type == 0) {
         for (integer_t i=0; i<dim1_; i++) {
             ans = 0.;
-            for (integer_t j=0; j<dim2_; j++) {
-                ans += Vector_hpc<T>::p_[i*dim2_ + j]*v_tmp[j];
+            for (integer_t j=0; j<dim1_; j++) {
+                ans += Vector_hpc<T>::p_[i*dim1_ + j]*v_tmp[j];
             }
             v[i] = ans;
         }
     } else {
         for (integer_t i=0; i<dim1_; i++) {
             ans = 0.;
-            for (integer_t j=0; j<dim2_; j++) {
+            for (integer_t j=0; j<dim1_; j++) {
                 ans += Vector_hpc<T>::p_[i + j*dim1_]*v_tmp[j];
             }
             v[i] = ans;
@@ -256,7 +253,7 @@ void Matrix_hpc<T>::dgemv(Vector_hpc<T>& v)
 template <typename T>
 void Matrix_hpc<T>::dgemv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2)
 {
-    if (dim2_ != v1.dim() || dim1_ != v2.dim()) {
+    if (dim1_ != v1.dim() || dim1_ != v2.dim()) {
         std::cerr << "DGEMV dimension is not match!" << std::endl;
         return;
     }
@@ -264,15 +261,15 @@ void Matrix_hpc<T>::dgemv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2)
     if (type == 0) {
         for (integer_t i=0; i<dim1_; i++) {
             ans = 0.;
-            for (integer_t j=0; j<dim2_; j++) {
-                ans += Vector_hpc<T>::p_[i*dim2_ + j]*v1[j];
+            for (integer_t j=0; j<dim1_; j++) {
+                ans += Vector_hpc<T>::p_[i*dim1_ + j]*v1[j];
             }
             v2[i] = ans;
         }
     } else {
         for (integer_t i=0; i<dim1_; i++) {
             ans = 0.;
-            for (integer_t j=0; j<dim2_; j++) {
+            for (integer_t j=0; j<dim1_; j++) {
                 ans += Vector_hpc<T>::p_[i + j*dim1_]*v1[j];
             }
             v2[i] = ans;
@@ -286,7 +283,7 @@ void Matrix_hpc<T>::dgbmv(Vector_hpc<T>& v)
     if (property != M_BANDED && property != M_SYMMETRIC_BANDED && property != M_TRIANGULAR) {
         return;
     }
-    if (dim2_ != v.dim() || dim1_ != dim2_) {
+    if (dim1_ != v.dim()) {
         std::cerr << "DGBMV dimension is not match!" << std::endl;
         return;
     }
@@ -299,12 +296,12 @@ void Matrix_hpc<T>::dgbmv(Vector_hpc<T>& v)
             ans = 0.;
             index = ((i-ksub) < 0)? 0: i-ksub;
             for (integer_t j=index; j<i; j++) {
-                ans += Vector_hpc<T>::p_[i*dim2_ + j]*v_tmp[j];
+                ans += Vector_hpc<T>::p_[i*dim1_ + j]*v_tmp[j];
             }
-            ans += Vector_hpc<T>::p_[i*dim2_ + i]*v_tmp[i];
-            index = ((i+ksupper)>dim2_) ? dim2_:i+ksupper;
+            ans += Vector_hpc<T>::p_[i*dim1_ + i]*v_tmp[i];
+            index = ((i+ksupper)>dim1_) ? dim1_:i+ksupper;
             for (integer_t j=i+1; j<index; j++) {
-                ans += Vector_hpc<T>::p_[i*dim2_ + j]*v_tmp[j];
+                ans += Vector_hpc<T>::p_[i*dim1_ + j]*v_tmp[j];
             }
             v[i] = ans;
         }
@@ -315,8 +312,8 @@ void Matrix_hpc<T>::dgbmv(Vector_hpc<T>& v)
             for (integer_t j=index; j<i; j++) {
                 ans += Vector_hpc<T>::p_[i + j*dim1_]*v_tmp[j];
             }
-            ans += Vector_hpc<T>::p_[i*dim2_ + i]*v_tmp[i];
-            index = ((i+ksupper)>dim2_) ? dim2_:i+ksupper;
+            ans += Vector_hpc<T>::p_[i*dim1_ + i]*v_tmp[i];
+            index = ((i+ksupper)>dim1_) ? dim1_:i+ksupper;
             for (integer_t j=i+1; j<index; j++) {
                 ans += Vector_hpc<T>::p_[i + j*dim1_]*v_tmp[j];
             }
@@ -332,7 +329,7 @@ void Matrix_hpc<T>::dgbmv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2)
         return;
     }
 
-    if (dim2_ != v1.dim() || dim1_ != v2.dim()) {
+    if (dim1_ != v1.dim() || dim1_ != v2.dim()) {
         std::cerr << "DGBMV dimension is not match!" << std::endl;
         return;
     }
@@ -343,12 +340,12 @@ void Matrix_hpc<T>::dgbmv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2)
             ans = 0.;
             index = ((i-ksub) < 0)? 0: i-ksub;
             for (integer_t j=index; j<i; j++) {
-                ans += Vector_hpc<T>::p_[i*dim2_ + j]*v1[j];
+                ans += Vector_hpc<T>::p_[i*dim1_ + j]*v1[j];
             }
-            ans += Vector_hpc<T>::p_[i*dim2_ + i]*v1[i];
-            index = ((i+ksupper)>dim2_) ? dim2_:i+ksupper;
+            ans += Vector_hpc<T>::p_[i*dim1_ + i]*v1[i];
+            index = ((i+ksupper)>dim1_) ? dim1_:i+ksupper;
             for (integer_t j=i+1; j<index; j++) {
-                ans += Vector_hpc<T>::p_[i*dim2_ + j]*v1[j];
+                ans += Vector_hpc<T>::p_[i*dim1_ + j]*v1[j];
             }
             v2[i] = ans;
         }
@@ -359,8 +356,8 @@ void Matrix_hpc<T>::dgbmv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2)
             for (integer_t j=index; j<i; j++) {
                 ans += Vector_hpc<T>::p_[i + j*dim1_]*v1[j];
             }
-            ans += Vector_hpc<T>::p_[i*dim2_ + i]*v1[i];
-            index = ((i+ksupper)>dim2_) ? dim2_:i+ksupper;
+            ans += Vector_hpc<T>::p_[i*dim1_ + i]*v1[i];
+            index = ((i+ksupper)>dim1_) ? dim1_:i+ksupper;
             for (integer_t j=i+1; j<index; j++) {
                 ans += Vector_hpc<T>::p_[i + j*dim1_]*v1[j];
             }
@@ -375,7 +372,7 @@ void Matrix_hpc<T>::dsymv(Vector_hpc<T>& v)
     if (property != M_SYMMETRIC) {
         return;
     }
-    if (dim2_ != v.dim() || dim1_ != dim2_) {
+    if (dim1_ != v.dim()) {
         std::cerr << "DSYMV dimension is not match!" << std::endl;
         return;
     }
@@ -386,9 +383,9 @@ void Matrix_hpc<T>::dsymv(Vector_hpc<T>& v)
         for (integer_t i=0; i<dim1_; i++) {
             ans = 0.;
             for (integer_t j=0; j<i; j++) {
-                ans += 2*Vector_hpc<T>::p_[i*dim2_ + j]*v_tmp[j];
+                ans += 2*Vector_hpc<T>::p_[i*dim1_ + j]*v_tmp[j];
             }
-            ans += Vector_hpc<T>::p_[i*dim2_ + i]*v_tmp[i];
+            ans += Vector_hpc<T>::p_[i*dim1_ + i]*v_tmp[i];
             v[i] = ans;
         }
     } else {
@@ -397,7 +394,7 @@ void Matrix_hpc<T>::dsymv(Vector_hpc<T>& v)
             for (integer_t j=0; j<i; j++) {
                 ans += 2*Vector_hpc<T>::p_[i + j*dim1_]*v_tmp[j];
             }
-            ans += Vector_hpc<T>::p_[i*dim2_ + i]*v_tmp[i];
+            ans += Vector_hpc<T>::p_[i*dim1_ + i]*v_tmp[i];
             v[i] = ans;
         }
     }
@@ -410,7 +407,7 @@ void Matrix_hpc<T>::dsymv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2)
         return;
     }
 
-    if (dim2_ != v1.dim() || dim1_ != v2.dim()) {
+    if (dim1_ != v1.dim() || dim1_ != v2.dim()) {
         std::cerr << "DSYMV dimension is not match!" << std::endl;
         return;
     }
@@ -419,9 +416,9 @@ void Matrix_hpc<T>::dsymv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2)
         for (integer_t i=0; i<dim1_; i++) {
             ans = 0.;
             for (integer_t j=0; j<i; j++) {
-                ans += 2*Vector_hpc<T>::p_[i*dim2_ + j]*v1[j];
+                ans += 2*Vector_hpc<T>::p_[i*dim1_ + j]*v1[j];
             }
-            ans += Vector_hpc<T>::p_[i*dim2_ + i]*v1[i];
+            ans += Vector_hpc<T>::p_[i*dim1_ + i]*v1[i];
             v2[i] = ans;
         }
     } else {
@@ -430,7 +427,7 @@ void Matrix_hpc<T>::dsymv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2)
             for (integer_t j=0; j<=i; j++) {
                 ans += 2*Vector_hpc<T>::p_[i + j*dim1_]*v1[j];
             }
-            ans += Vector_hpc<T>::p_[i*dim2_ + i]*v1[i];
+            ans += Vector_hpc<T>::p_[i*dim1_ + i]*v1[i];
             v2[i] = ans;
         }
     }
@@ -442,7 +439,7 @@ void Matrix_hpc<T>::dtrmv(Vector_hpc<T>& v)
     if (property != M_TRIANGULAR) {
         return;
     }
-    if (dim2_ != v.dim() || dim1_ != dim2_) {
+    if (dim1_ != v.dim()) {
         std::cerr << "DTRMV dimension is not match!" << std::endl;
         return;
     }
@@ -457,7 +454,7 @@ void Matrix_hpc<T>::dtrmv(const Vector_hpc<T>& v1, Vector_hpc<T>& v2)
         return;
     }
 
-    if (dim2_ != v1.dim() || dim1_ != v2.dim()) {
+    if (dim1_ != v1.dim() || dim1_ != v2.dim()) {
         std::cerr << "DTRMV dimension is not match!" << std::endl;
         return;
     }
@@ -588,7 +585,7 @@ std::ostream& operator<<(std::ostream &s, const Matrix_hpc<T> &M)
 {
     integer_t N = M.size();
     integer_t i_max = M.dim1();
-    integer_t j_max = M.dim2();
+    integer_t j_max = M.dim1();
 
     s << "\nNumber of Rows = " << i_max << std::endl;
     s << "\nNumber of Cols = " << j_max << std::endl;

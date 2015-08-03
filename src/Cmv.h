@@ -26,26 +26,9 @@
 #include <cstdlib>
 #include <cmath>
 
-#ifdef integer_t
-#undef integer_t
-#endif
+#include "Common.h"
 
-typedef long integer_t;
-
-//
-// Fortran changed to C/C++ basic data type
-//
-//      C++ type        name          Fortran type
-// ----------------------------------------------
-typedef unsigned char   BYTE;       // byte
-typedef short int       INTEGER2;   // integer*2
-typedef long            INTEGER;    // integer
-typedef int             LOGICAL;    // logical
-typedef float           REAL;       // real
-typedef double          REAL8;      // real*8
-typedef long double     REAL16;     // real*16
-
-// support float, double, int and long basic data type (generic programming)
+// support float, double, int and long etc. basic data type (generic programming)
 // " More C++ Idioms/Making New Friends "
 // From the <More C++ Idioms> wiki book
 // Declare friend function

@@ -19,20 +19,11 @@
 #ifndef MATRIX_HPC_H_
 #define MATRIX_HPC_H_
 
+#include "Common.h"
 #include "Cmv.h"
 
-typedef enum Matrix_store_manner {
-    ROW_MAJOR,
-    COL_MAJOR
-}matrix_manner_t;
-
-typedef enum Matrix_property {
-    M_NORMAL,
-    M_BANDED,
-    M_SYMMETRIC,
-    M_SYMMETRIC_BANDED,
-    M_TRIANGULAR
-}matrix_property_t;
+// Matrix_hpc is square Matrix: n * n
+// Make sure dim1_ == dim2_
 
 // " More C++ Idioms/Making New Friends "
 // From the <More C++ Idioms> wiki book
@@ -47,25 +38,24 @@ protected:
     int type;  // 0-ROW_MAJOR, default, 1-COL_MAJOR
     int property;
     integer_t dim1_;
-    integer_t dim2_;
     integer_t ksub;
     integer_t ksupper;
     integer_t nonzeroes;
 public:
     Matrix_hpc();
-    Matrix_hpc(integer_t, integer_t);
-    Matrix_hpc(matrix_manner_t, integer_t, integer_t);
+    Matrix_hpc(integer_t);
+    Matrix_hpc(matrix_manner_t, integer_t);
     ~Matrix_hpc();
     inline T& operator()(integer_t m, integer_t n) {
         if (type == 0) {
-            return Vector_hpc<T>::p_[m*dim2_ + n];
+            return Vector_hpc<T>::p_[m*dim1_ + n];
         } else {
             return Vector_hpc<T>::p_[m + n*dim1_];
         }
     }
     inline const T& operator()(integer_t m, integer_t n) const {
         if (type == 0) {
-            return Vector_hpc<T>::p_[m*dim2_ + n];
+            return Vector_hpc<T>::p_[m*dim1_ + n];
         } else {
             return Vector_hpc<T>::p_[m + n*dim1_];
         }
@@ -75,7 +65,6 @@ public:
     inline integer_t size() const { return Vector_hpc<T>::dim_;}
     inline integer_t dim() const { return Vector_hpc<T>::dim_;}
     inline integer_t dim1() const { return dim1_;}
-    inline integer_t dim2() const { return dim2_;}
     inline integer_t ref() const { return Vector_hpc<T>::ref_; }
     inline int null() const {return Vector_hpc<T>::dim_== 0;}
     inline void zero() {
@@ -118,7 +107,7 @@ public:
     void dtrmm(Matrix_hpc<T>& m);
     void dtrmm(const Matrix_hpc<T>& m1, Matrix_hpc<T>& m2);
 
-    Matrix_hpc<T> & newsize(integer_t, integer_t);
+    Matrix_hpc<T> & newsize(integer_t);
     Matrix_hpc<T> & operator=(const Matrix_hpc<T>&);
     Matrix_hpc<T> & operator=(const T&);
 
