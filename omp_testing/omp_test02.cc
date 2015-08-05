@@ -94,8 +94,8 @@ void demo3()
 {
     printf("Demo3:\n");
 
-#if 0
     omp_set_dynamic(0);
+#if 0
     printf("NESTED FLAG = %d\n", omp_get_nested());
     omp_set_nested(1);
     printf("NEW NESTED FLAG = %d\n", omp_get_nested());
