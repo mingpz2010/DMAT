@@ -145,7 +145,7 @@ void demo5()
 {
     printf("Demo5:\n");
     omp_set_dynamic(0);
-    #pragma omp parallel for num_thread(2)
+    #pragma omp parallel for num_threads(2)
     for (int i=101; i<105; i++) {
         report_num_threads_ForLoop(i, 1);
         #pragma omp parallel num_threads(3)
