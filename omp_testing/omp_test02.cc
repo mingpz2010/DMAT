@@ -104,7 +104,7 @@ void demo3()
     #pragma omp parallel num_threads(1)
     {
         report_num_threads(1);
-        #pragma omp parallel num_threads(3)
+        #pragma omp parallel num_threads(4)
         {
             report_num_threads(2);
         }
