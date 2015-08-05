@@ -132,9 +132,27 @@ void demo4()
     report_num_threads(1);
 }
 
+void report_num_threads_ForLoop(int id, int level)
+{
+    #pragma omp single
+    {
+        printf("Level %d[%d]: number of threads in the team - %d\n",
+                level, id, omp_get_num_threads());
+    }
+}
+
 void demo5()
 {
     printf("Demo5:\n");
+    omp_set_dynamic(0);
+    #pragma omp parallel for num_thread(2)
+    for (int i=101; i<105; i++) {
+        report_num_threads_ForLoop(i, 1);
+        #pragma omp parallel num_threads(3)
+        {
+            report_num_threads_ForLoop(i, 2);
+        }
+    }
 }
 
 int main(int argc, char *argv[])
