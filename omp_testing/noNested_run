@@ -1,0 +1,7 @@
+#/bin/sh
+export OMP_NUM_THREADS=4
+export OMP_STACKSIZE=64M
+export OMP_NESTED=FALSE
+export OMP_THREAD_LIMIT=8
+./omp_testor01
+./omp_testor02
