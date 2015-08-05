@@ -1,0 +1,3 @@
+#/bin/sh
+g++ -fopenmp -c omp_test01.cc
+g++ -o omp_testor01 omp_test01.o
