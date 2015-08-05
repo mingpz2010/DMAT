@@ -115,6 +115,19 @@ void demo3()
 void demo4()
 {
     printf("Demo4:\n");
+    omp_set_dynamic(0);
+    printf("OUTPUT From FIRST LOOP\n");
+    #pragma omp parallel num_threads(4)
+    {
+        report_num_threads(1);
+        #pragma omp parallel num_threads(2)
+        {
+            report_num_threads(2);
+        }
+    }
+    printf("OUTPUT From SECOND LOOP\n");
+    #pragma omp parallel num_threads(8)
+    report_num_threads(1);
 }
 
 void demo5()
