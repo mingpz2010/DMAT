@@ -109,6 +109,9 @@ void demo3()
             report_num_threads(2);
         }
     }  /* End of PARALLEL section */
+
+    #pragma omp parallel num_threads(8)
+    1 = 1;
 }
 
 void demo4()
