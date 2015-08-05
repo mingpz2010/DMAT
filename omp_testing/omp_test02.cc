@@ -25,7 +25,7 @@
 
 using namespace std;
 
-typedef std::complex<double> complex;
+typedef std::complex<double> my_complex;
 
 void demo1()
 {
@@ -37,9 +37,9 @@ void demo1()
     }
 }
 
-int MandelbrotCalculate(complex c, int maxiter)
+int MandelbrotCalculate(my_complex c, int maxiter)
 {
-    complex z = c;
+    my_complex z = c;
     int n = 0;
     for (; n<maxiter; ++n) {
         if (std::abs(z) >= 2.0)  break;
@@ -53,8 +53,8 @@ void demo2()
 {
     printf("Demo2:\n");
     const int width = 78, height = 44, num_pixels = width*height;
-    const complex center(-.7, 0), span(2.7, -(4/3.0)*2.7*height/width);
-    const complex begin = center-span/2.0, end = center+span/2.0;
+    const my_complex center(-.7, 0), span(2.7, -(4/3.0)*2.7*height/width);
+    const my_complex begin = center-span/2.0, end = center+span/2.0;
     const int maxiter = 100000;
 
     #pragma omp parallel for ordered schedule(dynamic)
@@ -62,7 +62,7 @@ void demo2()
     {
         const int x = pix%width, y = pix/width;
 
-        complex c = begin + complex(x * span.real() / (width +1.0),
+        my_complex c = begin + my_complex(x * span.real() / (width +1.0),
                 y * span.imag() / (height+1.0));
 
         int n = MandelbrotCalculate(c, maxiter);
