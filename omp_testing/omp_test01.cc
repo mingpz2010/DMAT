@@ -53,7 +53,7 @@ void func2()
 
     #pragma omp parallel default(shared)
     {
-        #pragma omp for schedule(dynamic,chunk) nowait
+        #pragma omp for schedule(dynamic,size) nowait
         for(int i=0; i<N; i++) {
             c[i] = a[i] + b[i];
         } /* End of parallel section */
@@ -71,7 +71,7 @@ void func3()
         b[i] = i + 22.35;
     }
 
-    #pragma omp parallel shared(default)
+    #pragma omp parallel default(shared)
     {
         #pragma omp sections nowait
         {
