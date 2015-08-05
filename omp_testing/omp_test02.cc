@@ -172,7 +172,9 @@ void demo6()
         printf("i = %d, a[%d] = %.6lf\n", i, i, a[i]);
     }
 
-    #pragma omp parallel for num_threads(4)
+    #pragma omp barrier
+
+    #pragma omp parallel for num_threads(4) schedule(static)
     for(int i=0; i < 4; ++i) {
         a[i] = 0.1;
     }
