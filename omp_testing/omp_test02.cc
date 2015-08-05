@@ -155,6 +155,22 @@ void demo5()
     }
 }
 
+void demo6()
+{
+    double a[4], b[4];
+
+    printf("Demo6:\n");
+    for (int i=0; i<4; i++) {
+        a[i] = b[i] = i + 2;
+    }
+    #pragma omp parallel for ordered schedule(dynamic)
+    for(int i=0; i < 4; ++i) {
+        a[i] *= (b[i]/3);
+        #pragma omp ordered
+        printf("i = %d, a[%d] = %.6lf\n", i, i, a[i]);
+    }
+}
+
 int main(int argc, char *argv[])
 {
     printf("\nEXPLAIN THE OPENMP in C++\n\n");
@@ -163,6 +179,7 @@ int main(int argc, char *argv[])
     demo3();
     demo4();
     demo5();
+    demo6();
 
     return 0;
 }
