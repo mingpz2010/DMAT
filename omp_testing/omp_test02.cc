@@ -101,7 +101,7 @@ void demo3()
     printf("NEW NESTED FLAG = %d\n", omp_get_nested());
 #endif
 
-    #pragma omp parallel num_threads(2)
+    #pragma omp parallel num_threads(1)
     {
         report_num_threads(1);
         #pragma omp parallel num_threads(2)
