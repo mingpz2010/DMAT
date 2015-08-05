@@ -176,7 +176,6 @@ void demo6()
 
     #pragma omp parallel for num_threads(4) schedule(static)
     for(int i=0; i < 4; ++i) {
-        a[i] = 0.1;
         printf("%.6lf\n", a[i]);
     }
 }
