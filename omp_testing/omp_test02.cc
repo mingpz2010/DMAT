@@ -79,6 +79,8 @@ void demo2()
             if(x+1 == width) std::puts("|");
         }
     }
+
+    #pragma omp barrier
 }
 
 void report_num_threads(int level)
@@ -106,7 +108,7 @@ void demo3()
     #pragma omp parallel num_threads(4)
     {
         report_num_threads(1);
-        #pragma omp barrier
+
         #pragma omp parallel num_threads(4)
         {
             report_num_threads(2);
