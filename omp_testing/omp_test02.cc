@@ -180,12 +180,18 @@ void demo6()
     }
 }
 
+void null()
+{
+
+}
+
 int main(int argc, char *argv[])
 {
     printf("\nEXPLAIN THE OPENMP in C++\n\n");
     demo1();
     // demo2();
     demo6();
+    null();
     demo3();
     demo4();
     demo5();
