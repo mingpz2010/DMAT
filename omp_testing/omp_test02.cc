@@ -19,10 +19,92 @@
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
+#include <complex>
+#include <cmath>
 #include <omp.h>
+
+using namespace std;
+
+typedef std::complex<double> complex;
+
+void demo1()
+{
+    const int size = 256;
+    double sinTable[size];
+    printf("Demo1:\n");
+    for (int n=0; n<size; ++n) {
+        sinTable[n] = std::sin(2 * M_PI * n / size);
+    }
+}
+
+int MandelbrotCalculate(complex c, int maxiter)
+{
+    complex z = c;
+    int n = 0;
+    for (; n<maxiter; ++n) {
+        if (std::abs(z) >= 2.0)  break;
+        z = z * z + c;
+    }
+
+    return n;
+}
+
+void demo2()
+{
+    printf("Demo2:\n");
+    const int width = 78, height = 44, num_pixels = width*height;
+    const complex center(-.7, 0), span(2.7, -(4/3.0)*2.7*height/width);
+    const complex begin = center-span/2.0, end = center+span/2.0;
+    const int maxiter = 100000;
+
+    #pragma omp parallel for ordered schedule(dynamic)
+    for(int pix=0; pix<num_pixels; ++pix)
+    {
+        const int x = pix%width, y = pix/width;
+
+        complex c = begin + complex(x * span.real() / (width +1.0),
+                y * span.imag() / (height+1.0));
+
+        int n = MandelbrotCalculate(c, maxiter);
+        if(n == maxiter) n = 0;
+        #pragma omp ordered
+        {
+            char c = ' ';
+            if(n > 0)
+            {
+                static const char charset[] = ".,c8M@jawrpogOQEPGJ";
+                c = charset[n % (sizeof(charset)-1)];
+            }
+            std::putchar(c);
+            if(x+1 == width) std::puts("|");
+        }
+    }
+}
+
+void demo3()
+{
+    printf("Demo3:\n");
+}
+
+void demo4()
+{
+    printf("Demo4:\n");
+}
+
+void demo5()
+{
+    printf("Demo5:\n");
+}
 
 int main(int argc, char *argv[])
 {
+    printf("\nEXPLAIN THE OPENMP in C++\n\n");
+    demo1();
+    demo2();
+    demo3();
+    demo4();
+    demo5();
+
     return 0;
 }
 
