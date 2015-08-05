@@ -1,3 +1,5 @@
 #/bin/sh
 g++ -fopenmp -c omp_test01.cc
-g++ -o omp_testor01 omp_test01.o
+g++ -fopenmp -o omp_testor01 omp_test01.o
+g++ -fopenmp -c omp_test02.cc
+g++ -fopenmp -o omp_testor02 omp_test02.o
