@@ -171,6 +171,11 @@ void demo6()
         #pragma omp ordered
         printf("i = %d, a[%d] = %.6lf\n", i, i, a[i]);
     }
+
+    #pragma omp parallel num_threads(4)
+    for(int i=0; i < 4; ++i) {
+        a[i] = 0.1;
+    }
 }
 
 int main(int argc, char *argv[])
