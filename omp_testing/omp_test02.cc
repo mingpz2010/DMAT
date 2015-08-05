@@ -110,8 +110,9 @@ void demo3()
         }
     }  /* End of PARALLEL section */
 
+    int a;
     #pragma omp parallel num_threads(8)
-    1 = 1;
+    a = 1;
 }
 
 void demo4()
