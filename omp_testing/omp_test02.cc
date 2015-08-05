@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
     printf("\nEXPLAIN THE OPENMP in C++\n\n");
     demo1();
     demo2();
-    demo3();
+    // demo3();
     demo4();
     demo5();
 
