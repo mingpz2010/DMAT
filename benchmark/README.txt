@@ -20,4 +20,4 @@ solvers.
 [From http://trilinos.org/]
 
 In our project, Trilinos 11.12.1(Epetra Module) is chosen and compared 
-testing.
+testing. If you have any question, please contact the author.
