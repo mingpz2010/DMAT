@@ -1,5 +1,8 @@
 __author__ = "mingpingzhou"
 
+# Basic operations of PYTHON
+# And some basic computing mathematics examples are given
+
 print "Hello! CHECK THE BASIC PYTHON PROGRAMMING SKILLS!"
 print 2 + 3 * 4
 

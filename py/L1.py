@@ -1,5 +1,7 @@
 __author__ = 'mingpingzhou'
 
+# Abstract: basic concepts of computing mathematics.
+
 def error_explain():
     a = 0.6321
     print ("n = %d, a = %.8lf"%(0, a))
